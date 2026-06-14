@@ -201,7 +201,6 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                             </SelectContent>
                                         </Select>
 
-                                        {/* حقل الإدخال المخفي لحل مشكلة السيرفر أكشن أيرور (null) */}
                                         <input
                                             type="hidden"
                                             name={field.name}

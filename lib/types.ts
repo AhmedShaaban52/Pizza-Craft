@@ -42,14 +42,13 @@ export type CategorySchemaType = z.infer<typeof categorySchema>;
 
 export const offerSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
-  description: z.string().max(500).optional().or(z.literal("")),
+  description: z.string().max(500).nullable().optional().or(z.literal("")),
   image: z.any(),
-  discount: z.number().min(1, "Minimum 1%").max(100, "Maximum 100%"),
-  startDate: z.string().optional().or(z.literal("")),
-  endDate: z.string().optional().or(z.literal("")),
-  createdAt: z.string().optional().or(z.literal("")),
-  updatedAt: z.string().optional().or(z.literal("")),
+  discount: z.coerce.number().min(1, "Minimum 1%").max(100, "Maximum 100%"),
+  startDate: z.string().nullable().optional().or(z.literal("")),
+  endDate: z.string().nullable().optional().or(z.literal("")),
 });
+
 export type OfferSchemaType = z.infer<typeof offerSchema>;
 
 export type Coupon = typeof couponsTable.$inferSelect;
@@ -58,11 +57,17 @@ export const couponSchema = z.object({
   code: z.string().min(1, "Code is required").max(50).toUpperCase(),
   discountType: z.enum(["percent", "amount"]),
   discountValue: z.coerce.number().min(0.01, "Value is required"),
-  minOrderAmount: z.coerce.number().min(0).optional(),
-  maxUses: z.coerce.number().min(1).optional(),
-  startDate: z.string().optional().or(z.literal("")),
-  endDate: z.string().optional().or(z.literal("")),
-  isActive: z.string().optional(),
+  minOrderAmount: z.preprocess(
+    (val) => (val === "" || val === null ? undefined : val),
+    z.coerce.number().min(0).optional(),
+  ),
+  maxUses: z.preprocess(
+    (val) => (val === "" || val === null ? undefined : val),
+    z.coerce.number().min(1).optional(),
+  ),
+  startDate: z.string().nullable().optional().or(z.literal("")),
+  endDate: z.string().nullable().optional().or(z.literal("")),
+  isActive: z.string().nullable().optional(),
 });
 
 export type CouponSchemaType = z.infer<typeof couponSchema>;
