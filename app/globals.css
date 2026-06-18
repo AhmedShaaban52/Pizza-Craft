@@ -2,6 +2,11 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@import "tailwindcss";
+
+@import "uploadthing/tw/v4";
+@source "../node_modules/@uploadthing/react/dist"; /** يعتمد على هيكلية الفولدرات في مشروعك */
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

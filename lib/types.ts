@@ -79,21 +79,18 @@ export type FieldType =
   | "textarea"
   | "select"
   | "file"
-  | "files"
-  | "date"
-  | "image-upload"
-  | "images-upload";
+  | "date";
 
-  export interface ModalField {
-    name: string;
-    label: string;
-    type: FieldType;
-    placeholder?: string;
-    required?: boolean;
-    options?: { label: string; value: string }[];
-    accept?: string;
-    min?: number;
-    max?: number;
-    colSpan?: 1 | 2;
-    maxImages?: number;
-  }
+export interface ModalField {
+  name: string;
+  label: string;
+  type: FieldType;
+  placeholder?: string;
+  required?: boolean;
+  options?: { label: string; value: string }[];
+  accept?: string;
+  multiple?: boolean;
+  min?: number;
+  max?: number;
+  colSpan?: 1 | 2;
+}

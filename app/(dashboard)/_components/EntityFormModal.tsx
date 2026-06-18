@@ -21,7 +21,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { type ModalField } from "@/lib/types";
-import { Uploader } from "./Uploader";
 
 type ActionResult = { success: true } | { success: false; error: string };
 
@@ -37,18 +36,20 @@ interface EntityFormModalProps<T extends Record<string, unknown>> {
     idKey?: keyof T;
 }
 
+type FormValues = Record<string, string | boolean>;
+
 function computeInitialValues<T extends Record<string, unknown>>(
     mode: "create" | "edit",
     item: T | null | undefined,
     fields: ModalField[]
-): Record<string, string | boolean> {
-    const initial: Record<string, string | boolean> = {};
+): FormValues {
+    const initial: FormValues = {};
 
     if (mode === "edit" && item) {
         fields.forEach((field) => {
             const raw = item[field.name as keyof T];
-            if (field.type === "files" || field.type === "images-upload") {
-                initial[field.name] = Array.isArray(raw) ? raw.join(",") : "";
+            if (field.type === "file") {
+                initial[field.name] = "";
             } else if (typeof raw === "boolean") {
                 initial[field.name] = raw;
             } else {
@@ -104,35 +105,15 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
     onUpdate,
     idKey = "id" as keyof T,
 }: EntityFormModalProps<T>) {
-    const [values, setValues] = useState<Record<string, string | boolean>>(() =>
+    const [values, setValues] = useState<FormValues>(() =>
         computeInitialValues(mode, item, fields)
     );
+    const [fileFiles, setFileFiles] = useState<Record<string, FileList | null>>({});
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     function setValue(name: string, value: string | boolean) {
         setValues((prev) => ({ ...prev, [name]: value }));
-    }
-    function getThumbnailsArray(name: string): string[] {
-        const raw = values[name];
-        if (typeof raw !== "string" || !raw.trim()) return [];
-        return raw.split(",").map((t) => t.trim()).filter(Boolean);
-    }
-
-    function setThumbnailAt(name: string, index: number, key: string) {
-        const arr = getThumbnailsArray(name);
-        if (key) {
-            arr[index] = key;
-        } else {
-            arr.splice(index, 1);
-        }
-        setValue(name, arr.filter(Boolean).join(","));
-    }
-
-    function addThumbnailSlot(name: string) {
-        const arr = getThumbnailsArray(name);
-        arr.push("");
-        setValue(name, arr.join(","));
     }
 
     async function handleSubmit() {
@@ -141,13 +122,30 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
 
         const formData = new FormData();
         fields.forEach((field) => {
-            const value = values[field.name];
-            if (typeof value === "boolean") {
-                formData.set(field.name, value ? "true" : "false");
+            if (field.type === "file") {
+                const files = fileFiles[field.name];
+                if (files && files.length > 0) {
+                    if (field.multiple) {
+                        Array.from(files).forEach((file) => {
+                            formData.append(field.name, file);
+                        });
+                    } else {
+                        formData.append(field.name, files[0]);
+                    }
+                }
             } else {
-                formData.set(field.name, value ?? "");
+                const value = values[field.name];
+                if (typeof value === "boolean") {
+                    formData.set(field.name, value ? "true" : "false");
+                } else {
+                    formData.set(field.name, value ?? "");
+                }
             }
         });
+
+        if ("isActive" in values) {
+            formData.set("isActive", values.isActive ? "true" : "false");
+        }
 
         const result =
             mode === "create"
@@ -166,7 +164,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-lg">
+            <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>
                         {mode === "create" ? `Add ${title}` : `Edit ${title}`}
@@ -206,45 +204,18 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                             ))}
                                         </SelectContent>
                                     </Select>
-                                ) : field.type === "image-upload" ? (
-                                    <Uploader
-                                        value={(value as string) || undefined}
-                                        onChange={(key) => setValue(field.name, key)}
-                                        fileTypeAccepted="image"
-                                    />
-                                ) : field.type === "images-upload" ? (
-                                    <div className="space-y-3">
-                                        {getThumbnailsArray(field.name).map((thumbKey, idx) => (
-                                            <Uploader
-                                                key={idx}
-                                                value={thumbKey || undefined}
-                                                onChange={(key) => setThumbnailAt(field.name, idx, key)}
-                                                fileTypeAccepted="image"
-                                            />
-                                        ))}
-                                        {(!field.maxImages ||
-                                            getThumbnailsArray(field.name).length < field.maxImages) && (
-                                                <Button
-                                                    type="button"
-                                                    variant="outline"
-                                                    onClick={() => addThumbnailSlot(field.name)}
-                                                    className="w-full"
-                                                >
-                                                    + Add Thumbnail
-                                                </Button>
-                                            )}
-                                    </div>
-                                ) : field.type === "file" || field.type === "files" ? (
+                                ) : field.type === "file" ? (
                                     <Input
                                         id={field.name}
-                                        value={(value as string) ?? ""}
-                                        onChange={(e) => setValue(field.name, e.target.value)}
-                                        placeholder={
-                                            field.placeholder ??
-                                            (field.type === "files"
-                                                ? "https://img1.jpg, https://img2.jpg"
-                                                : "https://...")
-                                        }
+                                        type="file"
+                                        accept="image/*"
+                                        multiple={field.multiple}
+                                        onChange={(e) => {
+                                            setFileFiles((prev) => ({
+                                                ...prev,
+                                                [field.name]: e.target.files,
+                                            }));
+                                        }}
                                     />
                                 ) : field.type === "date" ? (
                                     <Input
