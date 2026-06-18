@@ -72,7 +72,6 @@ export const couponSchema = z.object({
 
 export type CouponSchemaType = z.infer<typeof couponSchema>;
 
-// lib/types.ts
 export type FieldType =
   | "text"
   | "email"
@@ -81,17 +80,20 @@ export type FieldType =
   | "select"
   | "file"
   | "files"
-  | "date";
+  | "date"
+  | "image-upload"
+  | "images-upload";
 
-export interface ModalField {
-  name: string;
-  label: string;
-  type: FieldType;
-  placeholder?: string;
-  required?: boolean;
-  options?: { label: string; value: string }[];
-  accept?: string;
-  min?: number;
-  max?: number;
-  colSpan?: 1 | 2;
-}
+  export interface ModalField {
+    name: string;
+    label: string;
+    type: FieldType;
+    placeholder?: string;
+    required?: boolean;
+    options?: { label: string; value: string }[];
+    accept?: string;
+    min?: number;
+    max?: number;
+    colSpan?: 1 | 2;
+    maxImages?: number;
+  }

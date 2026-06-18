@@ -21,6 +21,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { type ModalField } from "@/lib/types";
+import { Uploader } from "./Uploader";
 
 type ActionResult = { success: true } | { success: false; error: string };
 
@@ -46,7 +47,7 @@ function computeInitialValues<T extends Record<string, unknown>>(
     if (mode === "edit" && item) {
         fields.forEach((field) => {
             const raw = item[field.name as keyof T];
-            if (field.type === "files") {
+            if (field.type === "files" || field.type === "images-upload") {
                 initial[field.name] = Array.isArray(raw) ? raw.join(",") : "";
             } else if (typeof raw === "boolean") {
                 initial[field.name] = raw;
@@ -112,6 +113,27 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
     function setValue(name: string, value: string | boolean) {
         setValues((prev) => ({ ...prev, [name]: value }));
     }
+    function getThumbnailsArray(name: string): string[] {
+        const raw = values[name];
+        if (typeof raw !== "string" || !raw.trim()) return [];
+        return raw.split(",").map((t) => t.trim()).filter(Boolean);
+    }
+
+    function setThumbnailAt(name: string, index: number, key: string) {
+        const arr = getThumbnailsArray(name);
+        if (key) {
+            arr[index] = key;
+        } else {
+            arr.splice(index, 1);
+        }
+        setValue(name, arr.filter(Boolean).join(","));
+    }
+
+    function addThumbnailSlot(name: string) {
+        const arr = getThumbnailsArray(name);
+        arr.push("");
+        setValue(name, arr.join(","));
+    }
 
     async function handleSubmit() {
         setError(null);
@@ -123,13 +145,9 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
             if (typeof value === "boolean") {
                 formData.set(field.name, value ? "true" : "false");
             } else {
-                formData.set(field.name, value != null ? String(value) : "");
+                formData.set(field.name, value ?? "");
             }
         });
-
-        if ("isActive" in values && !fields.some(f => f.name === "isActive")) {
-            formData.set("isActive", values.isActive ? "true" : "false");
-        }
 
         const result =
             mode === "create"
@@ -148,14 +166,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent
-                className="sm:max-w-lg"
-                onPointerDownOutside={(e) => {
-                    if ((e.target as HTMLElement).closest('[role="listbox"]')) {
-                        e.preventDefault();
-                    }
-                }}
-            >
+            <DialogContent className="sm:max-w-lg">
                 <DialogHeader>
                     <DialogTitle>
                         {mode === "create" ? `Add ${title}` : `Edit ${title}`}
@@ -180,32 +191,48 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                         rows={3}
                                     />
                                 ) : field.type === "select" ? (
-                                    <div className="relative w-full">
-                                        <Select
-                                            value={(value as string) || undefined}
-                                            onValueChange={(v) => setValue(field.name, v)}
-                                        >
-                                            <SelectTrigger id={field.name} className="w-full">
-                                                <SelectValue placeholder={field.placeholder ?? "Select..."} />
-                                            </SelectTrigger>
-
-                                            <SelectContent
-                                                position="popper"
-                                                    className="z-200 max-h-60 w-(--radix-select-trigger-width)"
-                                            >
-                                                {field.options?.map((opt) => (
-                                                    <SelectItem key={opt.value} value={opt.value}>
-                                                        {opt.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-
-                                        <input
-                                            type="hidden"
-                                            name={field.name}
-                                            value={(value as string) ?? ""}
-                                        />
+                                    <Select
+                                        value={(value as string) || undefined}
+                                        onValueChange={(v) => setValue(field.name, v)}
+                                    >
+                                        <SelectTrigger id={field.name} className="w-full">
+                                            <SelectValue placeholder={field.placeholder ?? "Select..."} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {field.options?.map((opt) => (
+                                                <SelectItem key={opt.value} value={opt.value}>
+                                                    {opt.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                ) : field.type === "image-upload" ? (
+                                    <Uploader
+                                        value={(value as string) || undefined}
+                                        onChange={(key) => setValue(field.name, key)}
+                                        fileTypeAccepted="image"
+                                    />
+                                ) : field.type === "images-upload" ? (
+                                    <div className="space-y-3">
+                                        {getThumbnailsArray(field.name).map((thumbKey, idx) => (
+                                            <Uploader
+                                                key={idx}
+                                                value={thumbKey || undefined}
+                                                onChange={(key) => setThumbnailAt(field.name, idx, key)}
+                                                fileTypeAccepted="image"
+                                            />
+                                        ))}
+                                        {(!field.maxImages ||
+                                            getThumbnailsArray(field.name).length < field.maxImages) && (
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    onClick={() => addThumbnailSlot(field.name)}
+                                                    className="w-full"
+                                                >
+                                                    + Add Thumbnail
+                                                </Button>
+                                            )}
                                     </div>
                                 ) : field.type === "file" || field.type === "files" ? (
                                     <Input
@@ -268,7 +295,6 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                         Cancel
                     </Button>
                     <Button
-                        type="button"
                         onClick={handleSubmit}
                         disabled={loading}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white"

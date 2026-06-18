@@ -1,9 +1,9 @@
 "use client";
 
-import { EntityTable } from "../../../_components/EntityTable";
 import { createProduct, deleteProduct, updateProduct } from "../actions";
 import { productColumns, getProductFields, type ProductWithCategory } from "@/utils/ProductsFields";
 import { type Category } from "@/lib/types";
+import { EntityTable } from "@/app/(dashboard)/_components/EntityTable";
 
 interface ProductsTableProps {
     products: ProductWithCategory[];

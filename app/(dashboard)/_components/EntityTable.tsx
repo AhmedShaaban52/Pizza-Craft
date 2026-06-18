@@ -102,8 +102,8 @@ export function EntityTable<T extends Record<string, unknown>>({
                                         ) : col.type === "badge" ? (
                                             <span
                                                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${item[col.key as keyof T]
-                                                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
-                                                        : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+                                                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                                                    : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
                                                     }`}
                                             >
                                                 <span
