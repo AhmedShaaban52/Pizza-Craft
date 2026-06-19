@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
     Select,
     SelectContent,
@@ -21,6 +20,9 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { type ModalField } from "@/lib/types";
+import { UploadDropzone } from "@/components/UploadThingReexported";
+import { X } from "lucide-react";
+import Image from "next/image";
 
 type ActionResult = { success: true } | { success: false; error: string };
 
@@ -48,8 +50,20 @@ function computeInitialValues<T extends Record<string, unknown>>(
     if (mode === "edit" && item) {
         fields.forEach((field) => {
             const raw = item[field.name as keyof T];
-            if (field.type === "file") {
-                initial[field.name] = "";
+
+            if (field.type === "date" && raw) {
+                try {
+                    const dateObj = new Date(raw as string | Date);
+                    initial[field.name] = dateObj.toISOString().split("T")[0];
+                } catch {
+                    initial[field.name] = "";
+                }
+            } else if (field.type === "file") {
+                if (field.multiple) {
+                    initial[field.name] = Array.isArray(raw) ? raw.join(",") : "";
+                } else {
+                    initial[field.name] = raw == null ? "" : String(raw);
+                }
             } else if (typeof raw === "boolean") {
                 initial[field.name] = raw;
             } else {
@@ -64,6 +78,7 @@ function computeInitialValues<T extends Record<string, unknown>>(
 
     return initial;
 }
+
 
 export function EntityFormModal<T extends Record<string, unknown>>({
     open,
@@ -108,12 +123,23 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
     const [values, setValues] = useState<FormValues>(() =>
         computeInitialValues(mode, item, fields)
     );
-    const [fileFiles, setFileFiles] = useState<Record<string, FileList | null>>({});
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
     function setValue(name: string, value: string | boolean) {
         setValues((prev) => ({ ...prev, [name]: value }));
+    }
+
+    function getThumbnailsArray(name: string): string[] {
+        const raw = values[name];
+        if (typeof raw !== "string" || !raw.trim()) return [];
+        return raw.split(",").map((t) => t.trim()).filter(Boolean);
+    }
+
+    function removeThumbnailAt(name: string, index: number) {
+        const current = getThumbnailsArray(name);
+        current.splice(index, 1);
+        setValue(name, current.join(","));
     }
 
     async function handleSubmit() {
@@ -122,24 +148,11 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
 
         const formData = new FormData();
         fields.forEach((field) => {
-            if (field.type === "file") {
-                const files = fileFiles[field.name];
-                if (files && files.length > 0) {
-                    if (field.multiple) {
-                        Array.from(files).forEach((file) => {
-                            formData.append(field.name, file);
-                        });
-                    } else {
-                        formData.append(field.name, files[0]);
-                    }
-                }
+            const value = values[field.name];
+            if (typeof value === "boolean") {
+                formData.set(field.name, value ? "true" : "false");
             } else {
-                const value = values[field.name];
-                if (typeof value === "boolean") {
-                    formData.set(field.name, value ? "true" : "false");
-                } else {
-                    formData.set(field.name, value ?? "");
-                }
+                formData.set(field.name, value ?? "");
             }
         });
 
@@ -196,7 +209,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                         <SelectTrigger id={field.name} className="w-full">
                                             <SelectValue placeholder={field.placeholder ?? "Select..."} />
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent position="popper" sideOffset={3}>
                                             {field.options?.map((opt) => (
                                                 <SelectItem key={opt.value} value={opt.value}>
                                                     {opt.label}
@@ -204,19 +217,93 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                             ))}
                                         </SelectContent>
                                     </Select>
+                                ) : field.type === "file" && field.multiple ? (
+                                    <div className="space-y-3">
+                                        <UploadDropzone
+                                            endpoint="imageUploader"
+                                            className="ut-button:bg-emerald-600! ut-button:hover:bg-emerald-700! ut-button:ut-uploading:bg-emerald-600! ut-button:ut-readying:bg-emerald-600!"
+                                            appearance={{
+                                                container:
+                                                    "w-full rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 transition-colors cursor-pointer",
+                                                uploadIcon: "text-neutral-400",
+                                                label:
+                                                    "text-sm text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400",
+                                                allowedContent: "text-xs text-neutral-400 dark:text-neutral-500",
+                                            }}
+                                            onClientUploadComplete={(res) => {
+                                                setValue(field.name, res[0]?.ufsUrl ?? "");
+                                            }}
+                                            onUploadError={(error: Error) => {
+                                                setError(`Upload failed: ${error.message}`);
+                                            }}
+                                        />
+
+                                        {getThumbnailsArray(field.name).length > 0 && (
+                                            <div className="grid grid-cols-4 gap-2">
+                                                {getThumbnailsArray(field.name).map((url, idx) => (
+                                                    <div
+                                                        key={idx}
+                                                        className="relative group rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden h-20"
+                                                    >
+                                                        <Image
+                                                            src={url}
+                                                            alt={`${field.label} ${idx + 1}`}
+                                                            fill
+                                                            unoptimized
+                                                            className="object-cover"
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => removeThumbnailAt(field.name, idx)}
+                                                            className="absolute top-1 right-1 p-1 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                                        >
+                                                            <X className="h-3 w-3" />
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
                                 ) : field.type === "file" ? (
-                                    <Input
-                                        id={field.name}
-                                        type="file"
-                                        accept="image/*"
-                                        multiple={field.multiple}
-                                        onChange={(e) => {
-                                            setFileFiles((prev) => ({
-                                                ...prev,
-                                                [field.name]: e.target.files,
-                                            }));
-                                        }}
-                                    />
+                                    <div className="space-y-3">
+                                        <UploadDropzone
+                                            endpoint="imageUploader"
+                                            className="ut-button:bg-emerald-600! ut-button:hover:bg-emerald-700! ut-button:ut-uploading:bg-emerald-600! ut-button:ut-readying:bg-emerald-600!"
+                                            appearance={{
+                                                container:
+                                                    "w-full rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 transition-colors cursor-pointer",
+                                                uploadIcon: "text-neutral-400",
+                                                label:
+                                                    "text-sm text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400",
+                                                allowedContent: "text-xs text-neutral-400 dark:text-neutral-500",
+                                            }}
+                                            onClientUploadComplete={(res) => {
+                                                setValue(field.name, res[0]?.ufsUrl ?? "");
+                                            }}
+                                            onUploadError={(error: Error) => {
+                                                setError(`Upload failed: ${error.message}`);
+                                            }}
+                                        />
+
+                                        {value && (
+                                            <div className="relative group rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden h-32 w-32">
+                                                <Image
+                                                    src={value as string}
+                                                    alt={field.label}
+                                                    fill
+                                                    unoptimized
+                                                    className="object-cover"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setValue(field.name, "")}
+                                                    className="absolute top-1 right-1 p-1.5 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                                >
+                                                    <X className="h-4 w-4" />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
                                 ) : field.type === "date" ? (
                                     <Input
                                         id={field.name}
@@ -238,19 +325,6 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                             </div>
                         );
                     })}
-
-                    {"isActive" in values && (
-                        <div className="col-span-2 flex items-center justify-between rounded-lg border border-neutral-200 dark:border-neutral-800 px-3 py-2.5">
-                            <Label htmlFor="isActive" className="cursor-pointer">
-                                Active
-                            </Label>
-                            <Switch
-                                id="isActive"
-                                checked={values.isActive as boolean}
-                                onCheckedChange={(checked) => setValue("isActive", checked)}
-                            />
-                        </div>
-                    )}
                 </div>
 
                 {error && (

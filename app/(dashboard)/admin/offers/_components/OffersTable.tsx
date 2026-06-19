@@ -1,6 +1,6 @@
 "use client";
 
-import { offerColumns, offerFields } from "@/utils/OffersFields";
+import { getOfferFields, offerColumns } from "@/utils/OffersFields";
 import { EntityTable } from "../../../_components/EntityTable";
 import { createOffer, deleteOffer, updateOffer } from "../actions";
 import { type Offer } from "@/lib/types";
@@ -15,7 +15,7 @@ export function OffersTable({ offers }: OffersTableProps) {
             title="Offer"
             items={offers}
             columns={offerColumns}
-            fields={offerFields}
+            fields={getOfferFields()}
             onCreate={createOffer}
             onUpdate={updateOffer}
             onDelete={deleteOffer}

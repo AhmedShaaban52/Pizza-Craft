@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X,  Heart, Languages } from "lucide-react";
+import { Search, ShoppingCart, User, Menu, X, Heart, Languages } from "lucide-react";
 import { ModeToggle } from "../../../../components/ModeToggle"; // Make sure the path to your file is correct
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
@@ -14,7 +14,7 @@ export default function Navbar() {
 
     const navLinks = [
         { name: "Home", href: "/" },
-        { name: "Menu", href: "/menu" },
+        { name: "Products", href: "/products" },
         { name: "Deals", href: "/deals" },
         { name: "About Us", href: "/about" },
         { name: "Contact", href: "/contact" },

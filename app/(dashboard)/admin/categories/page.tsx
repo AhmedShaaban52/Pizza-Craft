@@ -1,7 +1,5 @@
-import { categoryColumns, categoryFields } from "@/utils/CategoriesFields";
-import { getCategories, createCategory, updateCategory, deleteCategory } from "./actions";
-import { type Category } from "@/lib/types";
-import { EntityTable } from "../../_components/EntityTable";
+import { getCategories } from "./actions";
+import { CategoriesTable } from "./_components/CategoriesTable";
 
 export default async function CategoriesPage() {
   const result = await getCategories();
@@ -13,15 +11,7 @@ export default async function CategoriesPage() {
         Categories
       </h1>
 
-      <EntityTable<Category>
-        title="Category"
-        items={categories}
-        columns={categoryColumns}
-        fields={categoryFields}
-        onCreate={createCategory}
-        onUpdate={updateCategory}
-        onDelete={deleteCategory}
-      />
+      <CategoriesTable categories={categories} />
     </div>
   );
 }
