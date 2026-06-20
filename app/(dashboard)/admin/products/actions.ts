@@ -3,7 +3,7 @@
 import { db } from "@/lib/db";
 import { productsTable, categoriesTable } from "@/lib/schema";
 import { productSchema } from "@/lib/types";
-import { eq } from "drizzle-orm";
+import { and, eq, ilike, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 type ActionResult<T = undefined> =
@@ -197,5 +197,101 @@ export async function deleteProduct(id: string): Promise<ActionResult> {
   } catch (err) {
     console.error(err);
     return { success: false, error: "Failed to delete product" };
+  }
+}
+
+export interface SearchResult {
+  id: string;
+  name: string;
+  image: string;
+  price: string;
+  categoryName: string | null;
+}
+
+export async function searchProducts(query: string): Promise<SearchResult[]> {
+  const trimmed = query.trim();
+  if (!trimmed) return [];
+
+  try {
+    const results = await db
+      .select({
+        id: productsTable.id,
+        name: productsTable.name,
+        image: productsTable.image,
+        price: productsTable.price,
+        categoryName: categoriesTable.name,
+      })
+      .from(productsTable)
+      .leftJoin(
+        categoriesTable,
+        eq(productsTable.categoryId, categoriesTable.id),
+      )
+      .where(
+        and(
+          eq(productsTable.isActive, true),
+          or(
+            ilike(productsTable.name, `%${trimmed}%`),
+            ilike(productsTable.description, `%${trimmed}%`),
+          ),
+        ),
+      )
+      .limit(8);
+
+    return results;
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+}
+
+export async function getProductsBySearch(query: string) {
+  const trimmed = query.trim();
+  if (!trimmed) return { success: true as const, data: [] };
+
+  try {
+    const results = await db
+      .select({
+        id: productsTable.id,
+        name: productsTable.name,
+        description: productsTable.description,
+        image: productsTable.image,
+        thumbnails: productsTable.thumbnails,
+        price: productsTable.price,
+        discountType: productsTable.discountType,
+        discountValue: productsTable.discountValue,
+        categoryId: productsTable.categoryId,
+        isActive: productsTable.isActive,
+        createdAt: productsTable.createdAt,
+        updatedAt: productsTable.updatedAt,
+        category: {
+          id: categoriesTable.id,
+          name: categoriesTable.name,
+          description: categoriesTable.description,
+          image: categoriesTable.image,
+          isActive: categoriesTable.isActive,
+          createdAt: categoriesTable.createdAt,
+          updatedAt: categoriesTable.updatedAt,
+        },
+      })
+      .from(productsTable)
+      .leftJoin(
+        categoriesTable,
+        eq(productsTable.categoryId, categoriesTable.id),
+      )
+      .where(
+        and(
+          eq(productsTable.isActive, true),
+          or(
+            ilike(productsTable.name, `%${trimmed}%`),
+            ilike(productsTable.description, `%${trimmed}%`),
+          ),
+        ),
+      )
+      .orderBy(productsTable.createdAt);
+
+    return { success: true as const, data: results };
+  } catch (err) {
+    console.error(err);
+    return { success: false as const, error: "Failed to search products" };
   }
 }

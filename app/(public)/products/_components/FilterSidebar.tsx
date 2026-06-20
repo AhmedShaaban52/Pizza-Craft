@@ -1,8 +1,13 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 import { Category } from "@/lib/types";
-import { X } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 interface FilterSidebarProps {
     categories: Category[];
@@ -29,6 +34,25 @@ export function FilterSidebar({
     hasActiveFilters,
     clearFilters,
 }: FilterSidebarProps) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const [searchValue, setSearchValue] = useState(searchParams.get("search") ?? "");
+
+    function handleSearchSubmit(e: React.FormEvent) {
+        e.preventDefault();
+        const trimmed = searchValue.trim();
+        if (trimmed) {
+            router.push(`/products?search=${encodeURIComponent(trimmed)}`);
+        } else {
+            router.push("/products");
+        }
+    }
+
+    function clearSearch() {
+        setSearchValue("");
+        router.push("/products");
+    }
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -43,6 +67,33 @@ export function FilterSidebar({
                     </button>
                 )}
             </div>
+
+            {/* Search box */}
+            <form onSubmit={handleSearchSubmit} className="space-y-2">
+                <h3 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                    Search
+                </h3>
+                <div className="relative">
+                    <Search className="absolute left-3 top-2.5 h-4 w-4 text-neutral-400" />
+                    <Input
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        placeholder="Search pizzas..."
+                        className="pl-9 pr-8"
+                    />
+                    {searchValue && (
+                        <button
+                            type="button"
+                            onClick={clearSearch}
+                            className="absolute right-2.5 top-2.5 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+                        >
+                            <X className="h-4 w-4" />
+                        </button>
+                    )}
+                </div>
+            </form>
+
+            <div className="border-t border-neutral-200 dark:border-neutral-800" />
 
             {/* Category filter */}
             <div className="space-y-3">

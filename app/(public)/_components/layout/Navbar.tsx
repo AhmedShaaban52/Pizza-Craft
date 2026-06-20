@@ -2,15 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X, Heart, Languages } from "lucide-react";
-import { ModeToggle } from "../../../../components/ModeToggle"; // Make sure the path to your file is correct
+import { ShoppingCart, User, Menu, X, Heart, Languages } from "lucide-react";
+import { ModeToggle } from "../../../../components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
+import { SearchBar } from "./SearchBar";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [cartCount, setCartCount] = useState(2);
-    const [favCount, setFavCount] = useState(5); // Example favorites state
+    const [favCount, setFavCount] = useState(5);
 
     const navLinks = [
         { name: "Home", href: "/" },
@@ -27,7 +28,6 @@ export default function Navbar() {
 
                     <Logo />
 
-
                     {/* Desktop Navigation Links */}
                     <div className="hidden md:flex items-center space-x-8">
                         {navLinks.map((link) => (
@@ -43,27 +43,16 @@ export default function Navbar() {
 
                     {/* Desktop Search & Action Icons */}
                     <div className="hidden md:flex items-center gap-4">
-                        {/* Search Bar */}
-                        <div className="relative mr-2">
-                            <input
-                                type="text"
-                                placeholder="Search pizzas..."
-                                className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-full py-1.5 pl-10 pr-4 text-sm text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 w-44 transition-all duration-300"
-                            />
-                            <Search className="absolute left-3 top-2.5 h-4 w-4 text-neutral-400 dark:text-neutral-500" />
-                        </div>
+                        <SearchBar variant="desktop" />
 
-                        {/* Translation Icon */}
                         <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
                             <Languages className="h-5 w-5" />
                         </Button>
 
-                        {/* Account Icon */}
                         <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
                             <User className="h-5 w-5" />
                         </Button>
 
-                        {/* Favorites Icon (FavCart) */}
                         <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
                             <Heart className="h-5 w-5" />
                             {favCount > 0 && (
@@ -73,7 +62,6 @@ export default function Navbar() {
                             )}
                         </Button>
 
-                        {/* Cart Icon */}
                         <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
                             <ShoppingCart className="h-5 w-5" />
                             {cartCount > 0 && (
@@ -83,7 +71,6 @@ export default function Navbar() {
                             )}
                         </Button>
 
-                        {/* Custom Mode Toggle Component */}
                         <ModeToggle />
                     </div>
 
@@ -91,12 +78,10 @@ export default function Navbar() {
                     <div className="md:hidden flex items-center gap-2">
                         <ModeToggle />
 
-                        {/* Mobile Translation Shortcut */}
                         <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300">
                             <Languages className="h-5 w-5" />
                         </Button>
 
-                        {/* Mobile Favorites Shortcut */}
                         <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300">
                             <Heart className="h-5 w-5" />
                             {favCount > 0 && (
@@ -106,7 +91,6 @@ export default function Navbar() {
                             )}
                         </Button>
 
-                        {/* Mobile Cart */}
                         <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300">
                             <ShoppingCart className="h-5 w-5" />
                             {cartCount > 0 && (
@@ -116,7 +100,6 @@ export default function Navbar() {
                             )}
                         </Button>
 
-                        {/* Hamburger Toggle */}
                         <Button
                             variant="ghost"
                             size="icon"
@@ -133,13 +116,8 @@ export default function Navbar() {
             {/* Mobile Dropdown Menu */}
             {isOpen && (
                 <div className="md:hidden bg-white dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900 px-4 pt-2 pb-4 space-y-2">
-                    <div className="relative my-3">
-                        <input
-                            type="text"
-                            placeholder="Search pizzas..."
-                            className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-lg py-2 pl-10 pr-4 text-sm text-neutral-800 dark:text-neutral-200"
-                        />
-                        <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-400" />
+                    <div className="my-3">
+                        <SearchBar variant="mobile" onResultClick={() => setIsOpen(false)} />
                     </div>
 
                     {navLinks.map((link) => (
