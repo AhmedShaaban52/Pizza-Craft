@@ -89,7 +89,7 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleDecrement}
-                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors shrink-0"
+                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors shrink-0 cursor-pointer"
             >
                 <Minus className="h-3.5 w-3.5" />
             </button>
@@ -97,7 +97,7 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleIncrement}
-                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors shrink-0"
+                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors shrink-0 cursor-pointer"
             >
                 <Plus className="h-3.5 w-3.5" />
             </button>

@@ -45,7 +45,7 @@ export default function Navbar() {
                     <div className="hidden md:flex items-center gap-4">
                         <SearchBar variant="desktop" />
 
-                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
+                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 cursor-pointer">
                             <Languages className="h-5 w-5" />
                         </Button>
 

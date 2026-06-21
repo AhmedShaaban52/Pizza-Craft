@@ -68,7 +68,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
                     type="button"
                     onClick={() => handleQuantityChange(item.quantity - 1)}
                     disabled={isPending}
-                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors disabled:opacity-50"
+                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                     <Minus className="h-3.5 w-3.5" />
                 </button>
@@ -77,7 +77,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
                     type="button"
                     onClick={() => handleQuantityChange(item.quantity + 1)}
                     disabled={isPending}
-                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors disabled:opacity-50"
+                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                     <Plus className="h-3.5 w-3.5" />
                 </button>
@@ -88,7 +88,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
                 onClick={handleRemove}
                 disabled={isPending}
                 aria-label="Remove item"
-                className="h-8 w-8 rounded-lg flex items-center justify-center text-neutral-500 hover:text-red-400 hover:bg-red-950/30 transition-colors disabled:opacity-50"
+                className="h-8 w-8 rounded-lg flex items-center justify-center text-neutral-500 hover:text-red-400 hover:bg-red-950/30 transition-colors disabled:opacity-50 cursor-pointer"
             >
                 <Trash2 className="h-4 w-4" />
             </button>
