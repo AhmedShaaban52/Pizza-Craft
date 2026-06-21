@@ -70,7 +70,7 @@ export const cartsTable = pgTable(
   "carts",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    userId: uuid("user_id").notNull(),
+    userId: text("user_id").notNull(),
     productId: uuid("product_id")
       .references(() => productsTable.id, { onDelete: "cascade" })
       .notNull(),
@@ -87,7 +87,7 @@ export const favoritesTable = pgTable(
   "favorites",
   {
     id: uuid("id").primaryKey().defaultRandom(),
-    userId: uuid("user_id").notNull(),
+    userId: text("user_id").notNull(),
     productId: uuid("product_id")
       .references(() => productsTable.id, { onDelete: "cascade" })
       .notNull(),
@@ -100,7 +100,7 @@ export const favoritesTable = pgTable(
 
 export const ordersTable = pgTable("orders", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id").notNull(),
+  userId: text("user_id").notNull(), 
   stripeSessionId: text("stripe_session_id").notNull().unique(),
   stripePaymentIntent: text("stripe_payment_intent"),
   status: varchar("status", { length: 20 }).default("pending"),

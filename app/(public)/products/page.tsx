@@ -1,5 +1,6 @@
 import { getProducts, getProductsBySearch } from "@/app/(dashboard)/admin/products/actions";
 import { getCategories } from "@/app/(dashboard)/admin/categories/actions";
+import { getUserFavoriteIds } from "@/lib/favorites-actions";
 import { type ProductWithCategory } from "@/utils/ProductsFields";
 import { type Category } from "@/lib/types";
 import { ProductsFilter } from "./_components/ProductsFilter";
@@ -11,9 +12,10 @@ interface ProductsPageProps {
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
     const { search } = await searchParams;
 
-    const [productsResult, categoriesResult] = await Promise.all([
+    const [productsResult, categoriesResult, favoriteIds] = await Promise.all([
         search ? getProductsBySearch(search) : getProducts(),
         getCategories(),
+        getUserFavoriteIds(),
     ]);
 
     const products = (productsResult.success ? productsResult.data ?? [] : []) as ProductWithCategory[];
@@ -35,7 +37,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 </p>
             </div>
 
-            <ProductsFilter products={activeProducts} categories={activeCategories} />
+            <ProductsFilter
+                products={activeProducts}
+                categories={activeCategories}
+                favoriteIds={favoriteIds}
+            />
         </div>
     );
 }

@@ -11,15 +11,16 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { getFinalPrice } from "@/lib/getFinalPrice";
-import { ProductGridCard } from "./ProductGridCard";
 import { FilterSidebar } from "./FilterSidebar";
+import ProductGridCard from "./ProductGridCard";
 
 interface ProductsFilterProps {
     products: ProductWithCategory[];
     categories: Category[];
+    favoriteIds: string[];
 }
 
-export function ProductsFilter({ products, categories }: ProductsFilterProps) {
+export function ProductsFilter({ products, categories, favoriteIds }: ProductsFilterProps) {
     const maxPrice = useMemo(
         () => Math.ceil(Math.max(...products.map((p) => Number(p.price)), 50)),
         [products]
@@ -71,7 +72,6 @@ export function ProductsFilter({ products, categories }: ProductsFilterProps) {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
-            {/* Mobile filter trigger */}
             <div className="lg:hidden">
                 <Sheet>
                     <SheetTrigger asChild>
@@ -102,7 +102,6 @@ export function ProductsFilter({ products, categories }: ProductsFilterProps) {
                 </Sheet>
             </div>
 
-            {/* Desktop sidebar */}
             <aside className="hidden lg:block">
                 <div className="sticky top-24 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
                     <FilterSidebar
@@ -141,7 +140,11 @@ export function ProductsFilter({ products, categories }: ProductsFilterProps) {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                         {filteredProducts.map((product) => (
-                            <ProductGridCard key={product.id} product={product} />
+                            <ProductGridCard
+                                key={product.id}
+                                product={product}
+                                isFavorited={favoriteIds.includes(product.id)}
+                            />
                         ))}
                     </div>
                 )}

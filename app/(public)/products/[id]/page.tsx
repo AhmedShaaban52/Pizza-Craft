@@ -2,10 +2,12 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getProductById, getProducts } from "@/app/(dashboard)/admin/products/actions";
 import { getFinalPrice } from "@/lib/getFinalPrice";
-import { Button } from "@/components/ui/button";
-import { Heart, ShoppingCart } from "lucide-react";
+import { getUserFavoriteIds } from "@/lib/favorites-actions";
+import { getCartQuantityForProduct } from "@/lib/cart-actions";
 import { type ProductWithCategory } from "@/utils/ProductsFields";
-import { ProductGridCard } from "../_components/ProductGridCard";
+import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
+import { AddToCartButton } from "../_components/AddToCartButton";
+import ProductGridCard from "../_components/ProductGridCard";
 
 interface ProductDetailsPageProps {
     params: Promise<{ id: string }>;
@@ -14,9 +16,11 @@ interface ProductDetailsPageProps {
 export default async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
     const { id } = await params;
 
-    const [productResult, allProductsResult] = await Promise.all([
+    const [productResult, allProductsResult, favoriteIds, cartState] = await Promise.all([
         getProductById(id),
         getProducts(),
+        getUserFavoriteIds(),
+        getCartQuantityForProduct(id),
     ]);
 
     if (!productResult.success || !productResult.data) {
@@ -26,6 +30,7 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
     const product = productResult.data;
     const finalPrice = getFinalPrice(product);
     const hasDiscount = !!product.discountType && !!product.discountValue;
+    const isFavorited = favoriteIds.includes(product.id);
 
     const allProducts = (allProductsResult.success ? allProductsResult.data ?? [] : []) as ProductWithCategory[];
     const relatedProducts = allProducts
@@ -78,22 +83,23 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
                     </div>
 
                     <div className="mt-8 flex items-center gap-3">
-                        <Button className="flex-1 h-12 bg-emerald-600 hover:bg-emerald-700 text-white gap-2">
-                            <ShoppingCart className="h-5 w-5" />
-                            Add to Cart
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="h-12 w-12 border-neutral-300 dark:border-neutral-700"
-                        >
-                            <Heart className="h-5 w-5" />
-                        </Button>
+                        <div className="flex-1">
+                            <AddToCartButton
+                                productId={product.id}
+                                initialQuantity={cartState.quantity}
+                                initialCartId={cartState.cartId}
+                                className="h-12 text-base"
+                            />
+                        </div>
+                        <FavoriteButton
+                            productId={product.id}
+                            initialFavorited={isFavorited}
+                            className="h-12 w-12 border border-neutral-300 dark:border-neutral-700 bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                        />
                     </div>
                 </div>
             </div>
 
-            {/* Related products */}
             {relatedProducts.length > 0 && (
                 <div className="mt-16">
                     <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-6">

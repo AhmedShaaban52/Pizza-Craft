@@ -2,16 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ShoppingCart, User, Menu, X, Heart, Languages } from "lucide-react";
+import { User, Menu, X, Languages } from "lucide-react";
 import { ModeToggle } from "../../../../components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
 import { SearchBar } from "./SearchBar";
+import { CartFavCount } from "./CartFavCount";
+import { UserMenu } from "./UserMenu";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const [cartCount, setCartCount] = useState(2);
-    const [favCount, setFavCount] = useState(5);
 
     const navLinks = [
         { name: "Home", href: "/" },
@@ -49,27 +49,9 @@ export default function Navbar() {
                             <Languages className="h-5 w-5" />
                         </Button>
 
-                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
-                            <User className="h-5 w-5" />
-                        </Button>
+                        <UserMenu />
 
-                        <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
-                            <Heart className="h-5 w-5" />
-                            {favCount > 0 && (
-                                <span className="absolute top-1 right-1 bg-emerald-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                                    {favCount}
-                                </span>
-                            )}
-                        </Button>
-
-                        <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500">
-                            <ShoppingCart className="h-5 w-5" />
-                            {cartCount > 0 && (
-                                <span className="absolute top-1 right-1 bg-emerald-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center animate-pulse">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </Button>
+                        <CartFavCount variant="desktop" />
 
                         <ModeToggle />
                     </div>
@@ -82,23 +64,7 @@ export default function Navbar() {
                             <Languages className="h-5 w-5" />
                         </Button>
 
-                        <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300">
-                            <Heart className="h-5 w-5" />
-                            {favCount > 0 && (
-                                <span className="absolute top-1 right-1 bg-emerald-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                                    {favCount}
-                                </span>
-                            )}
-                        </Button>
-
-                        <Button variant="ghost" size="icon" className="relative text-neutral-600 dark:text-neutral-300">
-                            <ShoppingCart className="h-5 w-5" />
-                            {cartCount > 0 && (
-                                <span className="absolute top-1 right-1 bg-emerald-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </Button>
+                        <CartFavCount variant="mobile" />
 
                         <Button
                             variant="ghost"

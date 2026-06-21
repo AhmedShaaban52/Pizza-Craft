@@ -1,9 +1,9 @@
-import { offersTable, categoriesTable, productsTable } from "@/lib/schema"; // 👈 تأكد من استيراد جدول المنتجات الفردية
+import { offersTable, categoriesTable, productsTable } from "@/lib/schema"; 
 import OfferSlider from "./_components/OfferSlider";
 import CategorySection from "./_components/CategorySection";
 import { and, lte, gte, or, isNull } from "drizzle-orm";
 import { db } from "@/lib/db";
-import ProductSection from "./_components/ProductSection";
+import BestSellerSection from "./_components/BestSellerSection";
 
 async function getActiveOffers() {
   const now = new Date();
@@ -40,7 +40,7 @@ export default async function HomePage() {
 
       <CategorySection categories={categories} />
 
-      <ProductSection
+      <BestSellerSection
         products={featuredProducts}
         title="You might also like"
         subtitle="Chef recommended pairings for your selection"
