@@ -48,7 +48,7 @@ export default function Footer() {
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                                        className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -67,7 +67,7 @@ export default function Footer() {
                                 <li key={link.name}>
                                     <Link
                                         href={link.href}
-                                        className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                                        className="text-sm text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                                     >
                                         {link.name}
                                     </Link>
@@ -88,11 +88,11 @@ export default function Footer() {
                             <input
                                 type="email"
                                 placeholder="Email address"
-                                className="w-full rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-4 py-2.5 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                                className="w-full rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-4 py-2.5 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                             />
                             <button
                                 type="submit"
-                                className="w-full rounded-lg bg-emerald-500 hover:bg-emerald-600 text-black font-semibold text-sm py-2.5 transition-colors"
+                                className="w-full rounded-lg bg-orange-500 hover:bg-orange-600 text-black font-semibold text-sm py-2.5 transition-colors"
                             >
                                 Subscribe
                             </button>
@@ -110,19 +110,19 @@ export default function Footer() {
                     <div className="flex items-center gap-6">
                         <Link
                             href="/privacy"
-                            className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                            className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                         >
                             Privacy Policy
                         </Link>
                         <Link
                             href="/terms"
-                            className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                            className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                         >
                             Terms of Service
                         </Link>
                         <Link
                             href="/accessibility"
-                            className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                            className="text-xs text-neutral-500 dark:text-neutral-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                         >
                             Accessibility
                         </Link>
@@ -138,7 +138,7 @@ function SocialIcon({ icon, label }: { icon: React.ReactNode; label: string }) {
         <a
             href="#"
             aria-label={label}
-            className="h-9 w-9 rounded-full bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-emerald-500 hover:text-black dark:hover:bg-emerald-500 dark:hover:text-black flex items-center justify-center transition-colors"
+            className="h-9 w-9 rounded-full bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-orange-500 hover:text-black dark:hover:bg-orange-500 dark:hover:text-black flex items-center justify-center transition-colors"
         >
             {icon}
         </a >

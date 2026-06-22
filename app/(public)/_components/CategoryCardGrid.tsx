@@ -25,7 +25,7 @@ export function CategoryCardGrid({ categories }: CategoryCardGridProps) {
                     href={`/products?category=${category.id}`}
                     className="group"
                 >
-                    <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 ring-1 ring-neutral-200 dark:ring-neutral-800 group-hover:ring-emerald-500/50 transition-all">
+                    <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900 ring-1 ring-neutral-200 dark:ring-neutral-800 group-hover:ring-orange-500/50 transition-all">
                         <Image
                             src={category.image}
                             alt={category.name}

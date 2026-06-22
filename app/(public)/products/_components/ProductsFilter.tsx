@@ -79,7 +79,7 @@ export function ProductsFilter({ products, categories, favoriteIds }: ProductsFi
                             <SlidersHorizontal className="h-4 w-4" />
                             Filters
                             {hasActiveFilters && (
-                                <span className="ml-auto h-2 w-2 rounded-full bg-emerald-500" />
+                                <span className="ml-auto h-2 w-2 rounded-full bg-orange-500" />
                             )}
                         </Button>
                     </SheetTrigger>
@@ -132,7 +132,7 @@ export function ProductsFilter({ products, categories, favoriteIds }: ProductsFi
                         <Button
                             variant="link"
                             onClick={clearFilters}
-                            className="mt-2 text-emerald-600 dark:text-emerald-400"
+                            className="mt-2 text-orange-600 dark:text-orange-400"
                         >
                             Clear filters
                         </Button>

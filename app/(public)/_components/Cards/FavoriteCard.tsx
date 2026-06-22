@@ -30,7 +30,7 @@ export function FavoriteCard({ favorite, cartQuantity = 0, cartId = null }: Favo
     });
 
     return (
-        <div className="group rounded-2xl bg-neutral-900 border border-neutral-800 overflow-hidden hover:border-emerald-500/40 transition-colors">
+        <div className="group rounded-2xl bg-neutral-900 border border-neutral-800 overflow-hidden hover:border-orange-500/40 transition-colors">
             <div className="relative aspect-4/3 bg-neutral-800">
                 <Image
                     src={product.image}
@@ -51,13 +51,13 @@ export function FavoriteCard({ favorite, cartQuantity = 0, cartId = null }: Favo
 
                 <div className="mt-1.5 flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-emerald-400 text-emerald-400" />
+                        <Star key={i} className="h-3.5 w-3.5 fill-orange-400 text-orange-400" />
                     ))}
                     <span className="text-xs text-neutral-500 ml-1">(128)</span>
                 </div>
 
                 <div className="mt-3 flex items-center justify-between">
-                    <span className="text-lg font-bold text-emerald-400">
+                    <span className="text-lg font-bold text-orange-400">
                         ${finalPrice.toFixed(2)}
                     </span>
                 </div>

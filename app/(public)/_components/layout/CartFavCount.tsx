@@ -55,11 +55,11 @@ export function CartFavCount({ variant = "desktop" }: CartFavCountProps) {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="relative text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 cursor-pointer"
+                    className="relative text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer"
                 >
                     <Heart className={iconSize} />
                     {counts.fav > 0 && (
-                        <span className="absolute top-1 right-1 bg-emerald-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                        <span className="absolute top-1 right-1 bg-orange-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
                             {counts.fav}
                         </span>
                     )}
@@ -70,11 +70,11 @@ export function CartFavCount({ variant = "desktop" }: CartFavCountProps) {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="relative text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 cursor-pointer"
+                    className="relative text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer"
                 >
                     <ShoppingCart className={iconSize} />
                     {counts.cart > 0 && (
-                        <span className="absolute top-1 right-1 bg-emerald-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center animate-pulse ">
+                        <span className="absolute top-1 right-1 bg-orange-600 text-white font-sans text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center animate-pulse ">
                             {counts.cart}
                         </span>
                     )}

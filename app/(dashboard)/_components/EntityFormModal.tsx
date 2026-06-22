@@ -221,13 +221,13 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                     <div className="space-y-3">
                                         <UploadDropzone
                                             endpoint="imageUploader"
-                                            className="ut-button:bg-emerald-600! ut-button:hover:bg-emerald-700! ut-button:ut-uploading:bg-emerald-600! ut-button:ut-readying:bg-emerald-600!"
+                                            className="ut-button:bg-orange-600! ut-button:hover:bg-orange-700! ut-button:ut-uploading:bg-orange-600! ut-button:ut-readying:bg-orange-600!"
                                             appearance={{
                                                 container:
-                                                    "w-full rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 transition-colors cursor-pointer",
+                                                    "w-full rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 hover:border-orange-500 dark:hover:border-orange-500 hover:bg-orange-50/50 dark:hover:bg-orange-950/20 transition-colors cursor-pointer",
                                                 uploadIcon: "text-neutral-400",
                                                 label:
-                                                    "text-sm text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400",
+                                                    "text-sm text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-400",
                                                 allowedContent: "text-xs text-neutral-400 dark:text-neutral-500",
                                             }}
                                             onClientUploadComplete={(res) => {
@@ -268,13 +268,13 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                     <div className="space-y-3">
                                         <UploadDropzone
                                             endpoint="imageUploader"
-                                            className="ut-button:bg-emerald-600! ut-button:hover:bg-emerald-700! ut-button:ut-uploading:bg-emerald-600! ut-button:ut-readying:bg-emerald-600!"
+                                            className="ut-button:bg-orange-600! ut-button:hover:bg-orange-700! ut-button:ut-uploading:bg-orange-600! ut-button:ut-readying:bg-orange-600!"
                                             appearance={{
                                                 container:
-                                                    "w-full rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 hover:border-emerald-500 dark:hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 transition-colors cursor-pointer",
+                                                    "w-full rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 hover:border-orange-500 dark:hover:border-orange-500 hover:bg-orange-50/50 dark:hover:bg-orange-950/20 transition-colors cursor-pointer",
                                                 uploadIcon: "text-neutral-400",
                                                 label:
-                                                    "text-sm text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400",
+                                                    "text-sm text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-400",
                                                 allowedContent: "text-xs text-neutral-400 dark:text-neutral-500",
                                             }}
                                             onClientUploadComplete={(res) => {
@@ -342,7 +342,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                     <Button
                         onClick={handleSubmit}
                         disabled={loading}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                        className="bg-orange-600 hover:bg-orange-700 text-white"
                     >
                         {loading ? "Saving..." : mode === "create" ? `Add ${title}` : "Save Changes"}
                     </Button>

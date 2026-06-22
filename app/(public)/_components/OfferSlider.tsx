@@ -85,14 +85,14 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                     />
 
                                     <div className="relative z-10 space-y-4 text-left order-2 md:order-1">
-                                        <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                                        <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
                                             <Plus className="h-3 w-3 stroke-3" />
                                             {badgeText}
                                         </div>
 
                                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 dark:text-white leading-none">
                                             {discountText}
-                                            <span className="block text-emerald-600 dark:text-emerald-500 font-serif font-bold italic mt-2">
+                                            <span className="block text-orange-600 dark:text-orange-500 font-serif font-bold italic mt-2">
                                                 {offer.name}
                                             </span>
                                         </h2>
@@ -105,7 +105,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                             <Button
                                                 asChild
                                                 disabled={!isActive}
-                                                className="bg-emerald-500 hover:bg-emerald-400 text-white dark:text-black font-bold rounded-full px-6 py-5 text-xs transition-all shadow-[0_4px_15px_rgba(16,185,129,0.2)] dark:shadow-[0_4px_20px_rgba(16,185,129,0.3)] group/btn"
+                                                className="bg-orange-500 hover:bg-orange-400 text-white dark:text-black font-bold rounded-full px-6 py-5 text-xs transition-all shadow-[0_4px_15px_rgba(16,185,129,0.2)] dark:shadow-[0_4px_20px_rgba(16,185,129,0.3)] group/btn"
                                             >
                                                 <Link href={`/menu?offer=${offer.id}`} className="flex items-center gap-1.5">
                                                     Order Now
@@ -125,7 +125,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                     </div>
 
                                     <div className="relative z-10 flex justify-center md:justify-end order-1 md:order-2">
-                                        <div className="relative w-47.5 sm:w-57.5 md:w-67.5 lg:w-75 aspect-square rounded-2xl overflow-hidden shadow-md dark:shadow-[0_0_30px_rgba(16,185,129,0.08)] ring-1 ring-neutral-100 dark:ring-emerald-500/10">
+                                        <div className="relative w-47.5 sm:w-57.5 md:w-67.5 lg:w-75 aspect-square rounded-2xl overflow-hidden shadow-md dark:shadow-[0_0_30px_rgba(16,185,129,0.08)] ring-1 ring-neutral-100 dark:ring-orange-500/10">
                                             <Image
                                                 src={offer.image}
                                                 alt={offer.name}
@@ -149,7 +149,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                 <button
                     onClick={scrollPrev}
                     aria-label="Previous slide"
-                    className="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center transition-all hover:bg-emerald-500 dark:hover:bg-emerald-500 text-neutral-800 dark:text-white hover:text-white dark:hover:text-black shadow-sm cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center transition-all hover:bg-orange-500 dark:hover:bg-orange-500 text-neutral-800 dark:text-white hover:text-white dark:hover:text-black shadow-sm cursor-pointer"
                 >
                     <ChevronLeft className="h-4 w-4" />
                 </button>
@@ -159,7 +159,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                         <button
                             key={i}
                             onClick={() => scrollTo(i)}
-                            className={`transition-all duration-300 rounded-full h-1.5 ${i === selectedIndex ? "w-6 bg-emerald-500" : "w-1.5 bg-neutral-300 dark:bg-neutral-800"
+                            className={`transition-all duration-300 rounded-full h-1.5 ${i === selectedIndex ? "w-6 bg-orange-500" : "w-1.5 bg-neutral-300 dark:bg-neutral-800"
                                 }`}
                         />
                     ))}
@@ -168,7 +168,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                 <button
                     onClick={scrollNext}
                     aria-label="Next slide"
-                    className="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center transition-all hover:bg-emerald-500 dark:hover:bg-emerald-500 text-neutral-800 dark:text-white hover:text-white dark:hover:text-black shadow-sm cursor-pointer"
+                    className="w-10 h-10 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center transition-all hover:bg-orange-500 dark:hover:bg-orange-500 text-neutral-800 dark:text-white hover:text-white dark:hover:text-black shadow-sm cursor-pointer"
                 >
                     <ChevronRight className="h-4 w-4" />
                 </button>

@@ -6,7 +6,7 @@ export default function LoginPage() {
             <div className="w-full max-w-sm">
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-bold text-white">
-                        Welcome to <span className="text-emerald-400">PizzaCraft</span>
+                        Welcome to <span className="text-orange-400">PizzaCraft</span>
                     </h1>
                     <p className="mt-2 text-sm text-neutral-400">
                         Sign in to order your favorite pizza

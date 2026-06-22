@@ -49,7 +49,7 @@ export function EntityTable<T extends Record<string, unknown>>({
             <div className="flex justify-end">
                 <Button
                     onClick={() => setAddOpen(true)}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                    className="bg-orange-600 hover:bg-orange-700 text-white"
                 >
                     <Plus className="h-4 w-4 mr-2" />
                     Add {title}
@@ -102,12 +102,12 @@ export function EntityTable<T extends Record<string, unknown>>({
                                         ) : col.type === "badge" ? (
                                             <span
                                                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${item[col.key as keyof T]
-                                                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                                                    ? "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-400"
                                                     : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
                                                     }`}
                                             >
                                                 <span
-                                                    className={`h-1.5 w-1.5 rounded-full ${item[col.key as keyof T] ? "bg-emerald-500" : "bg-neutral-400"
+                                                    className={`h-1.5 w-1.5 rounded-full ${item[col.key as keyof T] ? "bg-orange-500" : "bg-neutral-400"
                                                         }`}
                                                 />
                                                 {item[col.key as keyof T] ? "Active" : "Inactive"}

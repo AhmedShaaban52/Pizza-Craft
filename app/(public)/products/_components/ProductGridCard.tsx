@@ -32,7 +32,7 @@ export default function ProductGridCard({
                 />
 
                 {hasDiscount && (
-                    <span className="absolute top-4 left-4 rounded-full bg-emerald-500 text-black text-xs font-semibold px-2.5 py-1">
+                    <span className="absolute top-4 left-4 rounded-full bg-orange-500 text-black text-xs font-semibold px-2.5 py-1">
                         {product.discountType === "percent"
                             ? `-${product.discountValue}%`
                             : `-$${product.discountValue}`}

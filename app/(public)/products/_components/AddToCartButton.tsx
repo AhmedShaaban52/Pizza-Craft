@@ -76,7 +76,7 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleAdd}
-                className={`w-full h-9 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white dark:text-black text-sm font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer  ${className ?? ""}`}
+                className={`w-full h-9 rounded-lg bg-orange-500 hover:bg-orange-600 text-white dark:text-black text-sm font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer  ${className ?? ""}`}
             >
                 <ShoppingCart className="h-4 w-4" />
                 Add to Cart
@@ -89,7 +89,7 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleDecrement}
-                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors shrink-0 cursor-pointer"
+                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-orange-500 hover:text-orange-400 transition-colors shrink-0 cursor-pointer"
             >
                 <Minus className="h-3.5 w-3.5" />
             </button>
@@ -97,7 +97,7 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleIncrement}
-                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors shrink-0 cursor-pointer"
+                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-orange-500 hover:text-orange-400 transition-colors shrink-0 cursor-pointer"
             >
                 <Plus className="h-3.5 w-3.5" />
             </button>

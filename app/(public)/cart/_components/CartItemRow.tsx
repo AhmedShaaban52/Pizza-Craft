@@ -60,7 +60,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
                 {item.category && (
                     <p className="text-xs text-neutral-500">{item.category.name}</p>
                 )}
-                <p className="mt-1 text-emerald-400 font-bold">${finalPrice.toFixed(2)}</p>
+                <p className="mt-1 text-orange-400 font-bold">${finalPrice.toFixed(2)}</p>
             </div>
 
             <div className="flex items-center gap-2">
@@ -68,7 +68,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
                     type="button"
                     onClick={() => handleQuantityChange(item.quantity - 1)}
                     disabled={isPending}
-                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors disabled:opacity-50 cursor-pointer"
+                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-orange-500 hover:text-orange-400 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                     <Minus className="h-3.5 w-3.5" />
                 </button>
@@ -77,7 +77,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
                     type="button"
                     onClick={() => handleQuantityChange(item.quantity + 1)}
                     disabled={isPending}
-                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-emerald-500 hover:text-emerald-400 transition-colors disabled:opacity-50 cursor-pointer"
+                    className="h-7 w-7 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-orange-500 hover:text-orange-400 transition-colors disabled:opacity-50 cursor-pointer"
                 >
                     <Plus className="h-3.5 w-3.5" />
                 </button>

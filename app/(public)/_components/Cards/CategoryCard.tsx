@@ -23,7 +23,7 @@ export default function CategoryCard({ name, description, image }: CategoryCardP
             </div>
 
             <div className="p-5 flex flex-col grow text-left">
-                <h3 className="text-md sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 tracking-tight transition-colors duration-300 group-hover:text-emerald-500">
+                <h3 className="text-md sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 tracking-tight transition-colors duration-300 group-hover:text-orange-500">
                     {name}
                 </h3>
 

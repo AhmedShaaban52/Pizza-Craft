@@ -14,7 +14,7 @@ export default async function FavoritesPage() {
         <div className="min-h-screen bg-neutral-950 px-4 md:px-12 py-10">
             <div className="mb-8">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-white">
-                    Your <span className="text-emerald-400">Favorites</span>
+                    Your <span className="text-orange-400">Favorites</span>
                 </h1>
                 <p className="mt-2 text-sm text-neutral-400">
                     Your handpicked artisanal selection

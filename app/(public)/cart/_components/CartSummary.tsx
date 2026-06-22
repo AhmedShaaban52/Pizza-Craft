@@ -31,7 +31,7 @@ export function CartSummary({ subtotal }: CartSummaryProps) {
 
             <Link
                 href="/checkout"
-                className="mt-5 w-full h-11 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-black font-semibold flex items-center justify-center transition-colors"
+                className="mt-5 w-full h-11 rounded-lg bg-orange-500 hover:bg-orange-600 text-black font-semibold flex items-center justify-center transition-colors"
             >
                 Proceed to Checkout
             </Link>

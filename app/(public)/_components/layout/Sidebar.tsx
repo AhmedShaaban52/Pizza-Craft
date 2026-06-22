@@ -18,7 +18,7 @@ export function Sidebar() {
         <aside className="w-64 border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex flex-col justify-between h-screen sticky top-0 transition-colors duration-200 z-30">
             <div>
                 <div className="px-6 py-6">
-                    <h1 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                    <h1 className="text-2xl font-bold text-orange-600 dark:text-orange-400">
                         FreshDelight
                     </h1>
                 </div>
@@ -36,7 +36,7 @@ export function Sidebar() {
                                     <button
                                         onClick={() => setOpenMenu(isOpen ? null : link.name)}
                                         className={`flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-colors ${hasActiveChild
-                                            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                                            ? "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-400"
                                             : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
                                             }`}
                                     >
@@ -58,7 +58,7 @@ export function Sidebar() {
                                                         key={sub.href}
                                                         href={sub.href}
                                                         className={`px-3 py-2 rounded-lg text-sm font-medium tracking-wide transition-colors ${isActive
-                                                            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                                                            ? "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-400"
                                                             : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
                                                             }`}
                                                     >
@@ -80,7 +80,7 @@ export function Sidebar() {
                                 key={link.href}
                                 href={link.href!}
                                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-colors ${isActive
-                                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+                                    ? "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-400"
                                     : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
                                     }`}
                             >

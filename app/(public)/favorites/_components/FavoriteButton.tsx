@@ -37,11 +37,11 @@ export function FavoriteButton({ productId, initialFavorited = false, className 
             aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
             className={cn(
                 "absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-neutral-900/80 transition-all hover:bg-neutral-900 cursor-pointer",
-                favorited ? "text-emerald-500" : "text-neutral-400 hover:text-emerald-500",
+                favorited ? "text-orange-500" : "text-neutral-400 hover:text-orange-500",
                 className
             )}
         >
-            <Heart className={cn("h-4 w-4 transition-all", favorited && "fill-emerald-500")} />
+            <Heart className={cn("h-4 w-4 transition-all", favorited && "fill-orange-500")} />
         </button>
     );
 }

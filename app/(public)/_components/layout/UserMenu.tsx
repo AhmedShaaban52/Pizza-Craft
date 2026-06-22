@@ -52,7 +52,7 @@ export function UserMenu() {
         return (
             <Link
                 href="/login"
-                className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 cursor-pointer"
+                className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer"
             >
                 <User className="h-5 w-5" />
             </Link>
@@ -64,7 +64,7 @@ export function UserMenu() {
             <button
                 type="button"
                 onClick={() => setOpen((prev) => !prev)}
-                className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 cursor-pointer"
+                className="flex items-center gap-1.5 text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer"
             >
                 {user.image ? (
                     <Image
@@ -76,7 +76,7 @@ export function UserMenu() {
                         className="h-7 w-7 rounded-full object-cover"
                     />
                 ) : (
-                    <div className="h-7 w-7 rounded-full bg-emerald-500 text-black flex items-center justify-center text-xs font-bold">
+                    <div className="h-7 w-7 rounded-full bg-orange-500 text-black flex items-center justify-center text-xs font-bold">
                         {user.name?.charAt(0).toUpperCase() ?? "U"}
                     </div>
                 )}
@@ -103,7 +103,7 @@ export function UserMenu() {
                         <Link
                             href="/profile"
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                         >
                             <User className="h-4 w-4" />
                             My Profile

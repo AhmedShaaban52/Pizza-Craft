@@ -34,7 +34,7 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 font-medium transition-colors duration-200"
+                                className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors duration-200"
                             >
                                 {link.name}
                             </Link>
@@ -45,7 +45,7 @@ export default function Navbar() {
                     <div className="hidden md:flex items-center gap-4">
                         <SearchBar variant="desktop" />
 
-                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-500 cursor-pointer">
+                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer">
                             <Languages className="h-5 w-5" />
                         </Button>
 
@@ -91,7 +91,7 @@ export default function Navbar() {
                             key={link.name}
                             href={link.href}
                             onClick={() => setIsOpen(false)}
-                            className="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+                            className="block px-3 py-2 rounded-md text-base font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
                         >
                             {link.name}
                         </Link>
@@ -100,7 +100,7 @@ export default function Navbar() {
                     <Link
                         href="/profile"
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+                        className="flex items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
                     >
                         <User className="h-5 w-5" />
                         <span>My Profile</span>

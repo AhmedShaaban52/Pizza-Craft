@@ -89,7 +89,7 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                         onFocus={() => results.length > 0 && setOpen(true)}
                         placeholder="Search pizzas..."
                         className={`w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 ${isDesktop ? "rounded-full py-1.5" : "rounded-lg py-2"
-                            } pl-10 pr-9 text-sm text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500`}
+                            } pl-10 pr-9 text-sm text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:ring-1 focus:ring-orange-500`}
                     />
                     {query && (
                         <button
@@ -107,7 +107,7 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                 <div className="absolute left-0 right-0 mt-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-lg overflow-hidden z-50 max-h-96 overflow-y-auto">
                     {isPending ? (
                         <div className="flex items-center justify-center py-6">
-                            <Loader2 className="h-5 w-5 animate-spin text-emerald-500" />
+                            <Loader2 className="h-5 w-5 animate-spin text-orange-500" />
                         </div>
                     ) : results.length === 0 ? (
                         <p className="px-4 py-6 text-sm text-center text-neutral-500 dark:text-neutral-400">
@@ -145,7 +145,7 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                                                     </p>
                                                 )}
                                             </div>
-                                            <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 shrink-0">
+                                            <span className="text-sm font-semibold text-orange-600 dark:text-orange-400 shrink-0">
                                                 ${Number(product.price).toFixed(2)}
                                             </span>
                                         </Link>
@@ -159,7 +159,7 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                                     setOpen(false);
                                     onResultClick?.();
                                 }}
-                                className="block text-center text-sm font-medium text-emerald-600 dark:text-emerald-400 py-2.5 border-t border-neutral-100 dark:border-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
+                                className="block text-center text-sm font-medium text-orange-600 dark:text-orange-400 py-2.5 border-t border-neutral-100 dark:border-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
                             >
                                 View all results
                             </Link>
