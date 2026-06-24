@@ -14,6 +14,10 @@ export type Product = typeof productsTable.$inferSelect;
 export type Order = typeof ordersTable.$inferSelect;
 export type OrderItem = typeof orderItemsTable.$inferSelect;
 
+export type OrderWithItems = Order & {
+  items: OrderItem[];
+};
+
 export const productSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
   description: z.string().max(500).nullable().optional().or(z.literal("")),
