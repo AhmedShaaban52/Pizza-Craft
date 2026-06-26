@@ -90,6 +90,7 @@ export async function createCheckoutSession(
         items.map((i) => ({
           productId: i.id,
           quantity: i.quantity,
+          image: i.image,
         })),
       ),
     },
@@ -135,13 +136,16 @@ export async function confirmOrder(sessionId: string) {
 
   await db.insert(orderItemsTable).values(
     miniItems.map(
-      (item: { productId: string; quantity: number }, index: number) => {
+      (
+        item: { productId: string; quantity: number; image: string },
+        index: number,
+      ) => {
         const stripeLineItem = lineItems[index];
         return {
           orderId: order.id,
           productId: item.productId,
           name: stripeLineItem?.description || "Product",
-          image: "",
+          image: item.image || "",
           price: (
             (stripeLineItem?.amount_total ?? 0) /
             (item.quantity * 100)
@@ -193,7 +197,7 @@ export async function getUserOrders(): Promise<{
 
         return acc;
       },
-      {} as Record<string, OrderWithItems>, 
+      {} as Record<string, OrderWithItems>,
     );
 
     return { success: true, data: Object.values(ordersMap) };

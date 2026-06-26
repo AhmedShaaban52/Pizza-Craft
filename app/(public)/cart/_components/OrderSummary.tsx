@@ -46,20 +46,20 @@ export function OrderSummary({
                     </label>
 
                     {appliedCoupon ? (
-                        <div className="flex items-center justify-between bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-xl px-3 py-2.5">
+                        <div className="flex items-center justify-between bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-xl px-3 py-2.5">
                             <div className="flex items-center gap-2">
-                                <Tag className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                <span className="font-mono font-black text-emerald-700 dark:text-emerald-400 text-sm">
+                                <Tag className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                                <span className="font-mono font-black text-orange-700 dark:text-orange-400 text-sm">
                                     {appliedCoupon}
                                 </span>
-                                <span className="text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                                <span className="text-orange-600 dark:text-orange-400 text-xs font-medium">
                                     -${couponDiscount.toFixed(2)}
                                 </span>
                             </div>
                             <button
                                 type="button"
                                 onClick={onRemoveCoupon}
-                                className="text-emerald-400 hover:text-red-500 transition-colors"
+                                className="text-orange-400 hover:text-red-500 transition-colors"
                             >
                                 <X className="w-4 h-4" />
                             </button>
@@ -72,13 +72,13 @@ export function OrderSummary({
                                 onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                                 onKeyDown={(e) => e.key === "Enter" && onApplyCoupon()}
                                 placeholder="Enter code..."
-                                className="flex-1 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-3 py-2 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 outline-none focus:border-emerald-500 font-mono uppercase"
+                                className="flex-1 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-3 py-2 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 outline-none focus:border-orange-500 font-mono uppercase"
                             />
                             <button
                                 type="button"
                                 onClick={onApplyCoupon}
                                 disabled={couponLoading || !couponCode.trim()}
-                                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-bold disabled:opacity-50 transition-colors"
+                                className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-xl text-sm font-bold disabled:opacity-50 transition-colors"
                             >
                                 {couponLoading ? "..." : "Apply"}
                             </button>
@@ -102,19 +102,19 @@ export function OrderSummary({
                     </div>
                     <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
                         <span>Delivery</span>
-                        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                        <span className="font-semibold text-orange-600 dark:text-orange-400">
                             FREE
                         </span>
                     </div>
                     {couponDiscount > 0 && (
-                        <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-bold">
+                        <div className="flex justify-between text-orange-600 dark:text-orange-400 font-bold">
                             <span>Coupon ({appliedCoupon})</span>
                             <span>-${couponDiscount.toFixed(2)}</span>
                         </div>
                     )}
                     <div className="border-t border-neutral-200 dark:border-neutral-800 pt-3 flex justify-between">
                         <span className="font-black text-neutral-900 dark:text-white text-base">Total</span>
-                        <span className="font-black text-emerald-600 dark:text-emerald-400 text-2xl">
+                        <span className="font-black text-orange-600 dark:text-orange-400 text-2xl">
                             ${total.toFixed(2)}
                         </span>
                     </div>
@@ -123,7 +123,7 @@ export function OrderSummary({
                 <button
                     onClick={onCheckout}
                     disabled={checkoutLoading}
-                    className="w-full mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
+                    className="w-full mt-6 bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 rounded-2xl transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
                 >
                     {checkoutLoading ? (
                         <>
@@ -141,8 +141,8 @@ export function OrderSummary({
             </div>
 
             <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center shrink-0">
-                    <Truck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <div className="w-9 h-9 rounded-xl bg-orange-50 dark:bg-orange-950/30 flex items-center justify-center shrink-0">
+                    <Truck className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                 </div>
                 <div>
                     <p className="text-sm font-bold text-neutral-900 dark:text-white">
@@ -155,8 +155,8 @@ export function OrderSummary({
             </div>
 
             <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 flex items-center justify-center shrink-0">
-                    <Shield className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <div className="w-9 h-9 rounded-xl bg-orange-50 dark:bg-orange-950/30 flex items-center justify-center shrink-0">
+                    <Shield className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                 </div>
                 <div>
                     <p className="text-sm font-bold text-neutral-900 dark:text-white">

@@ -87,7 +87,7 @@ export function CartClient({ initialItems, subtotal }: CartClientProps) {
                 </h2>
                 <Link
                     href="/products"
-                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
+                    className="flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
                     Continue Shopping
@@ -104,13 +104,13 @@ export function CartClient({ initialItems, subtotal }: CartClientProps) {
                 <div className="mb-8">
                     <Link
                         href="/products"
-                        className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 hover:underline text-sm font-medium mb-4 w-fit"
+                        className="flex items-center gap-2 text-orange-600 dark:text-orange-400 hover:underline text-sm font-medium mb-4 w-fit"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Continue Shopping
                     </Link>
                     <h1 className="text-3xl font-black text-neutral-900 dark:text-white">
-                        Shopping <span className="text-emerald-500">Cart</span>
+                        Shopping <span className="text-orange-500">Cart</span>
                     </h1>
                     <p className="text-neutral-500 dark:text-neutral-400 mt-1">
                         {initialItems.reduce((s, i) => s + i.quantity, 0)} items
