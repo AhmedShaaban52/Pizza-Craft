@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, ChevronDown } from "lucide-react";
+import { User, ChevronDown, Pizza } from "lucide-react";
 import { ModeToggle } from "@/components/ModeToggle";
 import { links } from "@/data/data";
 
@@ -18,9 +18,12 @@ export function Sidebar() {
         <aside className="w-64 border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex flex-col justify-between h-screen sticky top-0 transition-colors duration-200 z-30">
             <div>
                 <div className="px-6 py-6">
-                    <h1 className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                        FreshDelight
-                    </h1>
+                    <Link href="/" className="flex items-center gap-2 group">
+                        <Pizza className="h-7 w-7 text-orange-600 dark:text-orange-500 transform group-hover:rotate-45 transition-transform duration-300" />
+                        <span className="text-2xl font-black tracking-tight font-sans">
+                            Pizza<span className="text-orange-600 dark:text-orange-500">Craft</span>
+                        </span>
+                    </Link>
                 </div>
 
                 <nav className="flex flex-col gap-1 px-3">
