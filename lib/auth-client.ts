@@ -3,6 +3,6 @@ import { emailOTPClient } from "better-auth/client/plugins";
 import { adminClient } from "better-auth/client/plugins";
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:3000",
+  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   plugins: [emailOTPClient(), adminClient()],
 });
