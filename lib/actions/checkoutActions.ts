@@ -89,8 +89,10 @@ export async function createCheckoutSession(
       items: JSON.stringify(
         items.map((i) => ({
           productId: i.id,
+          name: i.name,
           quantity: i.quantity,
           image: i.image,
+          price: getFinalPrice(i).toFixed(2),
         })),
       ),
     },
@@ -107,9 +109,7 @@ export async function confirmOrder(sessionId: string) {
 
   if (existing.length > 0) return { success: true };
 
-  const session = await stripe.checkout.sessions.retrieve(sessionId, {
-    expand: ["line_items"],
-  });
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
 
   if (session.payment_status !== "paid") {
     return { success: false, error: "Payment not completed" };
@@ -132,29 +132,26 @@ export async function confirmOrder(sessionId: string) {
     })
     .returning();
 
-  const lineItems = session.line_items?.data || [];
-
-  await db.insert(orderItemsTable).values(
-    miniItems.map(
-      (
-        item: { productId: string; quantity: number; image: string },
-        index: number,
-      ) => {
-        const stripeLineItem = lineItems[index];
-        return {
+  if (miniItems.length > 0) {
+    await db.insert(orderItemsTable).values(
+      miniItems.map(
+        (item: {
+          productId: string;
+          name: string;
+          quantity: number;
+          image: string;
+          price: string;
+        }) => ({
           orderId: order.id,
           productId: item.productId,
-          name: stripeLineItem?.description || "Product",
+          name: item.name || "Artisanal Pizza",
           image: item.image || "",
-          price: (
-            (stripeLineItem?.amount_total ?? 0) /
-            (item.quantity * 100)
-          ).toFixed(2),
+          price: item.price,
           quantity: item.quantity,
-        };
-      },
-    ),
-  );
+        }),
+      ),
+    );
+  }
 
   await db.delete(cartsTable).where(eq(cartsTable.userId, userId));
 
@@ -201,7 +198,8 @@ export async function getUserOrders(): Promise<{
     );
 
     return { success: true, data: Object.values(ordersMap) };
-  } catch {
+  } catch (error) {
+    console.error("Error fetching orders:", error);
     return { success: false, data: [] };
   }
 }

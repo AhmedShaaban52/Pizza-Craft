@@ -30,6 +30,8 @@ export default async function OrdersPage() {
     const result = await getUserOrders();
     const orders = result.success ? result.data ?? [] : [];
 
+    console.log("orders", orders);
+
     if (orders.length === 0) {
         return (
             <div className="min-h-[75vh] bg-neutral-950 flex flex-col items-center justify-center gap-6 px-4">

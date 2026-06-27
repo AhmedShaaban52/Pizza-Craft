@@ -90,6 +90,9 @@ export default async function OrderDetailPage({
     const order = (result.data ?? []).find((o: OrderWithItems) => o.id === id);
     if (!order) notFound();
 
+    console.log("order deatils", order);
+    
+
     const formattedDate = new Date(order.createdAt).toLocaleString("en-US", {
         month: "long",
         day: "numeric",
