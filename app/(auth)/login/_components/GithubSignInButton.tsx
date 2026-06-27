@@ -32,7 +32,7 @@ export function GithubSignInButton() {
         <button
             onClick={handleSignIn}
             disabled={loading}
-            className="w-full h-11 rounded-lg bg-white hover:bg-neutral-200 text-black font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-60"
+            className="w-full h-11 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-200 dark:text-black font-medium flex items-center justify-center gap-2 border border-neutral-800 dark:border-none transition-colors disabled:opacity-60 cursor-pointer"
         >
             {loading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />

@@ -46,18 +46,25 @@ export function FavoriteCard({ favorite, cartQuantity = 0, cartId = null }: Favo
                 />
             </div>
 
-            <div className="p-4">
-                <h3 className="font-semibold text-white text-base">{product.name}</h3>
+            <div className="p-4 bg-white dark:bg-neutral-900 transition-colors">
+                <h3 className="font-semibold text-neutral-900 dark:text-white text-base truncate">
+                    {product.name}
+                </h3>
 
                 <div className="mt-1.5 flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} className="h-3.5 w-3.5 fill-orange-400 text-orange-400" />
+                        <Star
+                            key={i}
+                            className="h-3.5 w-3.5 fill-orange-500 text-orange-500 dark:fill-orange-400 dark:text-orange-400"
+                        />
                     ))}
-                    <span className="text-xs text-neutral-500 ml-1">(128)</span>
+                    <span className="text-xs text-neutral-500 ml-1 dark:text-neutral-400">
+                        (128)
+                    </span>
                 </div>
 
                 <div className="mt-3 flex items-center justify-between">
-                    <span className="text-lg font-bold text-orange-400">
+                    <span className="text-lg font-bold text-orange-600 dark:text-orange-400">
                         ${finalPrice.toFixed(2)}
                     </span>
                 </div>

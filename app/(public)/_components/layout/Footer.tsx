@@ -20,13 +20,13 @@ const customerService = [
 
 export default function Footer() {
     return (
-        <footer className="bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800 transition-colors duration-300">
+        <footer className="bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-800 transition-colors duration-200">
             <div className="px-4 md:px-14 py-14">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                     {/* Brand column */}
                     <div>
                         <Logo />
-                        <p className="mt-4 text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 max-w-xs">
+                        <p className="mt-4 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-xs">
                             Elevating the pizza experience through artisanal mastery and the
                             finest seasonal ingredients. Pure craft in every bite.
                         </p>
@@ -81,18 +81,18 @@ export default function Footer() {
                         <h3 className="text-sm font-bold text-neutral-900 dark:text-white mb-4">
                             Newsletter
                         </h3>
-                        <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
                             Join our circle for exclusive seasonal drops.
                         </p>
                         <form className="space-y-3">
                             <input
                                 type="email"
                                 placeholder="Email address"
-                                className="w-full rounded-lg bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-4 py-2.5 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                                className="w-full rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 px-4 py-2.5 text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                             />
                             <button
                                 type="submit"
-                                className="w-full rounded-lg bg-orange-500 hover:bg-orange-600 text-black font-semibold text-sm py-2.5 transition-colors"
+                                className="w-full rounded-lg bg-orange-500 hover:bg-orange-600 text-black dark:text-white font-bold text-sm py-2.5 transition-colors cursor-pointer"
                             >
                                 Subscribe
                             </button>
@@ -138,9 +138,9 @@ function SocialIcon({ icon, label }: { icon: React.ReactNode; label: string }) {
         <a
             href="#"
             aria-label={label}
-            className="h-9 w-9 rounded-full bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-orange-500 hover:text-black dark:hover:bg-orange-500 dark:hover:text-black flex items-center justify-center transition-colors"
+            className="h-9 w-9 rounded-full bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-orange-500 dark:hover:bg-orange-500 hover:text-white dark:hover:text-black flex items-center justify-center transition-colors"
         >
             {icon}
-        </a >
+        </a>
     );
 }

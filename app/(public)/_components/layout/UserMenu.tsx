@@ -103,7 +103,7 @@ export function UserMenu() {
                         <Link
                             href="/profile"
                             onClick={() => setOpen(false)}
-                            className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                            className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
                         >
                             <User className="h-4 w-4" />
                             My Profile
@@ -112,7 +112,7 @@ export function UserMenu() {
                         <button
                             type="button"
                             onClick={handleSignOut}
-                            className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                            className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer"
                         >
                             <LogOut className="h-4 w-4" />
                             Sign Out

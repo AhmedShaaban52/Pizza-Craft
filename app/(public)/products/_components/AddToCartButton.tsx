@@ -76,7 +76,7 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleAdd}
-                className={`w-full h-9 rounded-lg bg-orange-500 hover:bg-orange-600 text-white dark:text-black text-sm font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer  ${className ?? ""}`}
+                className={`w-full h-9 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer ${className ?? ""}`}
             >
                 <ShoppingCart className="h-4 w-4" />
                 Add to Cart
@@ -89,15 +89,19 @@ export function AddToCartButton({
             <button
                 type="button"
                 onClick={handleDecrement}
-                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-orange-500 hover:text-orange-400 transition-colors shrink-0 cursor-pointer"
+                className="h-9 w-9 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-600 hover:border-orange-500 hover:text-orange-600 transition-colors shrink-0 cursor-pointer dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-orange-500 dark:hover:text-orange-400"
             >
                 <Minus className="h-3.5 w-3.5" />
             </button>
-            <span className="flex-1 text-center text-white font-medium">{quantity}</span>
+
+            <span className="flex-1 text-center text-neutral-900 font-semibold dark:text-white">
+                {quantity}
+            </span>
+
             <button
                 type="button"
                 onClick={handleIncrement}
-                className="h-9 w-9 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-300 hover:border-orange-500 hover:text-orange-400 transition-colors shrink-0 cursor-pointer"
+                className="h-9 w-9 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-600 hover:border-orange-500 hover:text-orange-600 transition-colors shrink-0 cursor-pointer dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-orange-500 dark:hover:text-orange-400"
             >
                 <Plus className="h-3.5 w-3.5" />
             </button>
