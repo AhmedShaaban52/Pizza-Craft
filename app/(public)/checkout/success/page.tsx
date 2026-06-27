@@ -21,7 +21,7 @@ export default async function SuccessPage({
                 </p>
                 <Link
                     href="/cart"
-                    className="mt-4 text-emerald-400 hover:underline text-sm"
+                    className="mt-4 text-orange-400 hover:underline text-sm"
                 >
                     Return to cart
                 </Link>
@@ -32,12 +32,12 @@ export default async function SuccessPage({
     return (
         <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center text-center px-4">
             <div className="max-w-md w-full">
-                <div className="h-20 w-20 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 className="h-10 w-10 text-emerald-400" />
+                <div className="h-20 w-20 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle2 className="h-10 w-10 text-orange-400" />
                 </div>
 
                 <h1 className="text-3xl font-black text-white">
-                    Payment <span className="text-emerald-400">Successful!</span>
+                    Payment <span className="text-orange-400">Successful!</span>
                 </h1>
 
                 <p className="mt-3 text-neutral-400">
@@ -46,7 +46,7 @@ export default async function SuccessPage({
 
                 <div className="mt-8 rounded-2xl border border-neutral-800 bg-neutral-900 p-5 text-left space-y-3">
                     <div className="flex items-center gap-3">
-                        <Package className="h-5 w-5 text-emerald-400 shrink-0" />
+                        <Package className="h-5 w-5 text-orange-400 shrink-0" />
                         <div>
                             <p className="text-sm font-semibold text-white">Order Confirmed</p>
                             <p className="text-xs text-neutral-500">
@@ -59,7 +59,7 @@ export default async function SuccessPage({
                 <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                     <Link
                         href="/orders"
-                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl transition-colors text-center"
+                        className="flex-1 bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-xl transition-colors text-center"
                     >
                         View My Orders
                     </Link>
