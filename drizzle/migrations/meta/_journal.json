@@ -15,6 +15,27 @@
       "when": 1782069132404,
       "tag": "0001_powerful_quasimodo",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782560493713,
+      "tag": "0002_dark_red_hulk",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1782561868584,
+      "tag": "0003_groovy_the_liberteens",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782562429482,
+      "tag": "0004_loose_thing",
+      "breakpoints": true
     }
   ]
 }

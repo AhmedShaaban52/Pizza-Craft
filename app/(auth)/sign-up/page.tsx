@@ -1,30 +1,24 @@
 import Logo from "@/app/(public)/_components/layout/Logo";
-import { LoginForm } from "./_components/LoginForm";
 import Link from "next/link";
+import { SignUpForm } from "./_components/Signupform";
 
-export default function LoginPage() {
+export default function SignUpPage() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-neutral-950 px-4">
             <div className="w-full max-w-sm">
-
-                {/* Logo / brand */}
                 <div className="flex justify-center mb-8">
                     <Logo />
                 </div>
 
                 <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 space-y-4">
-                    <LoginForm />
+                    <SignUpForm />
                 </div>
 
                 <p className="mt-4 text-center text-sm text-neutral-500">
-                    Don&apos;t have an account?{" "}
-                    <Link href="/sign-up" className="text-orange-400 hover:text-orange-300 font-semibold transition-colors">
-                        Sign up
+                    Already have an account?{" "}
+                    <Link href="/login" className="text-orange-400 hover:text-orange-300 font-semibold transition-colors">
+                        Sign in
                     </Link>
-                </p>
-
-                <p className="mt-4 text-center text-xs text-neutral-600">
-                    By continuing, you agree to our Terms of Service and Privacy Policy.
                 </p>
             </div>
         </div>
