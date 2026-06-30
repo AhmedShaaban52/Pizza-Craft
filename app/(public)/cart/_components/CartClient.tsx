@@ -8,7 +8,6 @@ import { OrderSummary } from "./OrderSummary";
 import { createCheckoutSession } from "@/lib/actions/checkoutActions";
 import { validateCoupon } from "@/lib/actions/couponActions";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 interface CartItem {
     id: string;
@@ -35,7 +34,6 @@ export function CartClient({ initialItems, subtotal }: CartClientProps) {
     const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
     const [couponLoading, setCouponLoading] = useState(false);
     const [checkoutLoading, setCheckoutLoading] = useState(false);
-    const router = useRouter();
 
     async function handleApplyCoupon() {
         if (!couponCode.trim()) return;
