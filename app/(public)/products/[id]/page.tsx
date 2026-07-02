@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { getProductById, getProducts } from "@/app/(dashboard)/admin/products/actions";
 import { getFinalPrice } from "@/lib/getFinalPrice";
 import { getUserFavoriteIds } from "@/lib/favorites-actions";
@@ -7,6 +6,7 @@ import { getCartQuantityForProduct } from "@/lib/cart-actions";
 import { type ProductWithCategory } from "@/utils/ProductsFields";
 import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
 import { AddToCartButton } from "../_components/AddToCartButton";
+import { ProductImageGallery } from "../_components/ProductImageGallery";
 import ProductGridCard from "../_components/ProductGridCard";
 
 interface ProductDetailsPageProps {
@@ -40,26 +40,19 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
     return (
         <div className="px-4 md:px-12 py-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                {/* Image */}
-                <div className="relative aspect-square rounded-2xl overflow-hidden bg-neutral-100 dark:bg-neutral-900">
-                    <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        unoptimized
-                        priority
-                        className="object-cover"
-                    />
-                    {hasDiscount && (
-                        <span className="absolute top-4 left-4 rounded-full bg-orange-500 text-black text-sm font-semibold px-3 py-1.5">
-                            {product.discountType === "percent"
+                <ProductImageGallery
+                    image={product.image}
+                    thumbnails={product.thumbnails}
+                    alt={product.name}
+                    discountLabel={
+                        hasDiscount
+                            ? product.discountType === "percent"
                                 ? `-${product.discountValue}%`
-                                : `-$${product.discountValue}`}
-                        </span>
-                    )}
-                </div>
+                                : `-$${product.discountValue}`
+                            : null
+                    }
+                />
 
-                {/* Details */}
                 <div>
                     <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
                         {product.name}
@@ -94,6 +87,7 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
                         <FavoriteButton
                             productId={product.id}
                             initialFavorited={isFavorited}
+                            variant="static"
                             className="h-12 w-12 border border-neutral-300 dark:border-neutral-700 bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-900"
                         />
                     </div>

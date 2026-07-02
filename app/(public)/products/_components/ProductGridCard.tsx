@@ -3,6 +3,7 @@ import { type Product } from "@/lib/types";
 import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
 import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ProductGridCardProps {
     product: Product;
@@ -21,7 +22,13 @@ export default function ProductGridCard({
     const hasDiscount = !!product.discountType && !!product.discountValue;
 
     return (
-        <div className="group rounded-2xl border border-neutral-800 bg-neutral-900 overflow-hidden hover:border-neutral-700 transition-colors">
+        <div className="group relative rounded-2xl border border-neutral-800 bg-neutral-900 overflow-hidden hover:border-neutral-700 transition-colors">
+            <Link
+                href={`/products/${product.id}`}
+                aria-label={product.name}
+                className="absolute inset-0"
+            />
+
             <div className="relative aspect-square bg-neutral-800">
                 <Image
                     src={product.image}
@@ -39,7 +46,11 @@ export default function ProductGridCard({
                     </span>
                 )}
 
-                <FavoriteButton productId={product.id} initialFavorited={isFavorited} />
+                <FavoriteButton
+                    productId={product.id}
+                    initialFavorited={isFavorited}
+                    className="z-10"
+                />
             </div>
 
             <div className="p-4">
@@ -59,7 +70,7 @@ export default function ProductGridCard({
                     )}
                 </div>
 
-                <div className="mt-3">
+                <div className="mt-3 relative z-10">
                     <AddToCartButton
                         productId={product.id}
                         initialQuantity={cartQuantity}

@@ -5,7 +5,7 @@
 @import "tailwindcss";
 
 @import "uploadthing/tw/v4";
-@source "../node_modules/@uploadthing/react/dist"; /** يعتمد على هيكلية الفولدرات في مشروعك */
+@source "../node_modules/@uploadthing/react/dist"; 
 
 @custom-variant dark (&:is(.dark *));
 

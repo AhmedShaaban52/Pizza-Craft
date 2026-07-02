@@ -9,9 +9,15 @@ interface FavoriteButtonProps {
     productId: string;
     initialFavorited?: boolean;
     className?: string;
+    variant?: "overlay" | "static";
 }
 
-export function FavoriteButton({ productId, initialFavorited = false, className }: FavoriteButtonProps) {
+export function FavoriteButton({
+    productId,
+    initialFavorited = false,
+    className,
+    variant = "overlay",
+}: FavoriteButtonProps) {
     const [favorited, setFavorited] = useState(initialFavorited);
     const [, startTransition] = useTransition();
 
@@ -36,7 +42,8 @@ export function FavoriteButton({ productId, initialFavorited = false, className 
             onClick={handleClick}
             aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
             className={cn(
-                "absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-neutral-200 shadow-sm transition-all hover:bg-white cursor-pointer dark:bg-neutral-900/80 dark:border-neutral-800 dark:hover:bg-neutral-900",
+                "flex h-9 w-9 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-neutral-200 shadow-sm transition-all hover:bg-white cursor-pointer dark:bg-neutral-900/80 dark:border-neutral-800 dark:hover:bg-neutral-900",
+                variant === "overlay" && "absolute top-4 right-4",
                 favorited
                     ? "text-orange-600 dark:text-orange-500"
                     : "text-neutral-500 hover:text-orange-600 dark:text-neutral-400 dark:hover:text-orange-500",

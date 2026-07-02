@@ -1,16 +1,19 @@
-
 import Image from "next/image";
+import Link from "next/link";
 
 interface CategoryCardProps {
+    id: string;
     name: string;
     description: string | null;
     image: string;
 }
 
-export default function CategoryCard({ name, description, image }: CategoryCardProps) {
+export default function CategoryCard({ id, name, description, image }: CategoryCardProps) {
     return (
-        <div className="group relative rounded-3xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800/60 transition-all duration-500 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(16,185,129,0.08)] flex flex-col overflow-hidden cursor-pointer">
-
+        <Link
+            href={`/products?category=${id}`}
+            className="group relative rounded-3xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800/60 transition-all duration-500 hover:shadow-xl dark:hover:shadow-[0_10px_30px_rgba(16,185,129,0.08)] flex flex-col overflow-hidden cursor-pointer"
+        >
             <div className="relative aspect-4/3 w-full bg-neutral-200 dark:bg-neutral-800 overflow-hidden">
                 <Image
                     src={image}
@@ -33,6 +36,6 @@ export default function CategoryCard({ name, description, image }: CategoryCardP
                     </p>
                 )}
             </div>
-        </div>
+        </Link>
     );
 }

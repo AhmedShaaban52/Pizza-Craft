@@ -3,11 +3,8 @@
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ShoppingBag, Zap } from "lucide-react";
-import {
-  updateCartQuantity,
-  removeFromCart,
-} from "@/lib/cart-actions";
+import { Trash2, ShoppingBag, Zap } from "lucide-react";
+import { removeFromCart } from "@/lib/cart-actions";
 import { createCheckoutSession } from "@/lib/actions/checkoutActions";
 import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
 
@@ -42,14 +39,17 @@ export default function CartClient({ items }: { items: CartItem[] }) {
   const [checkingOut, setCheckingOut] = useState(false);
 
   function handleQuantityChange(cartId: string, newQty: number) {
+    // AddToCartButton already syncs the new quantity to the server itself
+    // (debounced), so here we just keep the summary/totals in sync instantly.
+    if (newQty <= 0) {
+      setList((prev) => prev.filter((item) => item.id !== cartId));
+      return;
+    }
     setList((prev) =>
       prev.map((item) =>
-        item.id === cartId ? { ...item, quantity: Math.max(1, newQty) } : item,
+        item.id === cartId ? { ...item, quantity: newQty } : item,
       ),
     );
-    startTransition(async () => {
-      await updateCartQuantity(cartId, Math.max(1, newQty));
-    });
   }
 
   function handleRemove(cartId: string) {
@@ -106,7 +106,7 @@ export default function CartClient({ items }: { items: CartItem[] }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Items list */}
         <div className="lg:col-span-2 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 divide-y divide-neutral-200 dark:divide-neutral-800 shadow-sm">
           {list.map((item) => {
@@ -156,6 +156,11 @@ export default function CartClient({ items }: { items: CartItem[] }) {
                 <div className="w-28">
                   <AddToCartButton
                     productId={item.product.id}
+                    initialQuantity={item.quantity}
+                    initialCartId={item.id}
+                    onQuantityChange={(newQty) =>
+                      handleQuantityChange(item.id, newQty)
+                    }
                   />
                 </div>
 

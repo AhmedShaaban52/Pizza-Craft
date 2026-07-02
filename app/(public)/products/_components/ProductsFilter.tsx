@@ -18,15 +18,20 @@ interface ProductsFilterProps {
     products: ProductWithCategory[];
     categories: Category[];
     favoriteIds: string[];
+    initialCategory?: string;
 }
 
-export function ProductsFilter({ products, categories, favoriteIds }: ProductsFilterProps) {
+export function ProductsFilter({ products, categories, favoriteIds, initialCategory }: ProductsFilterProps) {
+
+
     const maxPrice = useMemo(
         () => Math.ceil(Math.max(...products.map((p) => Number(p.price)), 50)),
         [products]
     );
 
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(
+        initialCategory ? [initialCategory] : []
+    );
     const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
     const [onlyDiscounted, setOnlyDiscounted] = useState(false);
 

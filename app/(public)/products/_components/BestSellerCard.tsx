@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Star } from "lucide-react";
 import { Product } from "@/lib/types";
 import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
@@ -28,6 +29,12 @@ export default function BestSellerCard({
 
     return (
         <div className="group relative w-full rounded-[2rem] border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/50 p-4 transition-all duration-300 hover:border-orange-500/50 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:shadow-xl dark:hover:shadow-[0_0_30px_rgba(16,185,129,0.05)]">
+            <Link
+                href={`/products/${product.id}`}
+                aria-label={product.name}
+                className="absolute inset-0 rounded-[2rem]"
+            />
+
             <div className="relative aspect-4/3 w-full overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-950">
                 <Image
                     src={product.image}
@@ -43,7 +50,11 @@ export default function BestSellerCard({
                     </span>
                 )}
 
-                <FavoriteButton productId={product.id} initialFavorited={isFavorited} />
+                <FavoriteButton
+                    productId={product.id}
+                    initialFavorited={isFavorited}
+                    className="z-10"
+                />
             </div>
 
             <div className="mt-5 px-2 pb-2">
@@ -73,7 +84,7 @@ export default function BestSellerCard({
                         )}
                     </div>
 
-                    <div className="w-28">
+                    <div className="w-28 relative z-10">
                         <AddToCartButton
                             productId={product.id}
                             initialQuantity={cartQuantity}

@@ -10,7 +10,7 @@ interface ProductsPageProps {
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-    const { search } = await searchParams;
+    const { search, category } = await searchParams;
 
     const [productsResult, categoriesResult, favoriteIds] = await Promise.all([
         search ? getProductsBySearch(search) : getProducts(),
@@ -41,6 +41,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 products={activeProducts}
                 categories={activeCategories}
                 favoriteIds={favoriteIds}
+                initialCategory={category}
             />
         </div>
     );

@@ -9,6 +9,7 @@ interface AddToCartButtonProps {
     initialQuantity?: number;
     initialCartId?: string | null;
     className?: string;
+    onQuantityChange?: (newQuantity: number) => void;
 }
 
 export function AddToCartButton({
@@ -16,6 +17,7 @@ export function AddToCartButton({
     initialQuantity = 0,
     initialCartId = null,
     className,
+    onQuantityChange,
 }: AddToCartButtonProps) {
     const [quantity, setQuantity] = useState(initialQuantity);
     const [cartId, setCartId] = useState<string | null>(initialCartId);
@@ -56,18 +58,21 @@ export function AddToCartButton({
     function handleAdd() {
         const next = quantity + 1;
         setQuantity(next); // instant UI update, every click
+        onQuantityChange?.(next);
         scheduleSync(next);
     }
 
     function handleIncrement() {
         const next = quantity + 1;
         setQuantity(next);
+        onQuantityChange?.(next);
         scheduleSync(next);
     }
 
     function handleDecrement() {
         const next = Math.max(0, quantity - 1);
         setQuantity(next);
+        onQuantityChange?.(next);
         scheduleSync(next);
     }
 

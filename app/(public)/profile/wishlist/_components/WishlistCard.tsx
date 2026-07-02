@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ShoppingCart, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { toggleFavorite } from "@/lib/favorites-actions";
-import { addToCart } from "@/lib/cart-actions";
 import { useTransition } from "react";
 import type { WishlistItem } from "./WishlistClient";
 import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
@@ -20,12 +19,6 @@ export default function WishlistCard({ item, onRemove }: WishlistCardProps) {
     startTransition(async () => {
       await toggleFavorite(item.product.id);
       onRemove(item.id);
-    });
-  }
-
-  function handleAddToCart() {
-    startTransition(async () => {
-      await addToCart(item.product.id);
     });
   }
 
@@ -87,7 +80,7 @@ export default function WishlistCard({ item, onRemove }: WishlistCardProps) {
         </div>
 
         {/* Add to Cart */}
-        <AddToCartButton productId ={item.product.id} />
+        <AddToCartButton productId={item.product.id} />
       </div>
     </div>
   );

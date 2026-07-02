@@ -1,4 +1,4 @@
-import { offersTable, categoriesTable, productsTable } from "@/lib/schema"; 
+import { offersTable, categoriesTable, productsTable } from "@/lib/schema";
 import OfferSlider from "./_components/OfferSlider";
 import CategorySection from "./_components/CategorySection";
 import { and, lte, gte, or, isNull } from "drizzle-orm";
@@ -25,14 +25,14 @@ async function getCategories() {
 async function getFeaturedProducts() {
   return await db
     .select()
-    .from(productsTable) 
-    .limit(4); 
+    .from(productsTable)
+    .limit(4);
 }
 
 export default async function HomePage() {
   const activeOffers = await getActiveOffers();
   const categories = await getCategories();
-  const featuredProducts = await getFeaturedProducts(); 
+  const featuredProducts = await getFeaturedProducts();
 
   return (
     <div className="bg-neutral-50 dark:bg-neutral-950 min-h-screen">

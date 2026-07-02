@@ -60,7 +60,7 @@ export function FilterSidebar({
                 {hasActiveFilters && (
                     <button
                         onClick={clearFilters}
-                        className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400 hover:underline"
+                        className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400 hover:underline cursor-pointer"
                     >
                         <X className="h-3 w-3" />
                         Clear all
@@ -107,7 +107,7 @@ export function FilterSidebar({
                                 id={`cat-${category.id}`}
                                 checked={selectedCategories.includes(category.id)}
                                 onCheckedChange={() => toggleCategory(category.id)}
-                                className="data-[state=checked]:bg-orange-600 data-[state=checked]:border-orange-600"
+                                className="data-checked:bg-orange-600! data-checked:border-orange-600! data-checked:text-white! cursor-pointer"
                             />
                             <Label
                                 htmlFor={`cat-${category.id}`}
@@ -133,7 +133,8 @@ export function FilterSidebar({
                     step={1}
                     value={priceRange}
                     onValueChange={(value) => setPriceRange(value as [number, number])}
-                    className="**:[[role=slider]]:bg-orange-600 **:[[role=slider]]:border-orange-600"
+                    className="**:data-[slot=slider-range]:bg-orange-600 **:[[role=slider]]:bg-orange-600 **:[[role=slider]]:border-orange-600 cursor-pointer"
+
                 />
                 <div className="flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
                     <span>${priceRange[0]}</span>
@@ -149,7 +150,7 @@ export function FilterSidebar({
                     id="discount-only"
                     checked={onlyDiscounted}
                     onCheckedChange={(checked) => setOnlyDiscounted(checked === true)}
-                    className="data-[state=checked]:bg-orange-600 data-[state=checked]:border-orange-600"
+                    className="data-checked:bg-orange-600! data-checked:border-orange-600! data-checked:text-white! cursor-pointer"
                 />
                 <Label
                     htmlFor="discount-only"
