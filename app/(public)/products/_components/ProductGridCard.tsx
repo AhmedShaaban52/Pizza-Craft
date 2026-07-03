@@ -22,14 +22,14 @@ export default function ProductGridCard({
     const hasDiscount = !!product.discountType && !!product.discountValue;
 
     return (
-        <div className="group relative rounded-2xl border border-neutral-800 bg-neutral-900 overflow-hidden hover:border-neutral-700 transition-colors">
+        <div className="group relative rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
             <Link
                 href={`/products/${product.id}`}
                 aria-label={product.name}
-                className="absolute inset-0"
+                className="absolute inset-0 cursor-pointer"
             />
 
-            <div className="relative aspect-square bg-neutral-800">
+            <div className="relative aspect-square bg-neutral-100 dark:bg-neutral-800">
                 <Image
                     src={product.image}
                     alt={product.name}
@@ -54,17 +54,21 @@ export default function ProductGridCard({
             </div>
 
             <div className="p-4">
-                <h3 className="font-semibold text-white line-clamp-1">{product.name}</h3>
+                <h3 className="font-semibold text-neutral-900 dark:text-white line-clamp-1">
+                    {product.name}
+                </h3>
                 {product.description && (
-                    <p className="mt-1 text-sm text-neutral-500 line-clamp-2">
+                    <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2">
                         {product.description}
                     </p>
                 )}
 
                 <div className="mt-3 flex items-baseline gap-2">
-                    <span className="font-bold text-white">${finalPrice.toFixed(2)}</span>
+                    <span className="font-bold text-neutral-900 dark:text-white">
+                        ${finalPrice.toFixed(2)}
+                    </span>
                     {hasDiscount && (
-                        <span className="text-xs text-neutral-500 line-through">
+                        <span className="text-xs text-neutral-400 dark:text-neutral-500 line-through">
                             ${Number(product.price).toFixed(2)}
                         </span>
                     )}

@@ -4,6 +4,7 @@ import CategorySection from "./_components/CategorySection";
 import { and, lte, gte, or, isNull } from "drizzle-orm";
 import { db } from "@/lib/db";
 import BestSellerSection from "./_components/BestSellerSection";
+import SpecialsSection from "./_components/SpecialsSection";
 
 async function getActiveOffers() {
   const now = new Date();
@@ -37,6 +38,8 @@ export default async function HomePage() {
   return (
     <div className="bg-neutral-50 dark:bg-neutral-950 min-h-screen">
       <OfferSlider offers={activeOffers} />
+      
+      <SpecialsSection/>
 
       <CategorySection categories={categories} />
 

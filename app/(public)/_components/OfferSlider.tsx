@@ -75,8 +75,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                     zIndex: isActive ? 10 : 1,
                                 }}
                             >
-                                <div className="relative w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8 p-8 md:p-10 rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-[0_20px_50px_rgba(0,0,0,0.04)] dark:shadow-[0_0_50px_rgba(16,185,129,0.12)] overflow-hidden transition-all duration-300">
-
+                                <div className="relative w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8 p-8 md:p-10 rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-[0_20px_50px_rgba(249,115,22,0.08)] dark:shadow-[0_0_50px_rgba(249,115,22,0.15)] overflow-hidden transition-all duration-300">
                                     <div
                                         className="pointer-events-none absolute inset-0 hidden dark:block opacity-30"
                                         style={{
@@ -105,9 +104,9 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                             <Button
                                                 asChild
                                                 disabled={!isActive}
-                                                className="bg-orange-500 hover:bg-orange-400 text-white dark:text-black font-bold rounded-full px-6 py-5 text-xs transition-all shadow-[0_4px_15px_rgba(16,185,129,0.2)] dark:shadow-[0_4px_20px_rgba(16,185,129,0.3)] group/btn"
+                                                className="bg-orange-500 hover:bg-orange-400 text-white dark:text-black font-bold rounded-full px-6 py-5 text-xs transition-all shadow-[0_4px_15px_rgba(249,115,22,0.2)] dark:shadow-[0_4px_20px_rgba(249,115,22,0.3)] group/btn"
                                             >
-                                                <Link href={`/menu?offer=${offer.id}`} className="flex items-center gap-1.5">
+                                                <Link href="/products" className="flex items-center gap-1.5">
                                                     Order Now
                                                     <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
                                                 </Link>
@@ -125,7 +124,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                     </div>
 
                                     <div className="relative z-10 flex justify-center md:justify-end order-1 md:order-2">
-                                        <div className="relative w-47.5 sm:w-57.5 md:w-67.5 lg:w-75 aspect-square rounded-2xl overflow-hidden shadow-md dark:shadow-[0_0_30px_rgba(16,185,129,0.08)] ring-1 ring-neutral-100 dark:ring-orange-500/10">
+                                        <div className="relative w-47.5 sm:w-57.5 md:w-67.5 lg:w-75 aspect-square rounded-2xl overflow-hidden shadow-md dark:shadow-[0_0_30px_rgba(249,115,22,0.08)] ring-1 ring-neutral-100 dark:ring-orange-500/10">
                                             <Image
                                                 src={offer.image}
                                                 alt={offer.name}

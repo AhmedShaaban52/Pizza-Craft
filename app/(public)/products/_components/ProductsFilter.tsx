@@ -108,7 +108,7 @@ export function ProductsFilter({ products, categories, favoriteIds, initialCateg
             </div>
 
             <aside className="hidden lg:block">
-                <div className="sticky top-24 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
+                <div className=" rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 p-5">
                     <FilterSidebar
                         categories={categories}
                         selectedCategories={selectedCategories}
