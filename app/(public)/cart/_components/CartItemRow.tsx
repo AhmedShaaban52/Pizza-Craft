@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useTransition } from "react";
-import { Minus, Plus, Trash2 } from "lucide-react";
-import { removeFromCart, updateCartQuantity } from "@/lib/cart-actions";
+import { Trash2 } from "lucide-react";
+import { removeFromCart } from "@/lib/cart-actions";
 import { getFinalPrice } from "@/lib/getFinalPrice";
+import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
 
 interface CartItemRowProps {
     item: {
@@ -29,12 +30,6 @@ export function CartItemRow({ item }: CartItemRowProps) {
         discountType: item.product.discountType,
         discountValue: item.product.discountValue,
     });
-    function handleQuantityChange(newQty: number) {
-        startTransition(async () => {
-            await updateCartQuantity(item.id, newQty);
-            window.dispatchEvent(new Event("cart-updated")); 
-        });
-    }
 
     function handleRemove() {
         startTransition(async () => {
@@ -69,28 +64,12 @@ export function CartItemRow({ item }: CartItemRowProps) {
                 </p>
             </div>
 
-            <div className="flex items-center gap-2">
-                <button
-                    type="button"
-                    onClick={() => handleQuantityChange(item.quantity - 1)}
-                    disabled={isPending || item.quantity <= 1}
-                    className="h-7 w-7 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-600 hover:border-orange-500 hover:text-orange-600 transition-colors disabled:opacity-40 cursor-pointer dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-orange-500 dark:hover:text-orange-400"
-                >
-                    <Minus className="h-3.5 w-3.5" />
-                </button>
-
-                <span className="w-6 text-center text-neutral-900 font-medium dark:text-white">
-                    {item.quantity}
-                </span>
-
-                <button
-                    type="button"
-                    onClick={() => handleQuantityChange(item.quantity + 1)}
-                    disabled={isPending}
-                    className="h-7 w-7 rounded-full border border-neutral-300 flex items-center justify-center text-neutral-600 hover:border-orange-500 hover:text-orange-600 transition-colors disabled:opacity-40 cursor-pointer dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-orange-500 dark:hover:text-orange-400"
-                >
-                    <Plus className="h-3.5 w-3.5" />
-                </button>
+            <div className="w-28">
+                <AddToCartButton
+                    productId={item.product.id}
+                    initialQuantity={item.quantity}
+                    initialCartId={item.id}
+                />
             </div>
 
             <button

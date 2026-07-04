@@ -29,18 +29,18 @@ export default function Navbar() {
 
     return (
         <nav className="sticky top-0 z-50 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white transition-colors duration-300">
-            <div className="h-16 md:h-20 px-4 md:px-10">
+            <div className="h-16 lg:h-20 px-4 lg:px-10">
                 <div className="flex items-center justify-between h-full">
 
                     <Logo />
 
                     {/* Desktop Navigation Links */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden lg:flex items-center space-x-8">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors duration-200"
+                                className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors duration-200 whitespace-nowrap"
                             >
                                 {link.name}
                             </Link>
@@ -48,7 +48,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Desktop Search & Action Icons */}
-                    <div className="hidden md:flex items-center gap-4">
+                    <div className="hidden lg:flex items-center gap-4">
                         <SearchBar variant="desktop" />
 
                         <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer">
@@ -63,7 +63,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Mobile Menu Actions */}
-                    <div className="md:hidden flex items-center gap-1.5">
+                    <div className="lg:hidden flex items-center gap-1.5">
                         <ModeToggle />
 
                         <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300">
