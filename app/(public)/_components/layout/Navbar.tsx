@@ -16,9 +16,15 @@ import Logo from "./Logo";
 import { SearchBar } from "./SearchBar";
 import { CartFavCount } from "./CartFavCount";
 import { UserMenu } from "./UserMenu";
+import { useLocale } from "@/lib/locale-context";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { locale, setLocale } = useLocale();
+
+    function toggleLocale() {
+        setLocale(locale === "en" ? "ar" : "en");
+    }
 
     const navLinks = [
         { name: "Home", href: "/" },
@@ -51,7 +57,13 @@ export default function Navbar() {
                     <div className="hidden lg:flex items-center gap-4">
                         <SearchBar variant="desktop" />
 
-                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={toggleLocale}
+                            title={locale === "en" ? "العربية" : "English"}
+                            className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer"
+                        >
                             <Languages className="h-5 w-5" />
                         </Button>
 
@@ -66,7 +78,13 @@ export default function Navbar() {
                     <div className="lg:hidden flex items-center gap-1.5">
                         <ModeToggle />
 
-                        <Button variant="ghost" size="icon" className="text-neutral-600 dark:text-neutral-300">
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={toggleLocale}
+                            title={locale === "en" ? "العربية" : "English"}
+                            className="text-neutral-600 dark:text-neutral-300"
+                        >
                             <Languages className="h-5 w-5" />
                         </Button>
 

@@ -28,7 +28,9 @@ export const usersTable = pgTable("users", {
 export const categoriesTable = pgTable("categories", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name", { length: 100 }).notNull(),
+  nameAr: varchar("name_ar", { length: 100 }),
   description: varchar("description", { length: 500 }),
+  descriptionAr: varchar("description_ar", { length: 500 }),
   image: text("image").notNull(),
   isActive: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -41,7 +43,9 @@ export const productsTable = pgTable("products", {
     .references(() => categoriesTable.id)
     .notNull(),
   name: varchar("name", { length: 100 }).notNull(),
+  nameAr: varchar("name_ar", { length: 100 }),
   description: varchar("description", { length: 500 }),
+  descriptionAr: varchar("description_ar", { length: 500 }),
   image: text("image").notNull(),
   thumbnails: text("thumbnails").array(),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),

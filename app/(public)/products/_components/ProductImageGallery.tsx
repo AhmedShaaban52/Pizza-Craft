@@ -17,7 +17,7 @@ export function ProductImageGallery({
     alt,
     discountLabel,
 }: ProductImageGalleryProps) {
-    const limitedThumbnails = (thumbnails ?? []).slice(0, 3);
+    const limitedThumbnails = (thumbnails ?? []).slice(0, 6);
     const [activeImage, setActiveImage] = useState(image);
 
     return (

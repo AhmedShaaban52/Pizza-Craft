@@ -7,6 +7,7 @@ import { type ProductWithCategory } from "@/utils/ProductsFields";
 import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
 import { AddToCartButton } from "../_components/AddToCartButton";
 import { ProductImageGallery } from "../_components/ProductImageGallery";
+import { ProductLocalizedInfo } from "../_components/ProductLocalizedInfo";
 import ProductGridCard from "../_components/ProductGridCard";
 
 interface ProductDetailsPageProps {
@@ -54,15 +55,12 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
                 />
 
                 <div>
-                    <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
-                        {product.name}
-                    </h1>
-
-                    {product.description && (
-                        <p className="mt-3 text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                            {product.description}
-                        </p>
-                    )}
+                    <ProductLocalizedInfo
+                        name={product.name}
+                        nameAr={product.nameAr}
+                        description={product.description}
+                        descriptionAr={product.descriptionAr}
+                    />
 
                     <div className="mt-6 flex items-baseline gap-3">
                         <span className="text-3xl font-bold text-neutral-900 dark:text-white">

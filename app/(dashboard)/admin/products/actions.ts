@@ -16,7 +16,9 @@ export async function getProducts() {
       .select({
         id: productsTable.id,
         name: productsTable.name,
+        nameAr: productsTable.nameAr,
         description: productsTable.description,
+        descriptionAr: productsTable.descriptionAr,
         image: productsTable.image,
         thumbnails: productsTable.thumbnails,
         price: productsTable.price,
@@ -29,6 +31,7 @@ export async function getProducts() {
         category: {
           id: categoriesTable.id,
           name: categoriesTable.name,
+          nameAr: categoriesTable.nameAr,
           description: categoriesTable.description,
           image: categoriesTable.image,
           isActive: categoriesTable.isActive,
@@ -70,7 +73,9 @@ export async function createProduct(formData: FormData): Promise<ActionResult> {
   try {
     const raw = {
       name: formData.get("name"),
+      nameAr: formData.get("nameAr"),
       description: formData.get("description"),
+      descriptionAr: formData.get("descriptionAr"),
       image: formData.get("image"),
       thumbnails: formData.get("thumbnails"),
       price: formData.get("price"),
@@ -103,7 +108,9 @@ export async function createProduct(formData: FormData): Promise<ActionResult> {
 
     await db.insert(productsTable).values({
       name: parsed.data.name,
+      nameAr: parsed.data.nameAr || null,
       description: parsed.data.description || null,
+      descriptionAr: parsed.data.descriptionAr || null,
       image: imageUrl,
       thumbnails: thumbnailsArr,
       price: parsed.data.price.toString(),
@@ -131,7 +138,9 @@ export async function updateProduct(
   try {
     const raw = {
       name: formData.get("name"),
+      nameAr: formData.get("nameAr"),
       description: formData.get("description"),
+      descriptionAr: formData.get("descriptionAr"),
       image: formData.get("image"),
       thumbnails: formData.get("thumbnails"),
       price: formData.get("price"),
@@ -166,7 +175,9 @@ export async function updateProduct(
       .update(productsTable)
       .set({
         name: parsed.data.name,
+        nameAr: parsed.data.nameAr || null,
         description: parsed.data.description || null,
+        descriptionAr: parsed.data.descriptionAr || null,
         ...(imageUrl ? { image: imageUrl } : {}),
         ...(thumbnailsArr !== undefined ? { thumbnails: thumbnailsArr } : {}),
         price: parsed.data.price.toString(),
@@ -253,7 +264,9 @@ export async function getProductsBySearch(query: string) {
       .select({
         id: productsTable.id,
         name: productsTable.name,
+        nameAr: productsTable.nameAr,
         description: productsTable.description,
+        descriptionAr: productsTable.descriptionAr,
         image: productsTable.image,
         thumbnails: productsTable.thumbnails,
         price: productsTable.price,
@@ -266,6 +279,7 @@ export async function getProductsBySearch(query: string) {
         category: {
           id: categoriesTable.id,
           name: categoriesTable.name,
+          nameAr: categoriesTable.nameAr,
           description: categoriesTable.description,
           image: categoriesTable.image,
           isActive: categoriesTable.isActive,

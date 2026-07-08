@@ -20,7 +20,9 @@ export type OrderWithItems = Order & {
 
 export const productSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
+  nameAr: z.string().max(100).nullable().optional().or(z.literal("")),
   description: z.string().max(500).nullable().optional().or(z.literal("")),
+  descriptionAr: z.string().max(500).nullable().optional().or(z.literal("")),
   image: z.any(),
   thumbnails: z.any().optional(),
   price: z.coerce.number().min(0.01, "Price is required"),
@@ -37,7 +39,9 @@ export type ProductSchemaType = z.infer<typeof productSchema>;
 
 export const categorySchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
+  nameAr: z.string().max(100).nullable().optional().or(z.literal("")),
   description: z.string().max(500).nullable().optional().or(z.literal("")),
+  descriptionAr: z.string().max(500).nullable().optional().or(z.literal("")),
   image: z.any(),
   isActive: z.string().nullable().optional(),
 });
@@ -97,4 +101,5 @@ export interface ModalField {
   min?: number;
   max?: number;
   colSpan?: 1 | 2;
+  dir?: "ltr" | "rtl";
 }

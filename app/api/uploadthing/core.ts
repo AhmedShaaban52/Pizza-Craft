@@ -4,7 +4,6 @@ import { UploadThingError } from "uploadthing/server";
 
 const f = createUploadthing();
 
-
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
@@ -16,8 +15,7 @@ export const ourFileRouter = {
   })
     // Set permissions and file types for this FileRoute
     .middleware(async () => {
-      
-     const session =   await requireUser()
+      const session = await requireUser();
 
       // If you throw, the user will not be able to upload
       if (!session.id) throw new UploadThingError("Unauthorized");
@@ -35,6 +33,25 @@ export const ourFileRouter = {
       return { uploadedBy: metadata.userId };
     }),
 
+  thumbnailUploader: f({
+    image: {
+      maxFileSize: "2MB",
+      maxFileCount: 6,
+    },
+  })
+    .middleware(async () => {
+      const session = await requireUser();
+
+      if (!session.id) throw new UploadThingError("Unauthorized");
+
+      return { userId: session.id };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Thumbnail upload complete for userId:", metadata.userId);
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.userId };
+    }),
 
   // Define as many FileRoutes as you like, each with a unique routeSlug
   resumeUploader: f({
@@ -45,8 +62,7 @@ export const ourFileRouter = {
   })
     // Set permissions and file types for this FileRoute
     .middleware(async () => {
-      
-     const session =   await requireUser()
+      const session = await requireUser();
 
       // If you throw, the user will not be able to upload
       if (!session.id) throw new UploadThingError("Unauthorized");

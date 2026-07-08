@@ -47,7 +47,9 @@ export async function createCategory(
   try {
     const raw = {
       name: formData.get("name"),
+      nameAr: formData.get("nameAr"),
       description: formData.get("description"),
+      descriptionAr: formData.get("descriptionAr"),
       image: formData.get("image"),
       isActive: formData.get("isActive"),
     };
@@ -67,7 +69,9 @@ export async function createCategory(
 
     await db.insert(categoriesTable).values({
       name: parsed.data.name,
+      nameAr: parsed.data.nameAr || null,
       description: parsed.data.description || null,
+      descriptionAr: parsed.data.descriptionAr || null,
       image: imageUrl,
       isActive: parsed.data.isActive !== "false",
     });
@@ -87,7 +91,9 @@ export async function updateCategory(
   try {
     const raw = {
       name: formData.get("name"),
+      nameAr: formData.get("nameAr"),
       description: formData.get("description"),
+      descriptionAr: formData.get("descriptionAr"),
       image: formData.get("image"),
       isActive: formData.get("isActive"),
     };
@@ -107,7 +113,9 @@ export async function updateCategory(
       .update(categoriesTable)
       .set({
         name: parsed.data.name,
+        nameAr: parsed.data.nameAr || null,
         description: parsed.data.description || null,
+        descriptionAr: parsed.data.descriptionAr || null,
         ...(imageUrl ? { image: imageUrl } : {}),
         isActive: parsed.data.isActive !== "false",
         updatedAt: new Date(),

@@ -8,6 +8,7 @@ export type ProductWithCategory = Product & {
 export const productColumns: ColumnDef<ProductWithCategory>[] = [
   { key: "image", label: "Image", type: "image" },
   { key: "name", label: "Name" },
+  { key: "nameAr", label: "الاسم", render: (item) => item.nameAr ?? "—" },
   {
     key: "category",
     label: "Category",
@@ -19,8 +20,21 @@ export const productColumns: ColumnDef<ProductWithCategory>[] = [
 
 export function getProductFields(categories: Category[]): ModalField[] {
   return [
-    { name: "name", label: "Name", type: "text", required: true, colSpan: 2 },
-    { name: "description", label: "Description", type: "textarea", colSpan: 2 },
+    { name: "name", label: "Name (English)", type: "text", required: true },
+    { name: "nameAr", label: "الاسم (عربي)", type: "text", dir: "rtl" },
+    {
+      name: "description",
+      label: "Description (English)",
+      type: "textarea",
+      colSpan: 2,
+    },
+    {
+      name: "descriptionAr",
+      label: "الوصف (عربي)",
+      type: "textarea",
+      dir: "rtl",
+      colSpan: 2,
+    },
     { name: "image", label: "Product Image", type: "file", colSpan: 2 },
     {
       name: "thumbnails",

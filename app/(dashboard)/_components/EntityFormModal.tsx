@@ -196,6 +196,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                 {field.type === "textarea" ? (
                                     <Textarea
                                         id={field.name}
+                                        dir={field.dir}
                                         value={(value as string) ?? ""}
                                         onChange={(e) => setValue(field.name, e.target.value)}
                                         placeholder={field.placeholder}
@@ -220,7 +221,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                 ) : field.type === "file" && field.multiple ? (
                                     <div className="space-y-3">
                                         <UploadDropzone
-                                            endpoint="imageUploader"
+                                            endpoint="thumbnailUploader"
                                             className="ut-button:bg-orange-600! ut-button:hover:bg-orange-700! ut-button:ut-uploading:bg-orange-600! ut-button:ut-readying:bg-orange-600!"
                                             appearance={{
                                                 container:
@@ -231,7 +232,14 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                                 allowedContent: "text-xs text-neutral-400 dark:text-neutral-500",
                                             }}
                                             onClientUploadComplete={(res) => {
-                                                setValue(field.name, res[0]?.ufsUrl ?? "");
+                                                const uploaded = res
+                                                    .map((f) => f.ufsUrl)
+                                                    .filter(Boolean) as string[];
+                                                const current = getThumbnailsArray(field.name);
+                                                setValue(
+                                                    field.name,
+                                                    [...current, ...uploaded].join(",")
+                                                );
                                             }}
                                             onUploadError={(error: Error) => {
                                                 setError(`Upload failed: ${error.message}`);
@@ -314,6 +322,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                 ) : (
                                     <Input
                                         id={field.name}
+                                        dir={field.dir}
                                         type={field.type}
                                         value={(value as string) ?? ""}
                                         onChange={(e) => setValue(field.name, e.target.value)}
