@@ -20,7 +20,7 @@ interface LocaleContextValue {
 
 const LocaleContext = createContext<LocaleContextValue>({
   locale: "en",
-  setLocale: () => {},
+  setLocale: () => { },
   dir: "ltr",
 });
 
@@ -31,12 +31,9 @@ function readCookieLocale(): Locale {
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
-
-  // Read the saved locale from the cookie once we're on the client.
-  useEffect(() => {
-    setLocaleState(readCookieLocale());
-  }, []);
+  const [locale, setLocaleState] = useState<Locale>(() => {
+    return readCookieLocale();
+  });
 
   function setLocale(next: Locale) {
     setLocaleState(next);
@@ -45,7 +42,6 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
 
   const dir = locale === "ar" ? "rtl" : "ltr";
 
-  // Keep <html dir/lang> in sync so native text direction & fonts follow the locale.
   useEffect(() => {
     document.documentElement.dir = dir;
     document.documentElement.lang = locale;
@@ -62,10 +58,6 @@ export function useLocale() {
   return useContext(LocaleContext);
 }
 
-/**
- * Pick the right language field for display.
- * Falls back to the English value if the Arabic one is empty.
- */
 export function pickLocale(
   en: string | null | undefined,
   ar: string | null | undefined,

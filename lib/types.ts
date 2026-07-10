@@ -50,7 +50,9 @@ export type CategorySchemaType = z.infer<typeof categorySchema>;
 
 export const offerSchema = z.object({
   name: z.string().min(1, "Name is required").max(100),
+  nameAr: z.string().max(100).nullable().optional().or(z.literal("")),
   description: z.string().max(500).nullable().optional().or(z.literal("")),
+  descriptionAr: z.string().max(500).nullable().optional().or(z.literal("")),
   image: z.any(),
   discount: z.coerce.number().min(1, "Minimum 1%").max(100, "Maximum 100%"),
   startDate: z.string().nullable().optional().or(z.literal("")),

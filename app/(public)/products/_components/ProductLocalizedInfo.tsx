@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, pickLocale } from "@/lib/locale-context";
+import { useLocale, pickLocale } from "@/context/locale-context";
 
 interface ProductLocalizedInfoProps {
     name: string;

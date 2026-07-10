@@ -8,11 +8,11 @@ export type ProductWithCategory = Product & {
 export const productColumns: ColumnDef<ProductWithCategory>[] = [
   { key: "image", label: "Image", type: "image" },
   { key: "name", label: "Name" },
-  { key: "nameAr", label: "الاسم", render: (item) => item.nameAr ?? "—" },
+  { key: "nameAr", label: "الاسم", render: (item) => item.nameAr ?? "" },
   {
     key: "category",
     label: "Category",
-    render: (item) => item.category?.name ?? "—",
+    render: (item) => item.category?.name ?? "",
   },
   { key: "price", label: "Price", render: (item) => `$${item.price}` },
   { key: "isActive", label: "Status", type: "badge" },

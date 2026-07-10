@@ -3,7 +3,9 @@ import CategoryCard from "./Cards/CategoryCard";
 interface Category {
     id: string;
     name: string;
+    nameAr?: string | null;
     description: string | null;
+    descriptionAr?: string | null;
     image: string;
 }
 
@@ -32,7 +34,9 @@ export default function CategorySection({ categories }: CategorySectionProps) {
                         key={category.id}
                         id={category.id}
                         name={category.name}
+                        nameAr={category.nameAr}
                         description={category.description}
+                        descriptionAr={category.descriptionAr}
                         image={category.image}
                     />
                 ))}

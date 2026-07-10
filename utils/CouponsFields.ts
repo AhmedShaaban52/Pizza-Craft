@@ -25,7 +25,7 @@ export const couponColumns: ColumnDef<Coupon>[] = [
     key: "endDate",
     label: "Expires",
     render: (item) =>
-      item.endDate ? new Date(item.endDate).toLocaleDateString() : "—",
+      item.endDate ? new Date(item.endDate).toLocaleDateString() : "",
   },
   { key: "isActive", label: "Status", type: "badge" },
 ];

@@ -39,7 +39,7 @@ export function Sidebar() {
                                     <button
                                         onClick={() => setOpenMenu(isOpen ? null : link.name)}
                                         className={`flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-colors ${hasActiveChild
-                                            ? "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400"
+                                            ? "bg-orange-50 text-orange-700 dark:bg-orange-500/5 dark:text-orange-400"
                                             : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
                                             } cursor-pointer`}
                                     >
@@ -61,7 +61,7 @@ export function Sidebar() {
                                                         key={sub.href}
                                                         href={sub.href}
                                                         className={`px-3 py-2 rounded-lg text-sm font-medium tracking-wide transition-colors ${isActive
-                                                            ? "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400"
+                                                            ? "bg-orange-50 text-orange-700 dark:bg-orange-500/5 dark:text-orange-400"
                                                             : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
                                                             }`}
                                                     >

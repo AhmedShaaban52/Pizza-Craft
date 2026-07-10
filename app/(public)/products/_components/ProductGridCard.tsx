@@ -4,7 +4,7 @@ import { getFinalPrice } from "@/lib/getFinalPrice";
 import { type Product } from "@/lib/types";
 import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
 import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
-import { useLocale, pickLocale } from "@/lib/locale-context";
+import { useLocale, pickLocale } from "@/context/locale-context";
 import Image from "next/image";
 import Link from "next/link";
 

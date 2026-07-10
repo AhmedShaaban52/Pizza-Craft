@@ -1,14 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useLocale, pickLocale } from "@/context/locale-context";
 
 interface CategoryCardProps {
     id: string;
     name: string;
+    nameAr?: string | null;
     description: string | null;
+    descriptionAr?: string | null;
     image: string;
 }
 
-export default function CategoryCard({ id, name, description, image }: CategoryCardProps) {
+export default function CategoryCard({ id, name, nameAr, description, descriptionAr, image }: CategoryCardProps) {
+    const { locale } = useLocale();
+    const localizedName = pickLocale(name, nameAr, locale);
+    const localizedDescription = pickLocale(description, descriptionAr, locale);
+
     return (
         <Link
             href={`/products?category=${id}`}
@@ -17,7 +26,7 @@ export default function CategoryCard({ id, name, description, image }: CategoryC
             <div className="relative aspect-4/3 w-full bg-neutral-200 dark:bg-neutral-800 overflow-hidden">
                 <Image
                     src={image}
-                    alt={name}
+                    alt={localizedName}
                     fill
                     unoptimized
                     priority
@@ -27,12 +36,12 @@ export default function CategoryCard({ id, name, description, image }: CategoryC
 
             <div className="p-5 flex flex-col grow text-left">
                 <h3 className="text-md sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 tracking-tight transition-colors duration-300 group-hover/category:text-orange-500!">
-                    {name}
+                    {localizedName}
                 </h3>
 
-                {description && (
+                {localizedDescription && (
                     <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 line-clamp-2">
-                        {description}
+                        {localizedDescription}
                     </p>
                 )}
             </div>

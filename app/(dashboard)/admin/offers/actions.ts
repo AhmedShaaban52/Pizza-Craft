@@ -51,7 +51,9 @@ export async function createOffer(formData: FormData): Promise<ActionResult> {
 
     const raw = {
       name: formData.get("name"),
+      nameAr: formData.get("nameAr"),
       description: formData.get("description"),
+      descriptionAr: formData.get("descriptionAr"),
       image: imageUrl,
       discount: formData.get("discount"),
       startDate: formData.get("startDate") || undefined,
@@ -68,7 +70,9 @@ export async function createOffer(formData: FormData): Promise<ActionResult> {
 
     await db.insert(offersTable).values({
       name: parsed.data.name,
+      nameAr: parsed.data.nameAr || null,
       description: parsed.data.description || null,
+      descriptionAr: parsed.data.descriptionAr || null,
       image: imageUrl,
       discount: parsed.data.discount,
       startDate: parsed.data.startDate ? new Date(parsed.data.startDate) : null,
@@ -94,8 +98,10 @@ export async function updateOffer(
 
     const raw = {
       name: formData.get("name"),
+      nameAr: formData.get("nameAr"),
       description: formData.get("description"),
-      image: imageUrl || "temporary_bypass_value", 
+      descriptionAr: formData.get("descriptionAr"),
+      image: imageUrl || "temporary_bypass_value",
       discount: formData.get("discount"),
       startDate: formData.get("startDate") || undefined,
       endDate: formData.get("endDate") || undefined,
@@ -113,7 +119,9 @@ export async function updateOffer(
       .update(offersTable)
       .set({
         name: parsed.data.name,
+        nameAr: parsed.data.nameAr || null,
         description: parsed.data.description || null,
+        descriptionAr: parsed.data.descriptionAr || null,
         ...(imageUrl ? { image: imageUrl } : {}),
         discount: parsed.data.discount,
         startDate: parsed.data.startDate

@@ -61,7 +61,9 @@ export const productsTable = pgTable("products", {
 export const offersTable = pgTable("offers", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
+  nameAr: text("name_ar"),
   description: text("description"),
+  descriptionAr: text("description_ar"),
   image: text("image").notNull(),
   discount: integer("discount").notNull(),
   startDate: timestamp("start_date"),
@@ -104,7 +106,7 @@ export const favoritesTable = pgTable(
 
 export const ordersTable = pgTable("orders", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: text("user_id").notNull(), 
+  userId: text("user_id").notNull(),
   stripeSessionId: text("stripe_session_id").notNull().unique(),
   stripePaymentIntent: text("stripe_payment_intent"),
   status: varchar("status", { length: 20 }).default("pending"),

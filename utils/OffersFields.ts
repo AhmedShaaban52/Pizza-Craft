@@ -4,6 +4,7 @@ import { type ModalField, type Offer } from "@/lib/types";
 export const offerColumns: ColumnDef<Offer>[] = [
   { key: "image", label: "Image", type: "image" },
   { key: "name", label: "Name" },
+  { key: "nameAr", label: "الاسم", render: (item) => item.nameAr ?? "" },
   {
     key: "discount",
     label: "Discount",
@@ -13,13 +14,13 @@ export const offerColumns: ColumnDef<Offer>[] = [
     key: "startDate",
     label: "Start Date",
     render: (item) =>
-      item.startDate ? new Date(item.startDate).toLocaleDateString() : "—",
+      item.startDate ? new Date(item.startDate).toLocaleDateString() : "",
   },
   {
     key: "endDate",
     label: "End Date",
     render: (item) =>
-      item.endDate ? new Date(item.endDate).toLocaleDateString() : "—",
+      item.endDate ? new Date(item.endDate).toLocaleDateString() : "",
   },
 ];
 
@@ -27,12 +28,29 @@ export function getOfferFields(): ModalField[] {
   return [
     {
       name: "name",
-      label: "Offer Name",
+      label: "Offer Name (English)",
       type: "text",
       required: true,
+    },
+    {
+      name: "nameAr",
+      label: "اسم العرض (عربي)",
+      type: "text",
+      dir: "rtl",
+    },
+    {
+      name: "description",
+      label: "Description (English)",
+      type: "textarea",
       colSpan: 2,
     },
-    { name: "description", label: "Description", type: "textarea", colSpan: 2 },
+    {
+      name: "descriptionAr",
+      label: "الوصف (عربي)",
+      type: "textarea",
+      dir: "rtl",
+      colSpan: 2,
+    },
     {
       name: "image",
       label: "Offer Banner",

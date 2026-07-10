@@ -7,12 +7,14 @@ import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Button } from "@/components/ui/button";
 import { Offer } from "@/lib/types";
+import { useLocale, pickLocale } from "@/context/locale-context";
 
 interface OfferSliderProps {
     offers: Offer[];
 }
 
 export default function OfferSlider({ offers }: OfferSliderProps) {
+    const { locale } = useLocale();
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
         duration: 35,
@@ -64,6 +66,8 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                         const isActive = index === selectedIndex;
                         const discountText = offer.discount ? `${offer.discount}% OFF` : "SPECIAL OFFER";
                         const badgeText = offer.discount ? `Special ${offer.discount}% Offer` : "Limited Time";
+                        const localizedName = pickLocale(offer.name, offer.nameAr, locale);
+                        const localizedDescription = pickLocale(offer.description, offer.descriptionAr, locale);
 
                         return (
                             <div
@@ -92,12 +96,12 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-900 dark:text-white leading-none">
                                             {discountText}
                                             <span className="block text-orange-600 dark:text-orange-500 font-serif font-bold italic mt-2">
-                                                {offer.name}
+                                                {localizedName}
                                             </span>
                                         </h2>
 
                                         <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-sm">
-                                            {offer.description || "Indulge in our classic premium selections fresh from the stone oven."}
+                                            {localizedDescription || "Indulge in our classic premium selections fresh from the stone oven."}
                                         </p>
 
                                         <div className="pt-2 flex items-center gap-3">
@@ -127,7 +131,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                         <div className="relative w-47.5 sm:w-57.5 md:w-67.5 lg:w-75 aspect-square rounded-2xl overflow-hidden shadow-md dark:shadow-[0_0_30px_rgba(249,115,22,0.08)] ring-1 ring-neutral-100 dark:ring-orange-500/10">
                                             <Image
                                                 src={offer.image}
-                                                alt={offer.name}
+                                                alt={localizedName}
                                                 fill
                                                 unoptimized
                                                 priority

@@ -8,6 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Category } from "@/lib/types";
 import { Search, X } from "lucide-react";
+import { useLocale, pickLocale } from "@/context/locale-context";
 
 interface FilterSidebarProps {
     categories: Category[];
@@ -35,6 +36,7 @@ export function FilterSidebar({
     clearFilters,
 }: FilterSidebarProps) {
     const router = useRouter();
+    const { locale } = useLocale();
     const searchParams = useSearchParams();
     const [searchValue, setSearchValue] = useState(searchParams.get("search") ?? "");
 
@@ -113,7 +115,7 @@ export function FilterSidebar({
                                 htmlFor={`cat-${category.id}`}
                                 className="text-sm font-normal text-neutral-600 dark:text-neutral-400 cursor-pointer"
                             >
-                                {category.name}
+                                {pickLocale(category.name, category.nameAr, locale)}
                             </Label>
                         </div>
                     ))}

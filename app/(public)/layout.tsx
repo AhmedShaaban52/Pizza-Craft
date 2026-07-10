@@ -1,7 +1,7 @@
 import Navbar from "@/app/(public)/_components/layout/Navbar";
 import { ReactNode } from "react";
 import Footer from "./_components/layout/Footer";
-import { LocaleProvider } from "@/lib/locale-context";
+import { LocaleProvider } from "@/context/locale-context";
 
 export default function LayoutPublic({ children }: { children: ReactNode }) {
   return (

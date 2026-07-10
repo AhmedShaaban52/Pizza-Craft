@@ -16,7 +16,7 @@ import Logo from "./Logo";
 import { SearchBar } from "./SearchBar";
 import { CartFavCount } from "./CartFavCount";
 import { UserMenu } from "./UserMenu";
-import { useLocale } from "@/lib/locale-context";
+import { useLocale } from "@/context/locale-context";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
