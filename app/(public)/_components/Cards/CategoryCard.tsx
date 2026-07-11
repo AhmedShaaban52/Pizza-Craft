@@ -34,8 +34,8 @@ export default function CategoryCard({ id, name, nameAr, description, descriptio
                 />
             </div>
 
-            <div className="p-5 flex flex-col grow text-left">
-                <h3 className="text-md sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 tracking-tight transition-colors duration-300 group-hover/category:text-orange-500!">
+            <div className="p-5 flex flex-col grow text-start">
+                <h3 className="text-md sm:text-lg font-bold text-neutral-900 dark:text-neutral-100 tracking-tight transition-colors duration-300 group-hover/category:text-orange-500">
                     {localizedName}
                 </h3>
 

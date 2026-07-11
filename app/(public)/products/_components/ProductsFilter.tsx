@@ -13,6 +13,7 @@ import {
 import { getFinalPrice } from "@/lib/getFinalPrice";
 import { FilterSidebar } from "./FilterSidebar";
 import ProductGridCard from "./ProductGridCard";
+import { useLocale } from "@/context/locale-context";
 
 interface ProductsFilterProps {
     products: ProductWithCategory[];
@@ -22,7 +23,17 @@ interface ProductsFilterProps {
 }
 
 export function ProductsFilter({ products, categories, favoriteIds, initialCategory }: ProductsFilterProps) {
+    const { locale } = useLocale();
 
+    // Define translations
+    const t = {
+        filters: locale === "ar" ? "الفلاتر" : "Filters",
+        item: (count: number) => locale === "ar"
+            ? `${count} ${count === 1 ? "عنصر" : "عناصر"}`
+            : `${count} ${count === 1 ? "item" : "items"}`,
+        noItems: locale === "ar" ? "لا توجد عناصر تطابق فلاترك." : "No items match your filters.",
+        clearFilters: locale === "ar" ? "مسح الفلاتر" : "Clear filters"
+    };
 
     const maxPrice = useMemo(
         () => Math.ceil(Math.max(...products.map((p) => Number(p.price)), 50)),
@@ -82,7 +93,7 @@ export function ProductsFilter({ products, categories, favoriteIds, initialCateg
                     <SheetTrigger asChild>
                         <Button variant="outline" className="w-full justify-start gap-2">
                             <SlidersHorizontal className="h-4 w-4" />
-                            Filters
+                            {t.filters}
                             {hasActiveFilters && (
                                 <span className="ml-auto h-2 w-2 rounded-full bg-orange-500" />
                             )}
@@ -126,20 +137,20 @@ export function ProductsFilter({ products, categories, favoriteIds, initialCateg
 
             <div>
                 <p className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">
-                    {filteredProducts.length} {filteredProducts.length === 1 ? "item" : "items"}
+                    {t.item(filteredProducts.length)}
                 </p>
 
                 {filteredProducts.length === 0 ? (
                     <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-neutral-300 dark:border-neutral-800 py-20 text-center">
                         <p className="text-neutral-500 dark:text-neutral-400">
-                            No items match your filters.
+                            {t.noItems}
                         </p>
                         <Button
                             variant="link"
                             onClick={clearFilters}
                             className="mt-2 text-orange-600 dark:text-orange-400"
                         >
-                            Clear filters
+                            {t.clearFilters}
                         </Button>
                     </div>
                 ) : (

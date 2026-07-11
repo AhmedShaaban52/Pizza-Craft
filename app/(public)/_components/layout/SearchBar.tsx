@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Search, Loader2, X } from "lucide-react";
 import { searchProducts, type SearchResult } from "@/app/(dashboard)/admin/products/actions";
+import { useLocale } from "@/context/locale-context";
 
 interface SearchBarProps {
     variant?: "desktop" | "mobile";
@@ -13,6 +14,7 @@ interface SearchBarProps {
 }
 
 export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps) {
+    const { locale } = useLocale();
     const [query, setQuery] = useState("");
     const [results, setResults] = useState<SearchResult[]>([]);
     const [open, setOpen] = useState(false);
@@ -20,12 +22,15 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
     const containerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
+    const t = {
+        placeholder: locale === "ar" ? "ابحث عن البيتزا..." : "Search pizzas...",
+        noResults: (q: string) => locale === "ar" ? `لا توجد نتائج لـ "${q}"` : `No products found for "${q}"`,
+        viewAll: locale === "ar" ? "عرض كل النتائج" : "View all results",
+    };
+
     useEffect(() => {
         const trimmed = query.trim();
-
-        if (!trimmed) {
-            return;
-        }
+        if (!trimmed) return;
 
         const timeout = setTimeout(() => {
             startTransition(async () => {
@@ -51,7 +56,6 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const value = e.target.value;
         setQuery(value);
-
         if (!value.trim()) {
             setResults([]);
             setOpen(false);
@@ -80,22 +84,22 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
             <form onSubmit={handleSubmit}>
                 <div className="relative">
                     <Search
-                        className={`absolute left-3 ${isDesktop ? "top-2.5" : "top-3"} h-4 w-4 text-neutral-400 dark:text-neutral-500`}
+                        className={`absolute ${locale === 'ar' ? 'right-3' : 'left-3'} ${isDesktop ? "top-2.5" : "top-3"} h-4 w-4 text-neutral-400 dark:text-neutral-500`}
                     />
                     <input
                         type="text"
                         value={query}
                         onChange={handleChange}
                         onFocus={() => results.length > 0 && setOpen(true)}
-                        placeholder="Search pizzas..."
+                        placeholder={t.placeholder}
                         className={`w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 ${isDesktop ? "rounded-full py-1.5" : "rounded-lg py-2"
-                            } pl-10 pr-9 text-sm text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:ring-1 focus:ring-orange-500`}
+                            } px-10 text-sm text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:ring-1 focus:ring-orange-500`}
                     />
                     {query && (
                         <button
                             type="button"
                             onClick={clearSearch}
-                            className={`absolute right-3 ${isDesktop ? "top-2.5" : "top-3"} text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300`}
+                            className={`absolute ${locale === 'ar' ? 'left-3' : 'right-3'} ${isDesktop ? "top-2.5" : "top-3"} text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300`}
                         >
                             <X className="h-4 w-4" />
                         </button>
@@ -111,7 +115,7 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                         </div>
                     ) : results.length === 0 ? (
                         <p className="px-4 py-6 text-sm text-center text-neutral-500 dark:text-neutral-400">
-                            No products found for &ldquo;{query}&rdquo;
+                            {t.noResults(query)}
                         </p>
                     ) : (
                         <>
@@ -120,30 +124,15 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                                     <li key={product.id}>
                                         <Link
                                             href={`/products?search=${encodeURIComponent(product.name)}`}
-                                            onClick={() => {
-                                                setOpen(false);
-                                                onResultClick?.();
-                                            }}
+                                            onClick={() => { setOpen(false); onResultClick?.(); }}
                                             className="flex items-center gap-3 px-4 py-2.5 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
                                         >
                                             <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-neutral-100 dark:bg-neutral-800 shrink-0">
-                                                <Image
-                                                    src={product.image}
-                                                    alt={product.name}
-                                                    fill
-                                                    unoptimized
-                                                    className="object-cover"
-                                                />
+                                                <Image src={product.image} alt={product.name} fill unoptimized className="object-cover" />
                                             </div>
                                             <div className="min-w-0 flex-1">
-                                                <p className="text-sm font-medium text-neutral-900 dark:text-white truncate">
-                                                    {product.name}
-                                                </p>
-                                                {product.categoryName && (
-                                                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                                                        {product.categoryName}
-                                                    </p>
-                                                )}
+                                                <p className="text-sm font-medium text-neutral-900 dark:text-white truncate">{product.name}</p>
+                                                {product.categoryName && <p className="text-xs text-neutral-500 dark:text-neutral-400">{product.categoryName}</p>}
                                             </div>
                                             <span className="text-sm font-semibold text-orange-600 dark:text-orange-400 shrink-0">
                                                 ${Number(product.price).toFixed(2)}
@@ -152,16 +141,12 @@ export function SearchBar({ variant = "desktop", onResultClick }: SearchBarProps
                                     </li>
                                 ))}
                             </ul>
-
                             <Link
                                 href={`/products?search=${encodeURIComponent(query)}`}
-                                onClick={() => {
-                                    setOpen(false);
-                                    onResultClick?.();
-                                }}
+                                onClick={() => { setOpen(false); onResultClick?.(); }}
                                 className="block text-center text-sm font-medium text-orange-600 dark:text-orange-400 py-2.5 border-t border-neutral-100 dark:border-neutral-900 hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
                             >
-                                View all results
+                                {t.viewAll}
                             </Link>
                         </>
                     )}

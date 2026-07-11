@@ -14,11 +14,12 @@ interface OfferSliderProps {
 }
 
 export default function OfferSlider({ offers }: OfferSliderProps) {
-    const { locale } = useLocale();
+    const { locale, dir } = useLocale();
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: true,
         duration: 35,
         align: "center",
+        direction: dir,
     });
 
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -41,8 +42,10 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
     useEffect(() => {
         if (!emblaApi) return;
 
-        setScrollSnaps(emblaApi.scrollSnapList());
-        setSelectedIndex(emblaApi.selectedScrollSnap());
+        queueMicrotask(() => {
+            setScrollSnaps(emblaApi.scrollSnapList());
+            setSelectedIndex(emblaApi.selectedScrollSnap());
+        });
 
         emblaApi.on("init", onInit);
         emblaApi.on("reInit", onInit);
@@ -55,17 +58,22 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
         };
     }, [emblaApi, onSelect, onInit]);
 
+    useEffect(() => {
+        if (!emblaApi) return;
+        emblaApi.reInit({ direction: dir });
+    }, [emblaApi, dir]);
+
     if (!offers || offers.length === 0) return null;
 
     return (
-        <div className="relative w-full bg-neutral-50 dark:bg-neutral-950 py-14 overflow-hidden transition-colors duration-300">
+        <div className="relative w-full bg-neutral-50 dark:bg-neutral-950 py-14 overflow-hidden transition-colors duration-300 mt-16">
 
             <div className="overflow-visible max-w-5xl md:max-w-6xl mx-auto px-4" ref={emblaRef}>
                 <div className="flex gap-6 md:gap-8 perspective-1000">
                     {offers.map((offer, index) => {
                         const isActive = index === selectedIndex;
-                        const discountText = offer.discount ? `${offer.discount}% OFF` : "SPECIAL OFFER";
-                        const badgeText = offer.discount ? `Special ${offer.discount}% Offer` : "Limited Time";
+                        const discountText = offer.discount ? locale === "ar" ? `خصم ${offer.discount}%` : `${offer.discount}% OFF` : locale === "ar" ? "عرض خاص" : "SPECIAL OFFER";
+                        const badgeText = offer.discount ? locale === "ar" ? `عرض خاص ${offer.discount}%` : `Special ${offer.discount}% Offer` : locale === "ar" ? "لفترة محدودة" : "Limited Time";
                         const localizedName = pickLocale(offer.name, offer.nameAr, locale);
                         const localizedDescription = pickLocale(offer.description, offer.descriptionAr, locale);
 
@@ -104,15 +112,18 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                             {localizedDescription || "Indulge in our classic premium selections fresh from the stone oven."}
                                         </p>
 
-                                        <div className="pt-2 flex items-center gap-3">
+                                        <div className={`pt-2 flex items-center gap-3 ${locale === "ar" ? "flex items-start justify-end" : ""} `}>
                                             <Button
                                                 asChild
                                                 disabled={!isActive}
                                                 className="bg-orange-500 hover:bg-orange-400 text-white dark:text-black font-bold rounded-full px-6 py-5 text-xs transition-all shadow-[0_4px_15px_rgba(249,115,22,0.2)] dark:shadow-[0_4px_20px_rgba(249,115,22,0.3)] group/btn"
                                             >
-                                                <Link href="/products" className="flex items-center gap-1.5">
-                                                    Order Now
-                                                    <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5" />
+                                                <Link
+                                                    href="/products"
+                                                    className={`flex items-center gap-1.5 ${locale === "ar" ? "flex-row-reverse" : ""}`}
+                                                >
+                                                    {locale === "ar" ? "اطلب الآن" : "Order Now"}
+                                                    <ChevronRight className="h-4 w-4 transition-transform group-hover/btn:-translate-x-0.5" />
                                                 </Link>
                                             </Button>
 
@@ -122,7 +133,9 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                                                 disabled={!isActive}
                                                 className="rounded-full px-6 py-5 text-xs font-semibold border-neutral-200 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-900 bg-transparent transition-all"
                                             >
-                                                <Link href="/menu">Explore Menu</Link>
+                                                <Link href="/menu">
+                                                    {locale === "ar" ? "استكشف القائمة" : "Explore Menu"}
+                                                </Link>
                                             </Button>
                                         </div>
                                     </div>
@@ -148,7 +161,7 @@ export default function OfferSlider({ offers }: OfferSliderProps) {
                 </div>
             </div>
 
-            <div className="flex justify-center items-center gap-4 mt-8">
+            <div dir="ltr" className="flex justify-center items-center gap-4 mt-8">
                 <button
                     onClick={scrollPrev}
                     aria-label="Previous slide"

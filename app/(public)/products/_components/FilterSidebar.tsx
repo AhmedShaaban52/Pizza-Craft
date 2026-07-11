@@ -55,17 +55,27 @@ export function FilterSidebar({
         router.push("/products");
     }
 
+
+    const t = {
+        filters: locale === "ar" ? "الفلاتر" : "Filters",
+        clearAll: locale === "ar" ? "مسح الكل" : "Clear all",
+        searchTitle: locale === "ar" ? "بحث" : "Search",
+        searchPlaceholder: locale === "ar" ? "البحث عن بيتزا..." : "Search pizzas...",
+        categoryTitle: locale === "ar" ? "التصنيف" : "Category",
+        priceRange: locale === "ar" ? "نطاق السعر" : "Price range",
+        onSale: locale === "ar" ? "العروض فقط" : "On sale only"
+    };
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-neutral-900 dark:text-white">Filters</h2>
+                <h2 className="font-semibold text-neutral-900 dark:text-white">{t.filters}</h2>
                 {hasActiveFilters && (
                     <button
                         onClick={clearFilters}
                         className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400 hover:underline cursor-pointer"
                     >
                         <X className="h-3 w-3" />
-                        Clear all
+                        {t.clearAll}
                     </button>
                 )}
             </div>
@@ -73,14 +83,14 @@ export function FilterSidebar({
             {/* Search box */}
             <form onSubmit={handleSearchSubmit} className="space-y-2">
                 <h3 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                    Search
+                    {t.searchTitle}
                 </h3>
                 <div className="relative">
                     <Search className="absolute left-3 top-2.5 h-4 w-4 text-neutral-400" />
                     <Input
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder="Search pizzas..."
+                        placeholder={t.searchPlaceholder}
                         className="pl-9 pr-8"
                     />
                     {searchValue && (
@@ -100,7 +110,7 @@ export function FilterSidebar({
             {/* Category filter */}
             <div className="space-y-3">
                 <h3 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                    Category
+                    {t.categoryTitle}
                 </h3>
                 <div className="space-y-2.5">
                     {categories.map((category) => (
@@ -127,7 +137,7 @@ export function FilterSidebar({
             {/* Price filter */}
             <div className="space-y-3">
                 <h3 className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                    Price range
+                    {t.priceRange}
                 </h3>
                 <Slider
                     min={0}
@@ -158,7 +168,7 @@ export function FilterSidebar({
                     htmlFor="discount-only"
                     className="text-sm font-normal text-neutral-600 dark:text-neutral-400 cursor-pointer"
                 >
-                    On sale only
+                    {t.onSale}
                 </Label>
             </div>
         </div>

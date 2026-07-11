@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { User, Menu, X, Languages } from "lucide-react";
+import { User, Menu, X, Globe } from "lucide-react";
 import { ModeToggle } from "../../../../components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,8 @@ import Logo from "./Logo";
 import { SearchBar } from "./SearchBar";
 import { CartFavCount } from "./CartFavCount";
 import { UserMenu } from "./UserMenu";
-import { useLocale } from "@/context/locale-context";
+import { pickLocale, useLocale } from "@/context/locale-context";
+import { NavLinks } from "@/data/data";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -26,15 +27,8 @@ export default function Navbar() {
         setLocale(locale === "en" ? "ar" : "en");
     }
 
-    const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "Products", href: "/products" },
-        { name: "About Us", href: "/about" },
-        { name: "Contact", href: "/contact" },
-    ];
-
     return (
-        <nav className="sticky top-0 z-50 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white transition-colors duration-300">
+        <nav className="fixed top-0 z-50 w-full bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white transition-colors duration-300">
             <div className="h-16 lg:h-20 px-4 lg:px-10">
                 <div className="flex items-center justify-between h-full">
 
@@ -42,13 +36,13 @@ export default function Navbar() {
 
                     {/* Desktop Navigation Links */}
                     <div className="hidden lg:flex items-center space-x-8">
-                        {navLinks.map((link) => (
+                        {NavLinks.map((link) => (
                             <Link
-                                key={link.name}
+                                key={link.href}
                                 href={link.href}
                                 className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors duration-200 whitespace-nowrap"
                             >
-                                {link.name}
+                                {pickLocale(link.name.en, link.name.ar, locale)}
                             </Link>
                         ))}
                     </div>
@@ -59,12 +53,13 @@ export default function Navbar() {
 
                         <Button
                             variant="ghost"
-                            size="icon"
+                            className="relative px-3 gap-2 text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors cursor-pointer"
                             onClick={toggleLocale}
-                            title={locale === "en" ? "العربية" : "English"}
-                            className="text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 cursor-pointer"
                         >
-                            <Languages className="h-5 w-5" />
+                            <Globe className="h-5 w-5" />
+                            <span className="absolute bottom-2.5 left-5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-orange-600 text-[9px] font-bold text-white shadow-sm">
+                                {locale === "en" ? "AR" : "EN"}
+                            </span>
                         </Button>
 
                         <UserMenu />
@@ -74,18 +69,18 @@ export default function Navbar() {
                         <ModeToggle />
                     </div>
 
-                    {/* Mobile Menu Actions */}
                     <div className="lg:hidden flex items-center gap-1.5">
                         <ModeToggle />
 
                         <Button
                             variant="ghost"
-                            size="icon"
+                            className="relative px-3 gap-2 text-neutral-600 dark:text-neutral-300 hover:text-orange-600 dark:hover:text-orange-500 transition-colors cursor-pointer"
                             onClick={toggleLocale}
-                            title={locale === "en" ? "العربية" : "English"}
-                            className="text-neutral-600 dark:text-neutral-300"
                         >
-                            <Languages className="h-5 w-5" />
+                            <Globe className="h-5 w-5" />
+                            <span className="absolute bottom-2.5 left-5 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-orange-600 text-[9px] font-bold text-white shadow-sm">
+                                {locale === "en" ? "AR" : "EN"}
+                            </span>
                         </Button>
 
                         <CartFavCount variant="mobile" />
@@ -115,14 +110,14 @@ export default function Navbar() {
                                     />
 
                                     <div className="mt-3 flex flex-col gap-1">
-                                        {navLinks.map((link) => (
+                                        {NavLinks.map((link) => (
                                             <Link
-                                                key={link.name}
+                                                key={link.href}
                                                 href={link.href}
                                                 onClick={() => setIsOpen(false)}
                                                 className="block px-3 py-2.5 rounded-lg text-base font-medium text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
                                             >
-                                                {link.name}
+                                                {pickLocale(link.name.en, link.name.ar, locale)}
                                             </Link>
                                         ))}
                                     </div>

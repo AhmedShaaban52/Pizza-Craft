@@ -1,3 +1,6 @@
+"use client"
+
+import { useLocale } from "@/context/locale-context";
 import CategoryCard from "./Cards/CategoryCard";
 
 interface Category {
@@ -14,17 +17,25 @@ interface CategorySectionProps {
 }
 
 export default function CategorySection({ categories }: CategorySectionProps) {
+    const { locale } = useLocale();
+
+    const t = {
+        title: locale === "ar" ? "استكشاف التصنيفات" : "Explore Categories",
+        subtitle: locale === "ar"
+            ? "اكتشف تشكيلاتنا المميزة حسب الاهتمام"
+            : "Discover premium selections by interest"
+    };
+
     if (!categories || categories.length === 0) return null;
 
     return (
         <div className="px-4 md:px-14 transition-colors duration-300">
-
-            <div className="mb-8 text-left">
+            <div className="mb-8 text-start">
                 <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900 dark:text-white">
-                    Our Main Categories
+                    {t.title}
                 </h2>
                 <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1 font-medium">
-                    Chef recommended pairings for your selection
+                    {t.subtitle}
                 </p>
             </div>
 

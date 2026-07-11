@@ -2,6 +2,7 @@ import Navbar from "@/app/(public)/_components/layout/Navbar";
 import { ReactNode } from "react";
 import Footer from "./_components/layout/Footer";
 import { LocaleProvider } from "@/context/locale-context";
+import ScrollToTop from "./_components/layout/ScrollToTop";
 
 export default function LayoutPublic({ children }: { children: ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export default function LayoutPublic({ children }: { children: ReactNode }) {
           {children}
         </main>
         <Footer />
+        <ScrollToTop />
       </div>
     </LocaleProvider>
   );
