@@ -4,14 +4,16 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { User, ChevronDown, Pizza } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { ModeToggle } from "@/components/ModeToggle";
 import { links } from "@/data/data";
 
 
 export function Sidebar() {
     const pathname = usePathname();
+    const t = useTranslations("Admin.sidebar");
     const [openMenu, setOpenMenu] = useState<string | null>(
-        links.find((l) => l.subItems?.some((s) => s.href === pathname))?.name ?? null
+        links.find((l) => l.subItems?.some((s) => s.href === pathname))?.id ?? null
     );
 
     return (
@@ -31,13 +33,13 @@ export function Sidebar() {
                         const Icon = link.icon;
 
                         if (link.subItems) {
-                            const isOpen = openMenu === link.name;
+                            const isOpen = openMenu === link.id;
                             const hasActiveChild = link.subItems.some((s) => s.href === pathname);
 
                             return (
-                                <div key={link.name}>
+                                <div key={link.id}>
                                     <button
-                                        onClick={() => setOpenMenu(isOpen ? null : link.name)}
+                                        onClick={() => setOpenMenu(isOpen ? null : link.id)}
                                         className={`flex items-center justify-between w-full px-3 py-2.5 rounded-lg text-sm font-medium tracking-wide transition-colors ${hasActiveChild
                                             ? "bg-orange-50 text-orange-700 dark:bg-orange-500/5 dark:text-orange-400"
                                             : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
@@ -45,7 +47,7 @@ export function Sidebar() {
                                     >
                                         <span className="flex items-center gap-3">
                                             <Icon className="h-4 w-4" />
-                                            {link.name}
+                                            {t(link.nameKey)}
                                         </span>
                                         <ChevronDown
                                             className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -65,13 +67,13 @@ export function Sidebar() {
                                                             : "text-neutral-500 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-900"
                                                             }`}
                                                     >
-                                                        {sub.name}
+                                                        {t(sub.nameKey)}
                                                     </Link>
                                                 );
                                             })}
                                         </div>
                                     )}
-                            </div>
+                                </div>
                             );
                         }
 
@@ -88,7 +90,7 @@ export function Sidebar() {
                                     }`}
                             >
                                 <Icon className="h-4 w-4" />
-                                {link.name}
+                                {t(link.nameKey)}
                             </Link>
                         );
                     })}
@@ -101,8 +103,8 @@ export function Sidebar() {
                         <User className="h-4 w-4 text-neutral-500 dark:text-neutral-400" />
                     </div>
                     <div>
-                        <p className="text-sm font-semibold leading-none">Admin User</p>
-                        <p className="text-xs text-neutral-400 mt-0.5">Super Admin</p>
+                        <p className="text-sm font-semibold leading-none">{t("adminUser")}</p>
+                        <p className="text-xs text-neutral-400 mt-0.5">{t("superAdmin")}</p>
                     </div>
                 </div>
 

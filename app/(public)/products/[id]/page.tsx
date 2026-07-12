@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getProductById, getProducts } from "@/app/(dashboard)/admin/products/actions";
 import { getFinalPrice } from "@/lib/getFinalPrice";
 import { getUserFavoriteIds } from "@/lib/favorites-actions";
@@ -8,14 +9,14 @@ import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteBut
 import { AddToCartButton } from "../_components/AddToCartButton";
 import { ProductImageGallery } from "../_components/ProductImageGallery";
 import { ProductLocalizedInfo } from "../_components/ProductLocalizedInfo";
-import ProductGridCard from "../_components/ProductGridCard";
-
+import ProductCard from "../_components/ProductCard";
 interface ProductDetailsPageProps {
     params: Promise<{ id: string }>;
 }
 
 export default async function ProductDetailsPage({ params }: ProductDetailsPageProps) {
     const { id } = await params;
+    const t = await getTranslations("ProductDetail");
 
     const [productResult, allProductsResult, favoriteIds, cartState] = await Promise.all([
         getProductById(id),
@@ -39,7 +40,7 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
         .slice(0, 4);
 
     return (
-        <div className="px-4 md:px-12 py-8">
+        <div className="px-4 md:px-12 py-8 mt-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <ProductImageGallery
                     image={product.image}
@@ -95,11 +96,11 @@ export default async function ProductDetailsPage({ params }: ProductDetailsPageP
             {relatedProducts.length > 0 && (
                 <div className="mt-16">
                     <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-6">
-                        You might also like
+                        {t("relatedProducts")}
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
                         {relatedProducts.map((p) => (
-                            <ProductGridCard key={p.id} product={p} />
+                            <ProductCard key={p.id} product={p} />
                         ))}
                     </div>
                 </div>

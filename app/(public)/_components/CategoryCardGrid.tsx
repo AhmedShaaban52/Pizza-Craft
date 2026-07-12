@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { type Category } from "@/lib/types";
 import { useLocale, pickLocale } from "@/context/locale-context";
 
@@ -11,12 +12,13 @@ interface CategoryCardGridProps {
 
 export function CategoryCardGrid({ categories }: CategoryCardGridProps) {
     const { locale } = useLocale();
+    const t = useTranslations("Categories");
 
     if (categories.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-neutral-300 dark:border-neutral-800 py-20 text-center">
                 <p className="text-neutral-500 dark:text-neutral-400">
-                    No categories available right now.
+                    {t("empty")}
                 </p>
             </div>
         );

@@ -1,9 +1,10 @@
-import React from 'react';
 import abouBg from "@/public/aboutBg.jpg";
+import { getTranslations } from "next-intl/server";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+    const t = await getTranslations("About")
     return (
-        <main className="min-h-screen bg-stone-50 text-stone-800 dark:bg-[#0C0A09] dark:text-[#E7E5E4] antialiased transition-colors duration-300">
+        <main className="min-h-screen md:pt-20 bg-stone-50 text-stone-800 dark:bg-[#0C0A09] dark:text-[#E7E5E4] antialiased transition-colors duration-300">
 
             {/* Section 1: Our Story (The Hearth Hero) */}
             <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
@@ -24,21 +25,21 @@ export default function AboutPage() {
                 <div className="relative z-20 w-full md:w-[95%] mx-auto px-6 md:px-12 flex justify-start items-center">
                     <div className="max-w-2xl">
                         <span className="inline-block px-3 py-1 bg-[#F97316]/10 border border-[#F97316]/20 text-[#F97316] text-xs font-semibold tracking-wider rounded-full mb-6 uppercase">
-                            Est. 2014
+                            {t("est")}
                         </span>
                         <h1 className="text-4xl md:text-6xl font-bold text-stone-900 dark:text-white mb-6 tracking-tight leading-tight">
-                            The Art of <br />
-                            <span className="text-[#F97316] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)]">the Craft</span>
+                            {t("TheArtOf")} <br />
+                            <span className="text-[#F97316] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)]">{t("theCraft")}</span>
                         </h1>
                         <p className="text-stone-600 dark:text-stone-400 text-lg mb-8 leading-relaxed max-w-xl">
-                            At Pizza Craft, we believe that true artisanal excellence begins with time and patience. Our dedication to traditional sourdough fermentation and premium, hand-picked toppings defines every slice we serve. Its not just a meal; its a culinary heritage forged in the heat of our signature wood-fired hearth.
+                            {t("aboutDescription")}
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <button className="px-6 py-3.5 bg-[#F97316] text-white dark:text-black font-semibold rounded-lg hover:bg-[#EA580C] transition-all shadow-[0_0_25px_rgba(249,115,22,0.25)]">
-                                Explore Menu
+                                {t("exploreMenu")}
                             </button>
                             <button className="px-6 py-3.5 border border-[#F97316]/40 text-[#F97316] font-semibold rounded-lg hover:bg-[#F97316]/5 transition-all">
-                                View Locations
+                                {t("viewLocations")}
                             </button>
                         </div>
                     </div>
@@ -86,7 +87,7 @@ export default function AboutPage() {
                                     <svg className="w-12 h-12 text-[#F97316] mb-3 opacity-90 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v15m0-15c-3.5 0-6.5 2.5-6.5 6a6.5 6.5 0 006.5 6.5m0-12.5c3.5 0 6.5 2.5 6.5 6a6.5 6.5 0 01-6.5 6.5" />
                                     </svg>
-                                    <p className="text-xs font-semibold tracking-widest text-stone-600 dark:text-stone-300 uppercase">100% Organic Sourcing</p>
+                                    <p className="text-xs font-semibold tracking-widest text-stone-600 dark:text-stone-300 uppercase">{t("organicSourcing")}</p>
                                 </div>
                             </div>
                         </div>
@@ -95,11 +96,11 @@ export default function AboutPage() {
                     {/* Right: Content & List */}
                     <div className="lg:pl-8">
                         <h2 className="text-3xl md:text-4xl font-bold text-stone-900 dark:text-white mb-6 tracking-tight leading-tight">
-                            Pure Excellence <br />
-                            <span className="text-[#F97316]">Without Compromise</span>
+                            {t("pureExcellence")} <br />
+                            <span className="text-[#F97316]">{t("withoutCompromise")}</span>
                         </h2>
                         <p className="text-stone-600 dark:text-stone-400 text-base mb-10 leading-relaxed">
-                            We dont cut corners. From the moisture content of our flour to the specific altitude where our tomatoes are grown, every detail is considered to provide the ultimate pizza experience.
+                            {t("aboutDescriptionSecond")}
                         </p>
 
                         <div className="space-y-8">
@@ -111,8 +112,8 @@ export default function AboutPage() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white mb-1">24-Hour Fermentation</h3>
-                                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">Our signature sourdough rests for a full day to develop a complex flavor profile and light, airy crust.</p>
+                                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white mb-1">{t("24HourFermentation")}</h3>
+                                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">{t("value1Desc")}</p>
                                 </div>
                             </div>
 
@@ -124,8 +125,8 @@ export default function AboutPage() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white mb-1">Locally Sourced</h3>
-                                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">We partner with local urban farms to ensure our produce is harvested and delivered within hours.</p>
+                                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white mb-1">{t("value2Title")}</h3>
+                                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">{t("value2Desc")}</p>
                                 </div>
                             </div>
 
@@ -137,8 +138,8 @@ export default function AboutPage() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white mb-1">Artisanal Toppings</h3>
-                                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">From hand-stretched mozzarella to house-cured meats, every topping is a masterpiece of flavor.</p>
+                                    <h3 className="text-lg font-semibold text-stone-900 dark:text-white mb-1">{t("value3Title")}</h3>
+                                    <p className="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">{t("value3Desc")}</p>
                                 </div>
                             </div>
                         </div>

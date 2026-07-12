@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { addToCart, updateCartQuantity, getCartQuantityForProduct } from "@/lib/cart-actions";
 
 interface AddToCartButtonProps {
@@ -21,6 +22,7 @@ export function AddToCartButton({
 }: AddToCartButtonProps) {
     const [quantity, setQuantity] = useState(initialQuantity);
     const [cartId, setCartId] = useState<string | null>(initialCartId);
+    const t = useTranslations("Products");
     const syncTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
     const pendingQuantity = useRef(initialQuantity);
 
@@ -84,7 +86,7 @@ export function AddToCartButton({
                 className={`w-full h-9 rounded-lg bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer ${className ?? ""}`}
             >
                 <ShoppingCart className="h-4 w-4" />
-                Add to Cart
+                {t("addToCart")}
             </button>
         );
     }

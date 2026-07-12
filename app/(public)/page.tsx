@@ -38,15 +38,13 @@ export default async function HomePage() {
   return (
     <div className="bg-neutral-50 dark:bg-neutral-950 min-h-screen">
       <OfferSlider offers={activeOffers} />
-      
-      <SpecialsSection/>
+
+      <SpecialsSection />
 
       <CategorySection categories={categories} />
 
       <BestSellerSection
         products={featuredProducts}
-        title="You might also like"
-        subtitle="Chef recommended pairings for your selection"
       />
     </div>
   );

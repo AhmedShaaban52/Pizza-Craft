@@ -3,10 +3,11 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useState,
+  useTransition,
   type ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 
 export type Locale = "en" | "ar";
 
@@ -16,12 +17,14 @@ interface LocaleContextValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   dir: "ltr" | "rtl";
+  isPending: boolean;
 }
 
 const LocaleContext = createContext<LocaleContextValue>({
   locale: "en",
   setLocale: () => { },
   dir: "ltr",
+  isPending: false,
 });
 
 function readCookieLocale(): Locale {
@@ -31,24 +34,24 @@ function readCookieLocale(): Locale {
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [locale, setLocaleState] = useState<Locale>(() => {
     return readCookieLocale();
   });
 
   function setLocale(next: Locale) {
-    setLocaleState(next);
     document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=31536000`;
+    startTransition(() => {
+      setLocaleState(next);
+      router.refresh();
+    });
   }
 
   const dir = locale === "ar" ? "rtl" : "ltr";
 
-  useEffect(() => {
-    document.documentElement.dir = dir;
-    document.documentElement.lang = locale;
-  }, [locale, dir]);
-
   return (
-    <LocaleContext.Provider value={{ locale, setLocale, dir }}>
+    <LocaleContext.Provider value={{ locale, setLocale, dir, isPending }}>
       {children}
     </LocaleContext.Provider>
   );

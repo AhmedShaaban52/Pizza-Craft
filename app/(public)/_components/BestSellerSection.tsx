@@ -1,27 +1,16 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Product } from "@/lib/types";
 import BestSellerCard from "../products/_components/BestSellerCard";
-import { useLocale } from "@/context/locale-context";
 
 interface BestSellerSectionProps {
     products: Product[];
-    title?: string;
-    subtitle?: string;
 }
 
-export default function BestSellerSection({
-    products,
-    title = "You might also like",
-    subtitle = "Chef recommended pairings for your selection",
-}: BestSellerSectionProps) {
-    const { locale } = useLocale();
-
-    const t = {
-        title: locale === "ar" ? "قد يعجبك أيضاً" : title,
-        subtitle: locale === "ar" ? "ترشيحات الشيف لك" : subtitle,
-    };
+export default function BestSellerSection({ products }: BestSellerSectionProps) {
+    const t = useTranslations("BestSellers");
 
     if (!products || products.length === 0) return null;
 
@@ -33,10 +22,10 @@ export default function BestSellerSection({
                 <div className="flex items-end justify-between mb-8">
                     <div className="space-y-1 text-start">
                         <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-neutral-900 dark:text-white">
-                            {t.title}
+                            {t("title")}
                         </h2>
                         <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-medium">
-                            {t.subtitle}
+                            {t("subtitle")}
                         </p>
                     </div>
 

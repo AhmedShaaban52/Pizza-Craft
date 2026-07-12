@@ -79,7 +79,7 @@ export default function BestSellerCard({
                 </div>
 
                 <p className="mt-2 text-xs text-neutral-500 dark:text-neutral-500 leading-relaxed line-clamp-2 h-8">
-                    {localizedDescription || "Fresh premium ingredients baked to perfection in our stone oven."}
+                    {localizedDescription}
                 </p>
 
                 <div className="mt-5 flex items-center justify-between gap-3">

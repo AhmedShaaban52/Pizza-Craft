@@ -8,19 +8,19 @@ import { useLocale, pickLocale } from "@/context/locale-context";
 import Image from "next/image";
 import Link from "next/link";
 
-interface ProductGridCardProps {
+interface ProductCardProps {
     product: Product;
     isFavorited?: boolean;
     cartQuantity?: number;
     cartId?: string | null;
 }
 
-export default function ProductGridCard({
+export default function ProductCard({
     product,
     isFavorited = false,
     cartQuantity = 0,
     cartId = null,
-}: ProductGridCardProps) {
+}: ProductCardProps) {
     const { locale } = useLocale();
     const localizedName = pickLocale(product.name, product.nameAr, locale);
     const localizedDescription = pickLocale(

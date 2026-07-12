@@ -1,19 +1,30 @@
 import { LayoutDashboard, Users, ShoppingCart, Package } from "lucide-react";
 
 export const links = [
-  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   {
-    name: "Products",
+    id: "dashboard",
+    nameKey: "dashboard",
+    href: "/admin",
+    icon: LayoutDashboard,
+  },
+  {
+    id: "products",
+    nameKey: "products",
     icon: Package,
     subItems: [
-      { name: "All Products", href: "/admin/products" },
-      { name: "Categories", href: "/admin/categories" },
-      { name: "Deals & Offers", href: "/admin/offers" },
-      { name: "Coupons", href: "/admin/coupons" },
+      { id: "allProducts", nameKey: "allProducts", href: "/admin/products" },
+      { id: "categories", nameKey: "categories", href: "/admin/categories" },
+      { id: "dealsOffers", nameKey: "dealsOffers", href: "/admin/offers" },
+      { id: "coupons", nameKey: "coupons", href: "/admin/coupons" },
     ],
   },
-  { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
-  { name: "USERS", href: "/admin/users", icon: Users },
+  {
+    id: "orders",
+    nameKey: "orders",
+    href: "/admin/orders",
+    icon: ShoppingCart,
+  },
+  { id: "users", nameKey: "users", href: "/admin/users", icon: Users },
 ];
 
 export const NavLinks = [

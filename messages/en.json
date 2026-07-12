@@ -1,0 +1,97 @@
+{
+  "Categories": {
+    "pageTitle": "Explore Our Menu",
+    "pageSubtitle": "Browse by category and find your next favorite.",
+    "sectionTitle": "Explore Categories",
+    "sectionSubtitle": "Discover premium selections by interest",
+    "empty": "No categories available right now."
+  },
+  "Products": {
+    "pageTitle": "Our Menu",
+    "pageDescription": "Handcrafted pizzas, made fresh to order.",
+    "itemsFound": "{count, plural, one {item found} other {items found}}",
+    "addToCart": "Add to Cart",
+    "filterTitle": "Filters",
+    "clearAll": "Clear all",
+    "clear": "Clear filters",
+    "searchTitle": "Search",
+    "searchPlaceholder": "Search pizzas...",
+    "categoryTitle": "Category",
+    "priceRange": "Price range",
+    "onSaleOnly": "On sale only",
+    "itemsCount": "{count, plural, one {item} other {items}}",
+    "noItems": "No items match your filters."
+  },
+  "ProductDetail": {
+    "relatedProducts": "You might also like"
+  },
+  "About": {
+    "est": "Est. 2014",
+    "TheArtOf": "The Art of",
+    "theCraft": "the Craft",
+    "aboutDescription": "At Pizza Craft, we believe that true artisanal excellence begins with time and patience. Our dedication to traditional sourdough fermentation and premium, hand-picked toppings defines every slice we serve. It's not just a meal; it's a culinary heritage forged in the heat of our signature wood-fired hearth.",
+    "exploreMenu": "Explore Menu",
+    "viewLocations": "View Locations",
+    "pureExcellence": "Pure Excellence",
+    "organicSourcing": "100% Organic Sourcing",
+    "withoutCompromise": "Without Compromise",
+    "aboutDescriptionSecond": "We don't cut corners. From the moisture content of our flour to the specific altitude where our tomatoes are grown, every detail is considered to provide the ultimate pizza experience.",
+    "24HourFermentation": "24-Hour Fermentation",
+    "value1Desc": "Our signature sourdough rests for a full day to develop a complex flavor profile and light, airy crust.",
+    "value2Title": "Locally Sourced",
+    "value2Desc": "We partner with local urban farms to ensure our produce is harvested and delivered within hours.",
+    "value3Title": "Artisanal Toppings",
+    "value3Desc": "From hand-stretched mozzarella to house-cured meats, every topping is a masterpiece of flavor."
+  },
+  "Contact": {
+    "connect": "Connect",
+    "getInTouch": "Get in Touch",
+    "heroDescription": "Whether you are looking for a bespoke catering experience or have inquiries about our artisanal sourdough process, we are here to craft the perfect response.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "subjectLabel": "Subject",
+    "option1": "General Inquiry",
+    "option2": "Catering Request",
+    "option3": "Wholesale Partnerships",
+    "option4": "Feedback",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell us more about your inquiry...",
+    "submitButton": "Send Message",
+    "flagshipTitle": "Our Flagship",
+    "address1": "Artisans Way, 102",
+    "address2": "Brooklyn, NY 11201",
+    "phone": "+1 (555) 234-5678",
+    "hours": "Mon - Sun: 11am - 10pm",
+    "emailContact": "hello@pizzacraft.com",
+    "supportTime": "Support within 24h",
+    "mapButton": "View on Interactive Map",
+    "faqTitle": "Quick Answers",
+    "faqDesc": "Find instant help with our most frequent requests",
+    "deliveryTitle": "Delivery Zones",
+    "deliveryDesc": "Check if we craft and deliver in your specific neighborhood.",
+    "cateringTitle": "Catering Menu",
+    "cateringDesc": "Professional sourdough events for groups of 10 to 200 people.",
+    "trackingTitle": "Order Tracking",
+    "trackingDesc": "Monitor your pizza is journey from the oven to your doorstep."
+  },
+  "Admin": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "allProducts": "All Products",
+      "categories": "Categories",
+      "dealsOffers": "Deals & Offers",
+      "coupons": "Coupons",
+      "orders": "Orders",
+      "users": "Users",
+      "adminUser": "Admin User",
+      "superAdmin": "Super Admin"
+    }
+  },
+  "BestSellers": {
+    "title": "New Arrivals",
+    "subtitle": "Chef recommended pairings for your selection"
+  }
+}

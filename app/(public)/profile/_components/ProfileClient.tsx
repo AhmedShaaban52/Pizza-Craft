@@ -39,11 +39,9 @@ export default function ProfileClient({ user }: ProfileClientProps) {
 console.log(user);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex">
-      {/* ── Main content ── */}
+    <div className="min-h-screen bg-background text-foreground flex pt-16 md:pt-20">
       <main className="w-11/12 px-12 py-10 space-y-8">
 
-        {/* Avatar + name */}
         <div className="flex items-center gap-6">
           <div className="relative shrink-0">
             {user.image ? (

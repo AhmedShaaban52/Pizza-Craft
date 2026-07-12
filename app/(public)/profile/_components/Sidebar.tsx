@@ -15,7 +15,7 @@ export function ProfileSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-52 shrink-0 border-r border-border bg-card py-6 px-3 flex flex-col gap-1">
+    <aside className="w-52 shrink-0 pt-20 md:pt-28 border-r border-border bg-card py-6 px-3 flex flex-col gap-1">
       {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
         const active = href === "/profile"
           ? pathname === href
