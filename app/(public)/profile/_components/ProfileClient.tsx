@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { User, Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ProfileUser {
   id: string;
@@ -36,11 +37,10 @@ function formatDate(date: Date) {
 }
 
 export default function ProfileClient({ user }: ProfileClientProps) {
-console.log(user);
-
+ const t = useTranslations("Profile");
   return (
-    <div className="min-h-screen bg-background text-foreground flex pt-16 md:pt-20">
-      <main className="w-11/12 px-12 py-10 space-y-8">
+    <div className="min-h-screen bg-background text-foreground md:flex pt-5 md:pt-20">
+      <main className="w-full md:w-[98%] px-3 md:px-12 md:py-10  space-y-8">
 
         <div className="flex items-center gap-6">
           <div className="relative shrink-0">
@@ -53,8 +53,8 @@ console.log(user);
                 className="w-28 h-28 rounded-full border-2 border-border object-cover"
               />
             ) : (
-              <div className="w-28 h-28 rounded-full border-2 border-border bg-orange-500 flex items-center justify-center">
-                <span className="text-3xl font-bold text-white">
+              <div className="size-20 md:size-28 rounded-full border-2 border-border bg-orange-500 flex items-center justify-center">
+                <span className="text-lg md:text-3xl font-bold text-white">
                   {getInitials(user.name)}
                 </span>
               </div>
@@ -68,9 +68,9 @@ console.log(user);
           </div>
 
           <div>
-            <h1 className="text-4xl font-bold tracking-tight">{user.name}</h1>
+            <h1 className="text-lg md:text-4xl font-bold tracking-tight">{user.name}</h1>
             <p className="text-sm text-orange-500 mt-1">
-              {user.role ?? "Member"} • Joined {formatDate(user.createdAt)}
+              {user.role ?? "Member"} • {t("joined")} {formatDate(user.createdAt)}
             </p>
           </div>
         </div>
@@ -80,19 +80,19 @@ console.log(user);
           <div className="flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-2.5">
               <User className="w-4 h-4 text-orange-500" />
-              <span className="font-semibold text-sm">Personal Information</span>
+              <span className="font-semibold text-sm">{t("personalInformation")}</span>
             </div>
-            <button className="text-orange-500 text-sm font-medium hover:text-orange-400 transition-colors">
-              Edit Info
+            <button className="text-orange-500 text-sm font-medium text-start hover:text-orange-400 transition-colors">
+              {t("editInfo")}
             </button>
           </div>
 
-          <div className="px-6 pb-6 grid grid-cols-2 gap-x-8 gap-y-5">
-            <Field label="Full Legal Name" value={user.name} />
-            <Field label="Email Address" value={user.email} highlight />
+          <div className="px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
+            <Field label={t("fullName")} value={user.name} />
+            <Field label={t("emailAddress")} value={user.email} highlight />
             <Field
-              label="Phone Number"
-              value={user.phoneNumber ?? "Not provided"}
+              label={t("phoneNumber")}
+              value={user.phoneNumber ?? t("notProvided")}
               muted={!user.phoneNumber}
             />
           </div>
@@ -120,13 +120,12 @@ function Field({
         {label}
       </p>
       <p
-        className={`text-sm font-medium ${
-          highlight
+        className={`text-sm font-medium ${highlight
             ? "text-orange-400"
             : muted
-            ? "text-muted-foreground"
-            : "text-foreground"
-        }`}
+              ? "text-muted-foreground"
+              : "text-foreground"
+          }`}
       >
         {value}
       </p>

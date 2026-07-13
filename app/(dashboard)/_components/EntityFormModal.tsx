@@ -23,6 +23,7 @@ import { type ModalField } from "@/lib/types";
 import { UploadDropzone } from "@/components/UploadThingReexported";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 type ActionResult = { success: true } | { success: false; error: string };
 
@@ -120,6 +121,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
     onUpdate,
     idKey = "id" as keyof T,
 }: EntityFormModalProps<T>) {
+    const t = useTranslations("Admin");
     const [values, setValues] = useState<FormValues>(() =>
         computeInitialValues(mode, item, fields)
     );
@@ -180,7 +182,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
             <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>
-                        {mode === "create" ? `Add ${title}` : `Edit ${title}`}
+                        {mode === "create" ? t("add", { title }) : t("edit", { title })}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -208,7 +210,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                         onValueChange={(v) => setValue(field.name, v)}
                                     >
                                         <SelectTrigger id={field.name} className="w-full">
-                                            <SelectValue placeholder={field.placeholder ?? "Select..."} />
+                                            <SelectValue placeholder={field.placeholder ?? t("selectPlaceholder")} />
                                         </SelectTrigger>
                                         <SelectContent position="popper" sideOffset={3}>
                                             {field.options?.map((opt) => (
@@ -242,7 +244,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                                 );
                                             }}
                                             onUploadError={(error: Error) => {
-                                                setError(`Upload failed: ${error.message}`);
+                                                setError(t("uploadFailed", { message: error.message }));
                                             }}
                                         />
 
@@ -289,7 +291,7 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                                                 setValue(field.name, res[0]?.ufsUrl ?? "");
                                             }}
                                             onUploadError={(error: Error) => {
-                                                setError(`Upload failed: ${error.message}`);
+                                                setError(t("uploadFailed", { message: error.message }));
                                             }}
                                         />
 
@@ -346,14 +348,14 @@ function EntityFormModalInner<T extends Record<string, unknown>>({
                         onClick={() => onOpenChange(false)}
                         disabled={loading}
                     >
-                        Cancel
+                        {t("cancel")}
                     </Button>
                     <Button
                         onClick={handleSubmit}
                         disabled={loading}
                         className="bg-orange-600 hover:bg-orange-700 text-white"
                     >
-                        {loading ? "Saving..." : mode === "create" ? `Add ${title}` : "Save Changes"}
+                        {loading ? t("saving") : mode === "create" ? t("add", { title }) : t("saveChanges")}
                     </Button>
                 </DialogFooter>
             </DialogContent>

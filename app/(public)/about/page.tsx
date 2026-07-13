@@ -5,8 +5,6 @@ export default async function AboutPage() {
     const t = await getTranslations("About")
     return (
         <main className="min-h-screen md:pt-20 bg-stone-50 text-stone-800 dark:bg-[#0C0A09] dark:text-[#E7E5E4] antialiased transition-colors duration-300">
-
-            {/* Section 1: Our Story (The Hearth Hero) */}
             <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0 z-0">
@@ -144,7 +142,6 @@ export default async function AboutPage() {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </section>
         </main>

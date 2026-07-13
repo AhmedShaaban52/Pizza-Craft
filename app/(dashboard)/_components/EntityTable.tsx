@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Pencil, Trash2, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { type ModalField } from "@/lib/types";
 import { EntityFormModal } from "./EntityFormModal";
@@ -40,6 +41,7 @@ export function EntityTable<T extends Record<string, unknown>>({
     idKey = "id" as keyof T,
     nameKey = "name" as keyof T,
 }: EntityTableProps<T>) {
+    const t = useTranslations("Admin");
     const [addOpen, setAddOpen] = useState(false);
     const [editItem, setEditItem] = useState<T | null>(null);
     const [deleteItem, setDeleteItem] = useState<T | null>(null);
@@ -52,7 +54,7 @@ export function EntityTable<T extends Record<string, unknown>>({
                     className="bg-orange-600 hover:bg-orange-700 text-white"
                 >
                     <Plus className="h-4 w-4 mr-2" />
-                    Add {title}
+                    {t("add", { title })}
                 </Button>
             </div>
 
@@ -65,7 +67,7 @@ export function EntityTable<T extends Record<string, unknown>>({
                                     {col.label}
                                 </th>
                             ))}
-                            <th className="px-4 py-3 font-medium text-right">Actions</th>
+                            <th className="px-4 py-3 font-medium text-right">{t("actions")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,7 +77,7 @@ export function EntityTable<T extends Record<string, unknown>>({
                                     colSpan={columns.length + 1}
                                     className="px-4 py-8 text-center text-neutral-400 dark:text-neutral-500"
                                 >
-                                    No {title.toLowerCase()} found.
+                                    {t("noItemsFound", { title: title.toLowerCase() })}
                                 </td>
                             </tr>
                         )}
@@ -110,7 +112,7 @@ export function EntityTable<T extends Record<string, unknown>>({
                                                     className={`h-1.5 w-1.5 rounded-full ${item[col.key as keyof T] ? "bg-orange-500" : "bg-neutral-400"
                                                         }`}
                                                 />
-                                                {item[col.key as keyof T] ? "Active" : "Inactive"}
+                                                {item[col.key as keyof T] ? t("active") : t("inactive")}
                                             </span>
                                         ) : (
                                             <span className="text-neutral-700 dark:text-neutral-300">

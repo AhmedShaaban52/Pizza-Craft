@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, ShoppingCart, Package } from "lucide-react";
+import { LayoutDashboard, Users, ShoppingCart, Package, User, ClipboardList, Heart, ShoppingBasket } from "lucide-react";
 
 export const links = [
   {
@@ -32,4 +32,27 @@ export const NavLinks = [
   { name: { en: "Products", ar: "المنتجات" }, href: "/products" },
   { name: { en: "About Us", ar: "من نحن" }, href: "/about" },
   { name: { en: "Contact", ar: "اتصل بنا" }, href: "/contact" },
+];
+
+export const NAV_ITEMS = [
+  {
+    label: { en: "Account Details", ar: "تفاصيل الحساب" },
+    href: "/profile",
+    icon: User,
+  },
+  {
+    label: { en: "My Orders", ar: "طلباتي" },
+    href: "/profile/orders",
+    icon: ClipboardList,
+  },
+  {
+    label: { en: "My Favorites", ar: "المفضلة" },
+    href: "/profile/wishlist",
+    icon: Heart,
+  },
+  {
+    label: { en: "My Cart", href: "/profile/cart", ar: "عربة التسوق" },
+    href: "/profile/cart",
+    icon: ShoppingBasket,
+  },
 ];

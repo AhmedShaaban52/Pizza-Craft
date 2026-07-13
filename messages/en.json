@@ -9,7 +9,7 @@
   "Products": {
     "pageTitle": "Our Menu",
     "pageDescription": "Handcrafted pizzas, made fresh to order.",
-    "itemsFound": "{count, plural, one {item found} other {items found}}",
+    "itemsFound": "{count, plural, one {# item found} other {# items found}}",
     "addToCart": "Add to Cart",
     "filterTitle": "Filters",
     "clearAll": "Clear all",
@@ -19,11 +19,63 @@
     "categoryTitle": "Category",
     "priceRange": "Price range",
     "onSaleOnly": "On sale only",
-    "itemsCount": "{count, plural, one {item} other {items}}",
+    "itemsCount": "{count, plural, one {# item} other {# items}}",
     "noItems": "No items match your filters."
   },
   "ProductDetail": {
     "relatedProducts": "You might also like"
+  },
+  "Admin": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "allProducts": "All Products",
+    "categories": "Categories",
+    "dealsOffers": "Deals & Offers",
+    "coupons": "Coupons",
+    "orders": "Orders",
+    "users": "Users",
+    "adminUser": "Admin User",
+    "superAdmin": "Super Admin",
+    "add": "Add {title}",
+    "edit": "Edit {title}",
+    "delete": "Delete {title}",
+    "deleteAction": "Delete",
+    "deleting": "Deleting...",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "noItemsFound": "No {title} found.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "selectPlaceholder": "Select...",
+    "uploadFailed": "Upload failed: {message}",
+    "deleteConfirm": "Are you sure you want to delete <b>{name}</b>? This action cannot be undone.",
+    "deleteConfirmGeneric": "Are you sure you want to delete this item? This action cannot be undone."
+  },
+  "BestSellers": {
+    "title": "New Arrivals",
+    "subtitle": "Chef recommended pairings for your selection"
+  },
+  "Cart": {
+    "orderSummary": "Order Summary",
+    "couponCode": "Coupon Code",
+    "enterCode": "Enter code...",
+    "apply": "Apply",
+    "applying": "...",
+    "subtotal": "Subtotal",
+    "tax": "Tax (10%)",
+    "delivery": "Delivery",
+    "free": "FREE",
+    "couponLabel": "Coupon ({code})",
+    "total": "Total",
+    "checkoutButton": "Proceed to Checkout",
+    "redirecting": "Redirecting...",
+    "secureNote": "Secure 256-bit SSL encrypted payments.",
+    "freeDelivery": "Free Delivery",
+    "freeDeliveryDesc": "Delivered fresh in 30–45 minutes.",
+    "securePayment": "Secure Payment",
+    "securePaymentDesc": "Your payment info is always protected."
   },
   "About": {
     "est": "Est. 2014",
@@ -76,22 +128,51 @@
     "trackingTitle": "Order Tracking",
     "trackingDesc": "Monitor your pizza is journey from the oven to your doorstep."
   },
-  "Admin": {
-    "sidebar": {
-      "dashboard": "Dashboard",
-      "products": "Products",
-      "allProducts": "All Products",
-      "categories": "Categories",
-      "dealsOffers": "Deals & Offers",
-      "coupons": "Coupons",
-      "orders": "Orders",
-      "users": "Users",
-      "adminUser": "Admin User",
-      "superAdmin": "Super Admin"
-    }
+  "Profile": {
+    "joined": "Joined",
+    "personalInformation":"Personal Information",
+    "editInfo":"Edit Info",
+    "fullName":"Full Name",
+    "emailAddress":"Email Address",
+    "phoneNumber": "Phone Number",
+    "notProvided":"Not provided"
   },
-  "BestSellers": {
-    "title": "New Arrivals",
-    "subtitle": "Chef recommended pairings for your selection"
+  "Coupons": {
+    "pageTitle": "Coupons",
+    "entityName": "Coupon",
+    "columns": {
+      "code": "Code",
+      "discount": "Discount",
+      "minOrder": "Min Order",
+      "used": "Used",
+      "expires": "Expires",
+      "status": "Status"
+    },
+    "fields": {
+      "code": {
+        "label": "Coupon Code",
+        "placeholder": "e.g. SAVE20"
+      },
+      "discountType": {
+        "label": "Discount Type",
+        "percent": "Percent",
+        "amount": "Amount"
+      },
+      "discountValue": {
+        "label": "Discount Value"
+      },
+      "minOrderAmount": {
+        "label": "Minimum Order Amount"
+      },
+      "maxUses": {
+        "label": "Max Uses"
+      },
+      "startDate": {
+        "label": "Start Date"
+      },
+      "endDate": {
+        "label": "End Date"
+      }
+    }
   }
 }

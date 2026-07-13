@@ -11,7 +11,7 @@ import { links } from "@/data/data";
 
 export function Sidebar() {
     const pathname = usePathname();
-    const t = useTranslations("Admin.sidebar");
+    const t = useTranslations("Admin");
     const [openMenu, setOpenMenu] = useState<string | null>(
         links.find((l) => l.subItems?.some((s) => s.href === pathname))?.id ?? null
     );

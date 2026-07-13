@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
     Dialog,
     DialogContent,
@@ -30,6 +31,7 @@ export function DeleteEntityModal({
     itemId,
     onDelete,
 }: DeleteEntityModalProps) {
+    const t = useTranslations("Admin");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -54,15 +56,18 @@ export function DeleteEntityModal({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-sm">
                 <DialogHeader>
-                    <DialogTitle>Delete {title}</DialogTitle>
+                    <DialogTitle>{t("delete", { title })}</DialogTitle>
                     <DialogDescription>
-                        Are you sure you want to delete{" "}
-                        {itemName && (
-                            <span className="font-semibold text-neutral-900 dark:text-white">
-                                {itemName}
-                            </span>
-                        )}
-                        ? This action cannot be undone.
+                        {itemName
+                            ? t.rich("deleteConfirm", {
+                                name: itemName,
+                                b: (chunks) => (
+                                    <span className="font-semibold text-neutral-900 dark:text-white">
+                                        {chunks}
+                                    </span>
+                                ),
+                            })
+                            : t("deleteConfirmGeneric")}
                     </DialogDescription>
                 </DialogHeader>
 
@@ -76,14 +81,14 @@ export function DeleteEntityModal({
                         onClick={() => onOpenChange(false)}
                         disabled={loading}
                     >
-                        Cancel
+                        {t("cancel")}
                     </Button>
                     <Button
                         onClick={handleDelete}
                         disabled={loading}
                         className="bg-red-600 hover:bg-red-700 text-white"
                     >
-                        {loading ? "Deleting..." : "Delete"}
+                        {loading ? t("deleting") : t("deleteAction")}
                     </Button>
                 </DialogFooter>
             </DialogContent>
