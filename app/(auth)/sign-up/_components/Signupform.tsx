@@ -2,12 +2,15 @@
 
 import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { authClient } from "@/lib/auth-client";
 import { Eye, EyeOff, Loader2, Mail, Lock, User } from "lucide-react";
 import { GithubSignInButton } from "../../login/_components/GithubSignInButton";
 
 export function SignUpForm() {
     const router = useRouter();
+    const t = useTranslations("Auth.SignUp");
+    const tc = useTranslations("Auth.Common");
     const [isPending, startTransition] = useTransition();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -28,7 +31,7 @@ export function SignUpForm() {
             });
 
             if (result?.error) {
-                setError(result.error.message || "Failed to create an account. Try again.");
+                setError(result.error.message || t("genericError"));
             } else {
                 router.push("/");
             }
@@ -41,7 +44,7 @@ export function SignUpForm() {
 
             <div className="relative flex items-center gap-3">
                 <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800" />
-                <span className="text-xs text-neutral-500 dark:text-neutral-600 uppercase tracking-widest font-medium">or</span>
+                <span className="text-xs text-neutral-500 dark:text-neutral-600 uppercase tracking-widest font-medium">{tc("or")}</span>
                 <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800" />
             </div>
 
@@ -50,7 +53,7 @@ export function SignUpForm() {
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                     <input
                         type="text"
-                        placeholder="Full name"
+                        placeholder={t("fullNamePlaceholder")}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
@@ -63,7 +66,7 @@ export function SignUpForm() {
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                     <input
                         type="email"
-                        placeholder="Email address"
+                        placeholder={t("emailPlaceholder")}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -76,7 +79,7 @@ export function SignUpForm() {
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                     <input
                         type={showPassword ? "text" : "password"}
-                        placeholder="Password"
+                        placeholder={t("passwordPlaceholder")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -86,6 +89,7 @@ export function SignUpForm() {
                     <button
                         type="button"
                         onClick={() => setShowPassword((v) => !v)}
+                        aria-label={showPassword ? tc("hidePassword") : tc("showPassword")}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
                     >
                         {showPassword ? <EyeOff className="w-4 h-4 cursor-pointer" /> : <Eye className="w-4 h-4 cursor-pointer" />}
@@ -103,7 +107,7 @@ export function SignUpForm() {
                     disabled={isPending}
                     className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-60 cursor-pointer"
                 >
-                    {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Create Account"}
+                    {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("createAccount")}
                 </button>
             </form>
         </>

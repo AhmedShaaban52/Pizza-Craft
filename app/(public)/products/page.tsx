@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { getProducts, getProductsBySearch } from "@/app/(dashboard)/admin/products/actions";
 import { getCategories } from "@/app/(dashboard)/admin/categories/actions";
-import { getUserFavoriteIds } from "@/lib/favorites-actions";
 import { type ProductWithCategory } from "@/utils/ProductsFields";
 import { type Category } from "@/lib/types";
 import { ProductsFilter } from "./_components/ProductsFilter";
+import { getUserFavoriteIds } from "@/lib/actions/favorites-actions";
 
 interface ProductsPageProps {
     searchParams: Promise<{ search?: string; category?: string }>;

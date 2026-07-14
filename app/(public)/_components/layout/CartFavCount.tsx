@@ -4,8 +4,8 @@ import { useEffect, useState, useCallback } from "react";
 import { ShoppingCart, Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getCartCount } from "@/lib/cart-actions";
-import { getFavoritesCount } from "@/lib/favorites-actions";
+import { getFavoritesCount } from "@/lib/actions/favorites-actions";
+import { getCartCount } from "@/lib/actions/cart-actions";
 
 interface CartFavCountProps {
     variant?: "desktop" | "mobile";

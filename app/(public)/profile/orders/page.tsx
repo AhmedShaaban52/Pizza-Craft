@@ -3,46 +3,59 @@ import { requireUser } from "@/lib/requireUser";
 import { ShoppingBag, RotateCcw, ChevronRight, Zap, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { OrderItem, OrderWithItems } from "@/lib/types";
 
 export const revalidate = 0;
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({
+  status,
+  labels,
+}: {
+  status: string;
+  labels: { delivered: string; inProgress: string };
+}) {
   if (status === "paid" || status === "delivered") {
     return (
       <span className="inline-flex items-center gap-1.5 bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/30 dark:border-orange-500/40 text-orange-600 dark:text-orange-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
         <span className="w-1.5 h-1.5 rounded-full bg-orange-500 dark:bg-orange-400" />
-        {status === "paid" ? "Delivered" : status}
+        {status === "paid" ? labels.delivered : status}
       </span>
     );
   }
   return (
     <span className="inline-flex items-center gap-1.5 bg-yellow-500/10 dark:bg-yellow-500/20 border border-yellow-500/30 dark:border-yellow-500/40 text-yellow-600 dark:text-yellow-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
       <Clock className="w-3 h-3" />
-      In Progress
+      {labels.inProgress}
     </span>
   );
 }
 
 export default async function OrdersPage() {
   await requireUser();
+  const t = await getTranslations("Orders");
 
   const result = await getUserOrders();
   const orders = result.success ? result.data ?? [] : [];
+
+  const statusLabels = {
+    delivered: t("statusDelivered"),
+    inProgress: t("statusInProgress"),
+  };
 
   if (orders.length === 0) {
     return (
       <div className="min-h-[75vh] bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center gap-6 px-4">
         <ShoppingBag className="w-20 h-20 text-neutral-300 dark:text-neutral-700" />
-        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">No orders found yet</h2>
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">{t("emptyTitle")}</h2>
         <p className="text-neutral-500 dark:text-neutral-400 text-center max-w-sm">
-          Looks like you haven&apos;t made your choice yet. Explore our delicious menu and place your first order!
+          {t("emptySubtitle")}
         </p>
         <Link
           href="/products"
           className="bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold px-6 py-3 rounded-xl transition-colors"
         >
-          Explore Menu
+          {t("exploreMenu")}
         </Link>
       </div>
     );
@@ -51,9 +64,11 @@ export default async function OrdersPage() {
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 px-4 md:px-12 py-10">
       <div className="mb-10">
-        <h1 className="text-4xl font-black text-neutral-900 dark:text-white">Your <span className="text-orange-500">Orders</span></h1>
+        <h1 className="text-4xl font-black text-neutral-900 dark:text-white">
+          {t("titlePart1")} <span className="text-orange-500">{t("titlePart2")}</span>
+        </h1>
         <p className="text-neutral-500 dark:text-neutral-400 mt-2 text-sm max-w-md">
-          Relive the warmth of the hearth. Browse your past artisanal creations and bring back your favorites with a single click.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -67,6 +82,8 @@ export default async function OrdersPage() {
 
           const shortId = `#PC-${order.id.slice(0, 4).toUpperCase()}`;
           const isPaid = order.status === "paid";
+          const itemCount = order.items?.length ?? 0;
+          const extraCount = itemCount - 3;
 
           return (
             <div
@@ -75,10 +92,10 @@ export default async function OrdersPage() {
             >
               <div className="px-5 pt-5 pb-4 flex items-start justify-between gap-2">
                 <div>
-                  <StatusBadge status={order.status ?? "pending"} />
+                  <StatusBadge status={order.status ?? "pending"} labels={statusLabels} />
                   <h2 className="text-xl font-black text-neutral-900 dark:text-white mt-2">{shortId}</h2>
                   <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
-                    {formattedDate} · {order.items?.length ?? 0} item{(order.items?.length ?? 0) !== 1 ? "s" : ""}
+                    {formattedDate} · {t("itemsCount", { count: itemCount })}
                   </p>
                 </div>
                 <span className="text-lg font-black text-neutral-900 dark:text-white shrink-0">
@@ -110,9 +127,9 @@ export default async function OrdersPage() {
                     </span>
                   </div>
                 ))}
-                {(order.items?.length ?? 0) > 3 && (
+                {extraCount > 0 && (
                   <p className="text-xs text-neutral-400 dark:text-neutral-600 pl-9">
-                    +{(order.items?.length ?? 0) - 3} more item{(order.items?.length ?? 0) - 3 !== 1 ? "s" : ""}
+                    {t("moreItems", { count: extraCount })}
                   </p>
                 )}
               </div>
@@ -122,7 +139,7 @@ export default async function OrdersPage() {
                   href={`/profile/orders/${order.id}`}
                   className="flex items-center gap-1 text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white font-semibold transition-colors"
                 >
-                  View Details
+                  {t("viewDetails")}
                   <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
 
@@ -132,7 +149,7 @@ export default async function OrdersPage() {
                     className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white dark:text-black text-xs font-black px-4 py-2 rounded-lg transition-colors"
                   >
                     <RotateCcw className="w-3 h-3" />
-                    Reorder
+                    {t("reorder")}
                   </Link>
                 )}
               </div>

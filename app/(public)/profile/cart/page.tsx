@@ -1,6 +1,6 @@
 import { requireUser } from "@/lib/requireUser";
-import { getCartItems } from "@/lib/cart-actions";
 import CartClient from "./_components/CartClient";
+import { getCartItems } from "@/lib/actions/cart-actions";
 
 export const revalidate = 0;
 

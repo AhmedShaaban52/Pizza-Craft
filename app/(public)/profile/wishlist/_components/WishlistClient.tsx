@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowUpDown } from "lucide-react";
 import WishlistCard from "./WishlistCard";
-import { getFavorites } from "@/lib/favorites-actions";
+import { getFavorites } from "@/lib/actions/favorites-actions";
 
 export type WishlistItem = Awaited<
   ReturnType<typeof getFavorites>
@@ -35,7 +35,7 @@ export default function WishlistClient({ items }: { items: WishlistItem[] }) {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground px-6 md:px-12 py-10">
+    <div className="min-h-screen bg-background text-foreground px-6 md:px-12 pt-20 md:pt-24">
       {/* Header */}
       <div className="flex items-start justify-between mb-8">
         <div>

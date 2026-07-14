@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
+import { useTranslations } from "next-intl";
 import { authClient } from "@/lib/auth-client";
 import { Loader2, Mail, Lock, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,8 @@ type Step = "email" | "otp" | "password" | "done";
 
 export function ForgotPasswordForm() {
     const router = useRouter();
+    const t = useTranslations("Auth.ForgotPassword");
+    const tc = useTranslations("Auth.Common");
     const [isPending, startTransition] = useTransition();
     const [step, setStep] = useState<Step>("email");
 
@@ -28,7 +31,7 @@ export function ForgotPasswordForm() {
             const result = await authClient.emailOtp.requestPasswordReset({ email });
 
             if (result?.error) {
-                setError("Could not send code. Check your email and try again.");
+                setError(t("couldNotSendCode"));
             } else {
                 setStep("otp");
             }
@@ -48,7 +51,7 @@ export function ForgotPasswordForm() {
         setError(null);
 
         if (password !== confirm) {
-            setError("Passwords don't match.");
+            setError(tc("passwordsDontMatch"));
             return;
         }
 
@@ -60,7 +63,7 @@ export function ForgotPasswordForm() {
             });
 
             if (result?.error) {
-                setError("Invalid or expired code. Please start over.");
+                setError(t("invalidOrExpiredCode"));
             } else {
                 setStep("done");
                 setTimeout(() => router.push("/login"), 2500);
@@ -75,20 +78,18 @@ export function ForgotPasswordForm() {
         });
     }
 
-    // ── Done ─────────────────────────────────────────────────────────────────
     if (step === "done") {
         return (
             <div className="text-center py-4 space-y-3">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/30 dark:border-orange-500/40">
                     <CheckCircle2 className="w-6 h-6 text-orange-500 dark:text-orange-400" />
                 </div>
-                <p className="text-neutral-900 dark:text-white font-bold">Password updated!</p>
-                <p className="text-sm text-neutral-500 dark:text-neutral-400">Redirecting you to sign in…</p>
+                <p className="text-neutral-900 dark:text-white font-bold">{tc("passwordUpdated")}</p>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400">{tc("redirectingToSignIn")}</p>
             </div>
         );
     }
 
-    // ── Step 1: Email ─────────────────────────────────────────────────────────
     if (step === "email") {
         return (
             <form onSubmit={handleRequestOtp} className="space-y-4">
@@ -96,7 +97,7 @@ export function ForgotPasswordForm() {
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                     <input
                         type="email"
-                        placeholder="Email address"
+                        placeholder={t("emailPlaceholder")}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -114,13 +115,12 @@ export function ForgotPasswordForm() {
                     disabled={isPending}
                     className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-60 cursor-pointer"
                 >
-                    {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Send Code"}
+                    {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("sendCode")}
                 </button>
             </form>
         );
     }
 
-    // ── Step 2: OTP ───────────────────────────────────────────────────────────
     if (step === "otp") {
         return (
             <div className="space-y-4">
@@ -128,9 +128,9 @@ export function ForgotPasswordForm() {
                     <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-orange-500/10 dark:bg-orange-500/20 border border-orange-500/30 dark:border-orange-500/40 mb-2">
                         <Mail className="w-5 h-5 text-orange-500 dark:text-orange-400" />
                     </div>
-                    <p className="text-sm font-bold text-neutral-900 dark:text-white">Enter the code</p>
+                    <p className="text-sm font-bold text-neutral-900 dark:text-white">{t("enterCode")}</p>
                     <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                        We sent a 6-digit code to{" "}
+                        {t("codeSentTo")}{" "}
                         <span className="text-orange-500 dark:text-orange-400 font-semibold">{email}</span>
                     </p>
                 </div>
@@ -156,18 +156,18 @@ export function ForgotPasswordForm() {
                         disabled={otp.length < 6}
                         className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-60 cursor-pointer"
                     >
-                        Continue
+                        {t("continueLabel")}
                     </button>
                 </form>
 
                 <p className="text-center text-xs text-neutral-500 dark:text-neutral-400">
-                    Didn&apos;t receive it?{" "}
+                    {t("didntReceiveIt")}{" "}
                     <button
                         onClick={handleResend}
                         disabled={isPending}
                         className="text-orange-500 hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300 font-semibold transition-colors disabled:opacity-50 cursor-pointer"
                     >
-                        {isPending ? "Sending…" : "Resend code"}
+                        {isPending ? t("sending") : t("resendCode")}
                     </button>
                 </p>
 
@@ -175,20 +175,19 @@ export function ForgotPasswordForm() {
                     onClick={() => { setStep("email"); setOtp(""); setError(null); }}
                     className="w-full text-xs text-neutral-400 hover:text-neutral-600 dark:text-neutral-600 dark:hover:text-neutral-400 transition-colors cursor-pointer"
                 >
-                    ← Use a different email
+                    {t("useDifferentEmail")}
                 </button>
             </div>
         );
     }
 
-    // ── Step 3: New password ──────────────────────────────────────────────────
     return (
         <form onSubmit={handleReset} className="space-y-3">
             <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                 <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="New password"
+                    placeholder={t("newPasswordPlaceholder")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -199,6 +198,7 @@ export function ForgotPasswordForm() {
                 <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? tc("hidePassword") : tc("showPassword")}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors"
                 >
                     {showPassword ? <EyeOff className="w-4 h-4 cursor-pointer" /> : <Eye className="w-4 h-4 cursor-pointer" />}
@@ -223,7 +223,7 @@ export function ForgotPasswordForm() {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                 <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Confirm password"
+                    placeholder={t("confirmPasswordPlaceholder")}
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}
                     required
@@ -236,7 +236,7 @@ export function ForgotPasswordForm() {
             </div>
 
             {confirm && confirm !== password && (
-                <p className="text-xs text-red-500 dark:text-red-400">Passwords don&apos;t match</p>
+                <p className="text-xs text-red-500 dark:text-red-400">{tc("passwordsDontMatch")}</p>
             )}
 
             {error && (
@@ -248,7 +248,7 @@ export function ForgotPasswordForm() {
                 disabled={isPending || (!!confirm && confirm !== password)}
                 className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-60 cursor-pointer"
             >
-                {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Set New Password"}
+                {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : tc("setNewPassword")}
             </button>
         </form>
     );

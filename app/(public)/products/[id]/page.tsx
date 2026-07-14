@@ -2,14 +2,14 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getProductById, getProducts } from "@/app/(dashboard)/admin/products/actions";
 import { getFinalPrice } from "@/lib/getFinalPrice";
-import { getUserFavoriteIds } from "@/lib/favorites-actions";
-import { getCartQuantityForProduct } from "@/lib/cart-actions";
 import { type ProductWithCategory } from "@/utils/ProductsFields";
 import { FavoriteButton } from "@/app/(public)/favorites/_components/FavoriteButton";
 import { AddToCartButton } from "../_components/AddToCartButton";
 import { ProductImageGallery } from "../_components/ProductImageGallery";
 import { ProductLocalizedInfo } from "../_components/ProductLocalizedInfo";
 import ProductCard from "../_components/ProductCard";
+import { getUserFavoriteIds } from "@/lib/actions/favorites-actions";
+import { getCartQuantityForProduct } from "@/lib/actions/cart-actions";
 interface ProductDetailsPageProps {
     params: Promise<{ id: string }>;
 }

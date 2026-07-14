@@ -4,6 +4,7 @@ import { getUserOrders } from "@/lib/actions/checkoutActions";
 import { OrderWithItems, OrderItem } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import {
   Zap,
   MapPin,
@@ -14,13 +15,6 @@ import {
 
 export const revalidate = 0;
 
-const STATUS_STEPS = [
-  { key: "placed", label: "Placed" },
-  { key: "prepared", label: "Prepared" },
-  { key: "in_transit", label: "In Transit" },
-  { key: "delivered", label: "Delivered" },
-];
-
 function getActiveStep(status: string) {
   if (status === "delivered") return 3;
   if (status === "in_transit") return 2;
@@ -28,25 +22,38 @@ function getActiveStep(status: string) {
   return 1;
 }
 
-function OrderStatusTracker({ status }: { status: string }) {
+function OrderStatusTracker({
+  status,
+  t,
+}: {
+  status: string;
+  t: Awaited<ReturnType<typeof getTranslations<"OrderDetail">>>;
+}) {
   const activeStep = getActiveStep(status);
+
+  const steps = [
+    { key: "placed", label: t("stepPlaced") },
+    { key: "prepared", label: t("stepPrepared") },
+    { key: "in_transit", label: t("stepInTransit") },
+    { key: "delivered", label: t("stepDelivered") },
+  ];
 
   return (
     <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 shadow-sm">
       <h2 className="text-lg font-black text-neutral-900 dark:text-white flex items-center gap-2 mb-6">
         <Zap className="w-5 h-5 text-orange-500" />
-        Order Status
+        {t("orderStatus")}
       </h2>
 
       <div className="relative">
         <div className="absolute top-4 left-0 right-0 h-0.5 bg-neutral-200 dark:bg-neutral-700" />
         <div
           className="absolute top-4 left-0 h-0.5 bg-orange-500 transition-all"
-          style={{ width: `${(activeStep / (STATUS_STEPS.length - 1)) * 100}%` }}
+          style={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
         />
 
         <div className="relative grid grid-cols-4">
-          {STATUS_STEPS.map((step, i) => {
+          {steps.map((step, i) => {
             const isDone = i <= activeStep;
             const isCurrent = i === activeStep;
             return (
@@ -83,6 +90,7 @@ export default async function OrderDetailPage({
 }) {
   await requireUser();
   const { id } = await params;
+  const t = await getTranslations("OrderDetail");
 
   const result = await getUserOrders();
   if (!result.success) redirect("/profile/orders");
@@ -118,10 +126,10 @@ export default async function OrderDetailPage({
             href="/profile/orders"
             className="text-xs text-neutral-500 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-2 inline-block"
           >
-            ← Back to Orders
+            {t("backToOrders")}
           </Link>
-          <h1 className="text-3xl font-black text-neutral-900 dark:text-white">Order Details {shortId}</h1>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">Placed on {formattedDate}</p>
+          <h1 className="text-3xl font-black text-neutral-900 dark:text-white">{t("title")} {shortId}</h1>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">{t("placedOn", { date: formattedDate })}</p>
         </div>
 
         <Link
@@ -129,7 +137,7 @@ export default async function OrderDetailPage({
           className="flex items-center gap-2 border border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-colors bg-white dark:bg-transparent shadow-sm"
         >
           <Download className="w-4 h-4" />
-          Download Invoice
+          {t("downloadInvoice")}
         </Link>
       </div>
 
@@ -137,10 +145,10 @@ export default async function OrderDetailPage({
 
         <div className="lg:col-span-2 flex flex-col gap-5">
 
-          <OrderStatusTracker status={order.status ?? "pending"} />
+          <OrderStatusTracker status={order.status ?? "pending"} t={t} />
 
           <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 shadow-sm">
-            <h2 className="text-lg font-black text-neutral-900 dark:text-white mb-5">Your Artisanal Selection</h2>
+            <h2 className="text-lg font-black text-neutral-900 dark:text-white mb-5">{t("yourSelection")}</h2>
 
             <div className="divide-y divide-neutral-200 dark:divide-neutral-800">
               {order.items?.map((item: OrderItem) => (
@@ -164,7 +172,7 @@ export default async function OrderDetailPage({
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-neutral-900 dark:text-white text-base">{item.name}</h3>
                     <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
-                      Qty: <span className="text-neutral-800 dark:text-neutral-300 font-semibold">{item.quantity}</span>
+                      {t("qty")} <span className="text-neutral-800 dark:text-neutral-300 font-semibold">{item.quantity}</span>
                     </p>
                   </div>
 
@@ -173,7 +181,7 @@ export default async function OrderDetailPage({
                       ${(Number(item.price) * item.quantity).toFixed(2)}
                     </p>
                     <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
-                      ${Number(item.price).toFixed(2)} each
+                      ${Number(item.price).toFixed(2)} {t("each")}
                     </p>
                   </div>
                 </div>
@@ -186,51 +194,51 @@ export default async function OrderDetailPage({
 
           <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5 shadow-sm">
             <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-3">
-              Delivery Address
+              {t("deliveryAddress")}
             </p>
             <div className="flex items-start gap-2 text-sm text-neutral-600 dark:text-neutral-400">
               <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
               <span className="text-neutral-700 dark:text-neutral-300">
-                Delivered to your registered address on file.
+                {t("deliveredToAddress")}
               </span>
             </div>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5 shadow-sm">
             <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-3">
-              Payment Method
+              {t("paymentMethod")}
             </p>
             <div className="flex items-center gap-3">
               <div className="bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md px-2 py-1 text-[10px] font-black text-blue-600 dark:text-blue-400 tracking-widest">
                 VISA
               </div>
               <div>
-                <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-300">Visa ending in ····</p>
-                <p className="text-xs text-neutral-400 dark:text-neutral-600">via Stripe</p>
+                <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-300">{t("visaEnding")}</p>
+                <p className="text-xs text-neutral-400 dark:text-neutral-600">{t("viaStripe")}</p>
               </div>
             </div>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5 shadow-sm">
-            <h3 className="text-base font-black text-neutral-900 dark:text-white mb-4">Financial Hearth</h3>
+            <h3 className="text-base font-black text-neutral-900 dark:text-white mb-4">{t("financialHearth")}</h3>
 
             <div className="space-y-2 text-sm">
               <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
-                <span>Subtotal</span>
+                <span>{t("subtotal")}</span>
                 <span className="text-neutral-800 dark:text-neutral-300 font-semibold">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
-                <span>Delivery Fee</span>
+                <span>{t("deliveryFee")}</span>
                 <span className="text-neutral-800 dark:text-neutral-300 font-semibold">${deliveryFee.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
-                <span>Estimated Tax</span>
+                <span>{t("estimatedTax")}</span>
                 <span className="text-neutral-800 dark:text-neutral-300 font-semibold">${estimatedTax.toFixed(2)}</span>
               </div>
             </div>
 
             <div className="border-t border-neutral-200 dark:border-neutral-800 mt-4 pt-4">
-              <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-1">Total Amount</p>
+              <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-1">{t("totalAmount")}</p>
               <p className="text-3xl font-black text-neutral-900 dark:text-white">${totalAmount.toFixed(2)}</p>
             </div>
 
@@ -239,7 +247,7 @@ export default async function OrderDetailPage({
               className="mt-5 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-black py-3 rounded-xl transition-colors text-sm"
             >
               <RotateCcw className="w-4 h-4" />
-              Reorder This Meal
+              {t("reorderThisMeal")}
             </Link>
           </div>
 
@@ -248,8 +256,8 @@ export default async function OrderDetailPage({
               <MessageCircle className="w-4 h-4 text-orange-500" />
             </div>
             <div>
-              <p className="text-sm font-bold text-neutral-900 dark:text-white">Need help with this order?</p>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400">Speak with our Hearth specialists</p>
+              <p className="text-sm font-bold text-neutral-900 dark:text-white">{t("needHelp")}</p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">{t("speakSpecialists")}</p>
             </div>
           </div>
         </div>

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { addToCart, updateCartQuantity, getCartQuantityForProduct } from "@/lib/cart-actions";
+import { addToCart, getCartQuantityForProduct, updateCartQuantity } from "@/lib/actions/cart-actions";
+
 
 interface AddToCartButtonProps {
     productId: string;

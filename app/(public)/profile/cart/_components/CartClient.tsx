@@ -4,9 +4,10 @@ import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Trash2, ShoppingBag, Zap } from "lucide-react";
-import { removeFromCart } from "@/lib/cart-actions";
+import { useTranslations } from "next-intl";
 import { createCheckoutSession } from "@/lib/actions/checkoutActions";
 import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
+import { removeFromCart } from "@/lib/actions/cart-actions";
 
 interface CartProduct {
   id: string;
@@ -34,6 +35,7 @@ function getFinalPrice(product: CartProduct): number {
 }
 
 export default function CartClient({ items }: { items: CartItem[] }) {
+  const t = useTranslations("Cart");
   const [list, setList] = useState<CartItem[]>(items);
   const [isPending, startTransition] = useTransition();
   const [checkingOut, setCheckingOut] = useState(false);
@@ -81,15 +83,15 @@ export default function CartClient({ items }: { items: CartItem[] }) {
     return (
       <div className="min-h-[75vh] bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center gap-6 px-4">
         <ShoppingBag className="w-20 h-20 text-neutral-300 dark:text-neutral-700" />
-        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">Your cart is empty</h2>
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white">{t("emptyTitle")}</h2>
         <p className="text-neutral-500 dark:text-neutral-400 text-center max-w-sm">
-          Browse our menu and add some wood-fired favorites to get started.
+          {t("emptySubtitle")}
         </p>
         <Link
           href="/products"
           className="bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold px-6 py-3 rounded-xl transition-colors"
         >
-          Explore Menu
+          {t("exploreMenu")}
         </Link>
       </div>
     );
@@ -99,10 +101,10 @@ export default function CartClient({ items }: { items: CartItem[] }) {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 px-4 md:px-12 py-10">
       <div className="mb-8">
         <h1 className="text-4xl font-black text-neutral-900 dark:text-white">
-          Your <span className="text-orange-500">Cart</span>
+          {t("titlePart1")} <span className="text-orange-500">{t("titlePart2")}</span>
         </h1>
         <p className="text-neutral-500 dark:text-neutral-400 mt-2 text-sm">
-          {list.length} item{list.length !== 1 ? "s" : ""} ready for the hearth.
+          {t("itemsReady", { count: list.length })}
         </p>
       </div>
 
@@ -174,7 +176,7 @@ export default function CartClient({ items }: { items: CartItem[] }) {
                 <button
                   onClick={() => handleRemove(item.id)}
                   disabled={isPending}
-                  aria-label="Remove item"
+                  aria-label={t("removeItem")}
                   className="w-8 h-8 flex items-center justify-center text-neutral-400 hover:text-red-500 dark:text-neutral-600 dark:hover:text-red-400 transition-colors shrink-0"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -186,23 +188,23 @@ export default function CartClient({ items }: { items: CartItem[] }) {
 
         {/* Summary */}
         <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5 h-fit shadow-sm">
-          <h3 className="text-base font-black text-neutral-900 dark:text-white mb-4">Order Summary</h3>
+          <h3 className="text-base font-black text-neutral-900 dark:text-white mb-4">{t("orderSummary")}</h3>
 
           <div className="space-y-2 text-sm">
             <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
-              <span>Subtotal</span>
+              <span>{t("subtotal")}</span>
               <span className="text-neutral-800 dark:text-neutral-300 font-semibold">
                 ${subtotal.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
-              <span>Delivery Fee</span>
+              <span>{t("deliveryFee")}</span>
               <span className="text-neutral-800 dark:text-neutral-300 font-semibold">
                 ${deliveryFee.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
-              <span>Estimated Tax</span>
+              <span>{t("estimatedTax")}</span>
               <span className="text-neutral-800 dark:text-neutral-300 font-semibold">
                 ${estimatedTax.toFixed(2)}
               </span>
@@ -211,7 +213,7 @@ export default function CartClient({ items }: { items: CartItem[] }) {
 
           <div className="border-t border-neutral-200 dark:border-neutral-800 mt-4 pt-4">
             <p className="text-xs font-bold text-orange-500 uppercase tracking-widest mb-1">
-              Total
+              {t("total")}
             </p>
             <p className="text-3xl font-black text-neutral-900 dark:text-white">${total.toFixed(2)}</p>
           </div>
@@ -221,7 +223,7 @@ export default function CartClient({ items }: { items: CartItem[] }) {
             disabled={checkingOut || list.length === 0}
             className="mt-5 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-black py-3 rounded-xl transition-colors text-sm disabled:opacity-60"
           >
-            {checkingOut ? "Redirecting…" : "Proceed to Checkout"}
+            {checkingOut ? t("redirecting") : t("proceedToCheckout")}
           </button>
         </div>
       </div>

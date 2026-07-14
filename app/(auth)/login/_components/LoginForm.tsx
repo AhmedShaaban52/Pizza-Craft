@@ -3,12 +3,15 @@
 import { useTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { authClient } from "@/lib/auth-client";
 import { Eye, EyeOff, Loader2, Mail, Lock } from "lucide-react";
 import { GithubSignInButton } from "./GithubSignInButton";
 
 export function LoginForm() {
     const router = useRouter();
+    const t = useTranslations("Auth.Login");
+    const tc = useTranslations("Auth.Common");
     const [isPending, startTransition] = useTransition();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,7 +30,7 @@ export function LoginForm() {
             });
 
             if (result?.error) {
-                setError("Invalid email or password. Please try again.");
+                setError(t("invalidCredentials"));
             } else {
                 router.push("/");
             }
@@ -40,7 +43,7 @@ export function LoginForm() {
 
             <div className="relative flex items-center gap-3">
                 <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800" />
-                <span className="text-xs text-neutral-500 dark:text-neutral-600 uppercase tracking-widest font-medium">or</span>
+                <span className="text-xs text-neutral-500 dark:text-neutral-600 uppercase tracking-widest font-medium">{tc("or")}</span>
                 <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800" />
             </div>
 
@@ -49,7 +52,7 @@ export function LoginForm() {
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                     <input
                         type="email"
-                        placeholder="Email address"
+                        placeholder={t("emailPlaceholder")}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -62,7 +65,7 @@ export function LoginForm() {
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 dark:text-neutral-500 pointer-events-none" />
                     <input
                         type={showPassword ? "text" : "password"}
-                        placeholder="Password"
+                        placeholder={t("passwordPlaceholder")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -72,6 +75,7 @@ export function LoginForm() {
                     <button
                         type="button"
                         onClick={() => setShowPassword((v) => !v)}
+                        aria-label={showPassword ? tc("hidePassword") : tc("showPassword")}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors cursor-pointer"
                     >
                         {showPassword ? <EyeOff className="w-4 h-4 cursor-pointer" /> : <Eye className="w-4 h-4 cursor-pointer" />}
@@ -80,7 +84,7 @@ export function LoginForm() {
 
                 <div className="flex justify-end">
                     <Link href="/forgot-password" className="text-xs text-orange-500 hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300 transition-colors">
-                        Forgot password?
+                        {t("forgotPassword")}
                     </Link>
                 </div>
 
@@ -95,7 +99,7 @@ export function LoginForm() {
                     disabled={isPending}
                     className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-60 cursor-pointer"
                 >
-                    {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign In"}
+                    {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : t("signIn")}
                 </button>
             </form>
         </>

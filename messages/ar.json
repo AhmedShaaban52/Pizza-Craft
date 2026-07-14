@@ -57,7 +57,16 @@
     "title": "وصل حديثاً",
     "subtitle": "ترشيحات الشيف لك"
   },
-  "Cart": {
+  "ShoppingCart": {
+    "emptyTitle": "سلتك فارغة",
+    "continueShopping": "متابعة التسوق",
+    "titlePart1": "سلة",
+    "titlePart2": "التسوق",
+    "itemsCount": "{count, plural, one {# عنصر} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+    "couponAppliedToast": "تم تطبيق الكوبون! لقد وفرت {amount}",
+    "invalidCouponError": "كوبون غير صالح",
+    "genericError": "حدث خطأ ما",
+    "checkoutFailedError": "فشلت عملية الدفع. حاول مرة أخرى.",
     "orderSummary": "ملخص الطلب",
     "couponCode": "رمز الكوبون",
     "enterCode": "أدخل الرمز...",
@@ -71,11 +80,12 @@
     "total": "الإجمالي",
     "checkoutButton": "المتابعة للدفع",
     "redirecting": "جارٍ التحويل...",
-    "secureNote": "مدفوعات مشفرة بتقنية SSL 256-بت.",
+    "secureNote": "مدفوعات مؤمّنة بتشفير SSL 256-بت.",
     "freeDelivery": "توصيل مجاني",
-    "freeDeliveryDesc": "يتم التوصيل طازجاً خلال 30-45 دقيقة.",
+    "freeDeliveryDesc": "يتم التوصيل طازجًا خلال 30–45 دقيقة.",
     "securePayment": "دفع آمن",
-    "securePaymentDesc": "معلومات الدفع الخاصة بك محمية دائماً."
+    "securePaymentDesc": "معلومات الدفع الخاصة بك محمية دائمًا.",
+    "removeItem": "إزالة العنصر"
   },
   "About": {
     "est": "تأسست عام 2014",
@@ -137,6 +147,76 @@
     "phoneNumber": "رقم الهاتف",
     "notProvided": "غير متوفر"
   },
+  "Orders": {
+    "titlePart1": "طلباتك",
+    "titlePart2": "",
+    "subtitle": "استعد دفء الموقد. تصفح إبداعاتك الحرفية السابقة وأعد طلب المفضلة لديك بنقرة واحدة.",
+    "emptyTitle": "لا توجد طلبات بعد",
+    "emptySubtitle": "يبدو أنك لم تقم باختيارك بعد. تصفح قائمتنا الشهية وقدّم طلبك الأول!",
+    "exploreMenu": "تصفح القائمة",
+    "statusDelivered": "تم التوصيل",
+    "statusInProgress": "قيد التنفيذ",
+    "itemsCount": "{count, plural, one {# عنصر} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+    "moreItems": "{count, plural, one {+# عنصر إضافي} two {+عنصران إضافيان} few {+# عناصر إضافية} many {+# عنصرًا إضافيًا} other {+# عنصر إضافي}}",
+    "viewDetails": "عرض التفاصيل",
+    "reorder": "إعادة الطلب"
+  },
+  "OrderDetail": {
+    "backToOrders": "→ العودة إلى الطلبات",
+    "title": "تفاصيل الطلب",
+    "placedOn": "تم الطلب في {date}",
+    "downloadInvoice": "تحميل الفاتورة",
+    "orderStatus": "حالة الطلب",
+    "stepPlaced": "تم الطلب",
+    "stepPrepared": "قيد التحضير",
+    "stepInTransit": "في الطريق",
+    "stepDelivered": "تم التوصيل",
+    "yourSelection": "اختياراتك الحرفية",
+    "qty": "الكمية:",
+    "each": "لكل قطعة",
+    "deliveryAddress": "عنوان التوصيل",
+    "deliveredToAddress": "تم التوصيل إلى العنوان المسجل لديك.",
+    "paymentMethod": "طريقة الدفع",
+    "visaEnding": "فيزا تنتهي بـ ····",
+    "viaStripe": "عبر Stripe",
+    "financialHearth": "الملخص المالي",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "estimatedTax": "الضريبة المقدرة",
+    "totalAmount": "المبلغ الإجمالي",
+    "reorderThisMeal": "إعادة طلب هذه الوجبة",
+    "needHelp": "تحتاج مساعدة بخصوص هذا الطلب؟",
+    "speakSpecialists": "تحدث مع فريق دعم Hearth"
+  },
+  "Cart": {
+    "titlePart1": "سلتك",
+    "titlePart2": "",
+    "itemsReady": "{count, plural, one {# عنصر} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}} جاهزة للموقد.",
+    "emptyTitle": "سلتك فارغة",
+    "emptySubtitle": "تصفح قائمتنا وأضف بعض المفضلات المشوية على الحطب للبدء.",
+    "exploreMenu": "تصفح القائمة",
+    "orderSummary": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "estimatedTax": "الضريبة المقدرة",
+    "total": "الإجمالي",
+    "proceedToCheckout": "المتابعة للدفع",
+    "redirecting": "جارٍ التحويل…",
+    "removeItem": "إزالة العنصر"
+  },
+  "Wishlist": {
+    "yourCollection": "مجموعتك",
+    "title": "قائمة الرغبات الحرفية",
+    "subtitle": "مجموعة مختارة من إبداعاتك المشوية على الحطب المفضلة، بانتظار أن تُقدَّم من الموقد.",
+    "sortBy": "ترتيب حسب",
+    "sortDefault": "افتراضي",
+    "sortPriceAsc": "السعر: من الأقل إلى الأعلى",
+    "sortPriceDesc": "السعر: من الأعلى إلى الأقل",
+    "sortName": "الاسم",
+    "emptyTitle": "قائمة رغباتك فارغة",
+    "emptySubtitle": "تصفح قائمتنا واحفظ المفضلة لديك.",
+    "removeFromWishlist": "إزالة من قائمة الرغبات"
+  },
   "Coupons": {
     "pageTitle": "الكوبونات",
     "entityName": "كوبون",
@@ -173,6 +253,71 @@
       "endDate": {
         "label": "تاريخ الانتهاء"
       }
+    }
+  },
+  "Favorites": {
+    "titlePart1": "مفضلتك",
+    "titlePart2": "",
+    "subtitle": "تشكيلتك الحرفية المختارة بعناية",
+    "emptyTitle": "لا توجد مفضلات بعد.",
+    "emptySubtitle": "اضغط على أيقونة القلب في أي منتج لحفظه هنا.",
+    "addToFavorites": "إضافة إلى المفضلة",
+    "removeFromFavorites": "إزالة من المفضلة"
+  },
+  "Auth": {
+    "Common": {
+      "or": "أو",
+      "signInWithGithub": "تسجيل الدخول عبر GitHub",
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "passwordsDontMatch": "كلمتا المرور غير متطابقتين.",
+      "setNewPassword": "تعيين كلمة مرور جديدة",
+      "passwordUpdated": "تم تحديث كلمة المرور!",
+      "redirectingToSignIn": "جارٍ تحويلك إلى تسجيل الدخول…"
+    },
+    "Login": {
+      "emailPlaceholder": "البريد الإلكتروني",
+      "passwordPlaceholder": "كلمة المرور",
+      "forgotPassword": "هل نسيت كلمة المرور؟",
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة. حاول مرة أخرى.",
+      "signIn": "تسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signUp": "إنشاء حساب",
+      "termsAgreement": "بمتابعتك، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا."
+    },
+    "SignUp": {
+      "fullNamePlaceholder": "الاسم الكامل",
+      "emailPlaceholder": "البريد الإلكتروني",
+      "passwordPlaceholder": "كلمة المرور",
+      "createAccount": "إنشاء حساب",
+      "genericError": "فشل إنشاء الحساب. حاول مرة أخرى.",
+      "alreadyHaveAccount": "لديك حساب بالفعل؟",
+      "signIn": "تسجيل الدخول"
+    },
+    "ResetPassword": {
+      "newPasswordPlaceholder": "كلمة المرور الجديدة",
+      "confirmPasswordPlaceholder": "تأكيد كلمة المرور الجديدة",
+      "invalidLink": "رابط إعادة التعيين غير صالح. يرجى طلب رابط جديد.",
+      "passwordTooShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+      "invalidOrExpiredLink": "رابط إعادة التعيين غير صالح أو منتهي الصلاحية. يرجى طلب رابط جديد.",
+      "backToSignIn": "العودة لتسجيل الدخول"
+    },
+    "ForgotPassword": {
+      "emailPlaceholder": "البريد الإلكتروني",
+      "sendCode": "إرسال الرمز",
+      "couldNotSendCode": "تعذر إرسال الرمز. تحقق من بريدك الإلكتروني وحاول مرة أخرى.",
+      "enterCode": "أدخل الرمز",
+      "codeSentTo": "أرسلنا رمزًا مكونًا من 6 أرقام إلى",
+      "continueLabel": "متابعة",
+      "didntReceiveIt": "لم تستلم الرمز؟",
+      "sending": "جارٍ الإرسال…",
+      "resendCode": "إعادة إرسال الرمز",
+      "useDifferentEmail": "→ استخدام بريد إلكتروني مختلف",
+      "invalidOrExpiredCode": "الرمز غير صالح أو منتهي الصلاحية. يرجى البدء من جديد.",
+      "newPasswordPlaceholder": "كلمة المرور الجديدة",
+      "confirmPasswordPlaceholder": "تأكيد كلمة المرور",
+      "rememberedIt": "تذكرتها؟",
+      "backToSignIn": "العودة لتسجيل الدخول"
     }
   }
 }

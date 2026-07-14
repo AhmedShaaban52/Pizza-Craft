@@ -1,8 +1,10 @@
+"use client"
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { AddToCartButton } from "../../products/_components/AddToCartButton";
 import { getFinalPrice } from "@/lib/getFinalPrice";
 import { FavoriteButton } from "../../favorites/_components/FavoriteButton";
+import { pickLocale, useLocale } from "@/context/locale-context";
 
 interface FavoriteCardProps {
     favorite: {
@@ -10,6 +12,9 @@ interface FavoriteCardProps {
         product: {
             id: string;
             name: string;
+            nameAr: string;
+            description: string;
+            descriptionAr: string;
             image: string;
             price: string;
             discountType: "percent" | "amount" | null;
@@ -23,6 +28,8 @@ interface FavoriteCardProps {
 
 export function FavoriteCard({ favorite, cartQuantity = 0, cartId = null }: FavoriteCardProps) {
     const { product } = favorite;
+    const { locale } = useLocale();
+    const localizedName = pickLocale(product.name, product.nameAr, locale);
     const finalPrice = getFinalPrice({
         price: product.price,
         discountType: product.discountType,
@@ -48,8 +55,9 @@ export function FavoriteCard({ favorite, cartQuantity = 0, cartId = null }: Favo
 
             <div className="p-4 bg-white dark:bg-neutral-900 transition-colors">
                 <h3 className="font-semibold text-neutral-900 dark:text-white text-base truncate">
-                    {product.name}
+                    {localizedName}
                 </h3>
+           
 
                 <div className="mt-1.5 flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (

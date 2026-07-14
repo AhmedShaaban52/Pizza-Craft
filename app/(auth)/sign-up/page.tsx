@@ -1,8 +1,11 @@
 import Logo from "@/app/(public)/_components/layout/Logo";
 import Link from "next/link";
 import { SignUpForm } from "./_components/Signupform";
+import { getTranslations } from "next-intl/server";
 
-export default function SignUpPage() {
+export default async function SignUpPage() {
+    const t = await getTranslations("Auth.SignUp");
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-950 px-4 transition-colors duration-200">
             <div className="w-full max-w-sm">
@@ -15,9 +18,9 @@ export default function SignUpPage() {
                 </div>
 
                 <p className="mt-4 text-center text-sm text-neutral-600 dark:text-neutral-400">
-                    Already have an account?{" "}
+                    {t("alreadyHaveAccount")}{" "}
                     <Link href="/login" className="text-orange-500 hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300 font-semibold transition-colors cursor-pointer">
-                        Sign in
+                        {t("signIn")}
                     </Link>
                 </p>
             </div>

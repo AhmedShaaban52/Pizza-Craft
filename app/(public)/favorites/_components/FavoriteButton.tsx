@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { Heart } from "lucide-react";
-import { toggleFavorite } from "@/lib/favorites-actions";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { toggleFavorite } from "@/lib/actions/favorites-actions";
 
 interface FavoriteButtonProps {
     productId: string;
@@ -18,6 +19,7 @@ export function FavoriteButton({
     className,
     variant = "overlay",
 }: FavoriteButtonProps) {
+    const t = useTranslations("Favorites");
     const [favorited, setFavorited] = useState(initialFavorited);
     const [, startTransition] = useTransition();
 
@@ -40,7 +42,7 @@ export function FavoriteButton({
         <button
             type="button"
             onClick={handleClick}
-            aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+            aria-label={favorited ? t("removeFromFavorites") : t("addToFavorites")}
             className={cn(
                 "flex h-9 w-9 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-neutral-200 shadow-sm transition-all hover:bg-white cursor-pointer dark:bg-neutral-900/80 dark:border-neutral-800 dark:hover:bg-neutral-900",
                 variant === "overlay" && "absolute top-4 right-4",

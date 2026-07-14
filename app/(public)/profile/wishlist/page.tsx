@@ -1,8 +1,8 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { getFavorites } from "@/lib/favorites-actions";
 import WishlistClient from "./_components/WishlistClient";
+import { getFavorites } from "@/lib/actions/favorites-actions";
 
 export const metadata = {
   title: "Wishlist | Pizza Craft",

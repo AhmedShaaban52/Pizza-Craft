@@ -96,6 +96,9 @@ export async function getCartItems() {
         product: {
           id: productsTable.id,
           name: productsTable.name,
+          nameAr: productsTable.nameAr,
+          description: productsTable.description,
+          descriptionAr: productsTable.descriptionAr,
           image: productsTable.image,
           price: productsTable.price,
           discountType: productsTable.discountType,
@@ -103,6 +106,7 @@ export async function getCartItems() {
         },
         category: {
           name: categoriesTable.name,
+          nameAr: categoriesTable.nameAr,
         },
       })
       .from(cartsTable)

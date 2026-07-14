@@ -4,7 +4,6 @@ import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/requireUser";
 import { desc, eq, sql } from "drizzle-orm";
-import { getCartItems } from "@/lib/cart-actions";
 import {
   cartsTable,
   couponsTable,
@@ -12,6 +11,7 @@ import {
   ordersTable,
 } from "../schema";
 import { OrderWithItems } from "../types";
+import { getCartItems } from "./cart-actions";
 
 function getFinalPrice(item: {
   price: string;

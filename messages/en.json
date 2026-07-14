@@ -57,7 +57,16 @@
     "title": "New Arrivals",
     "subtitle": "Chef recommended pairings for your selection"
   },
-  "Cart": {
+  "ShoppingCart": {
+    "emptyTitle": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "titlePart1": "Shopping",
+    "titlePart2": "Cart",
+    "itemsCount": "{count, plural, one {# item} other {# items}}",
+    "couponAppliedToast": "Coupon applied! You save {amount}",
+    "invalidCouponError": "Invalid coupon",
+    "genericError": "Something went wrong",
+    "checkoutFailedError": "Checkout failed. Please try again.",
     "orderSummary": "Order Summary",
     "couponCode": "Coupon Code",
     "enterCode": "Enter code...",
@@ -75,7 +84,8 @@
     "freeDelivery": "Free Delivery",
     "freeDeliveryDesc": "Delivered fresh in 30–45 minutes.",
     "securePayment": "Secure Payment",
-    "securePaymentDesc": "Your payment info is always protected."
+    "securePaymentDesc": "Your payment info is always protected.",
+    "removeItem": "Remove item"
   },
   "About": {
     "est": "Est. 2014",
@@ -130,12 +140,82 @@
   },
   "Profile": {
     "joined": "Joined",
-    "personalInformation":"Personal Information",
-    "editInfo":"Edit Info",
-    "fullName":"Full Name",
-    "emailAddress":"Email Address",
+    "personalInformation": "Personal Information",
+    "editInfo": "Edit Info",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
     "phoneNumber": "Phone Number",
-    "notProvided":"Not provided"
+    "notProvided": "Not provided"
+  },
+  "Orders": {
+    "titlePart1": "Your",
+    "titlePart2": "Orders",
+    "subtitle": "Relive the warmth of the hearth. Browse your past artisanal creations and bring back your favorites with a single click.",
+    "emptyTitle": "No orders found yet",
+    "emptySubtitle": "Looks like you haven't made your choice yet. Explore our delicious menu and place your first order!",
+    "exploreMenu": "Explore Menu",
+    "statusDelivered": "Delivered",
+    "statusInProgress": "In Progress",
+    "itemsCount": "{count, plural, one {# item} other {# items}}",
+    "moreItems": "{count, plural, one {+# more item} other {+# more items}}",
+    "viewDetails": "View Details",
+    "reorder": "Reorder"
+  },
+  "OrderDetail": {
+    "backToOrders": "← Back to Orders",
+    "title": "Order Details",
+    "placedOn": "Placed on {date}",
+    "downloadInvoice": "Download Invoice",
+    "orderStatus": "Order Status",
+    "stepPlaced": "Placed",
+    "stepPrepared": "Prepared",
+    "stepInTransit": "In Transit",
+    "stepDelivered": "Delivered",
+    "yourSelection": "Your Artisanal Selection",
+    "qty": "Qty:",
+    "each": "each",
+    "deliveryAddress": "Delivery Address",
+    "deliveredToAddress": "Delivered to your registered address on file.",
+    "paymentMethod": "Payment Method",
+    "visaEnding": "Visa ending in ····",
+    "viaStripe": "via Stripe",
+    "financialHearth": "Financial Hearth",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "estimatedTax": "Estimated Tax",
+    "totalAmount": "Total Amount",
+    "reorderThisMeal": "Reorder This Meal",
+    "needHelp": "Need help with this order?",
+    "speakSpecialists": "Speak with our Hearth specialists"
+  },
+  "Cart": {
+    "titlePart1": "Your",
+    "titlePart2": "Cart",
+    "itemsReady": "{count, plural, one {# item} other {# items}} ready for the hearth.",
+    "emptyTitle": "Your cart is empty",
+    "emptySubtitle": "Browse our menu and add some wood-fired favorites to get started.",
+    "exploreMenu": "Explore Menu",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "estimatedTax": "Estimated Tax",
+    "total": "Total",
+    "proceedToCheckout": "Proceed to Checkout",
+    "redirecting": "Redirecting…",
+    "removeItem": "Remove item"
+  },
+  "Wishlist": {
+    "yourCollection": "Your Collection",
+    "title": "Artisanal Wishlist",
+    "subtitle": "A curated selection of your favorite wood-fired crafts, waiting to be pulled from the hearth.",
+    "sortBy": "Sort By",
+    "sortDefault": "Default",
+    "sortPriceAsc": "Price: Low to High",
+    "sortPriceDesc": "Price: High to Low",
+    "sortName": "Name",
+    "emptyTitle": "Your wishlist is empty",
+    "emptySubtitle": "Browse our menu and save your favorites.",
+    "removeFromWishlist": "Remove from wishlist"
   },
   "Coupons": {
     "pageTitle": "Coupons",
@@ -173,6 +253,71 @@
       "endDate": {
         "label": "End Date"
       }
+    }
+  },
+  "Favorites": {
+    "titlePart1": "Your",
+    "titlePart2": "Favorites",
+    "subtitle": "Your handpicked artisanal selection",
+    "emptyTitle": "No favorites yet.",
+    "emptySubtitle": "Tap the heart icon on any product to save it here.",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites"
+  },
+  "Auth": {
+    "Common": {
+      "or": "or",
+      "signInWithGithub": "Sign in with GitHub",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "passwordsDontMatch": "Passwords don't match.",
+      "setNewPassword": "Set New Password",
+      "passwordUpdated": "Password updated!",
+      "redirectingToSignIn": "Redirecting you to sign in…"
+    },
+    "Login": {
+      "emailPlaceholder": "Email address",
+      "passwordPlaceholder": "Password",
+      "forgotPassword": "Forgot password?",
+      "invalidCredentials": "Invalid email or password. Please try again.",
+      "signIn": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "termsAgreement": "By continuing, you agree to our Terms of Service and Privacy Policy."
+    },
+    "SignUp": {
+      "fullNamePlaceholder": "Full name",
+      "emailPlaceholder": "Email address",
+      "passwordPlaceholder": "Password",
+      "createAccount": "Create Account",
+      "genericError": "Failed to create an account. Try again.",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "ResetPassword": {
+      "newPasswordPlaceholder": "New password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "invalidLink": "Invalid reset link. Please request a new one.",
+      "passwordTooShort": "Password must be at least 8 characters.",
+      "invalidOrExpiredLink": "Reset link is invalid or expired. Please request a new one.",
+      "backToSignIn": "Back to sign in"
+    },
+    "ForgotPassword": {
+      "emailPlaceholder": "Email address",
+      "sendCode": "Send Code",
+      "couldNotSendCode": "Could not send code. Check your email and try again.",
+      "enterCode": "Enter the code",
+      "codeSentTo": "We sent a 6-digit code to",
+      "continueLabel": "Continue",
+      "didntReceiveIt": "Didn't receive it?",
+      "sending": "Sending…",
+      "resendCode": "Resend code",
+      "useDifferentEmail": "← Use a different email",
+      "invalidOrExpiredCode": "Invalid or expired code. Please start over.",
+      "newPasswordPlaceholder": "New password",
+      "confirmPasswordPlaceholder": "Confirm password",
+      "rememberedIt": "Remembered it?",
+      "backToSignIn": "Back to sign in"
     }
   }
 }

@@ -1,6 +1,6 @@
-import { getCartItems } from "@/lib/cart-actions";
 import { requireUser } from "@/lib/requireUser";
 import { CartClient } from "./_components/CartClient";
+import { getCartItems } from "@/lib/actions/cart-actions";
 
 export default async function CartPage() {
     await requireUser();
