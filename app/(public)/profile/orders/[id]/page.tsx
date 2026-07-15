@@ -1,6 +1,6 @@
 import { requireUser } from "@/lib/requireUser";
 import { redirect, notFound } from "next/navigation";
-import { getUserOrders } from "@/lib/actions/checkoutActions";
+import { getUserOrders, reorderOrder } from "@/lib/actions/checkoutActions";
 import { OrderWithItems, OrderItem } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -242,13 +242,16 @@ export default async function OrderDetailPage({
               <p className="text-3xl font-black text-neutral-900 dark:text-white">${totalAmount.toFixed(2)}</p>
             </div>
 
-            <Link
-              href={`/checkout/success?session_id=${order.stripeSessionId}`}
-              className="mt-5 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-black py-3 rounded-xl transition-colors text-sm"
-            >
-              <RotateCcw className="w-4 h-4" />
-              {t("reorderThisMeal")}
-            </Link>
+            <form action={reorderOrder}>
+              <input type="hidden" name="orderId" value={order.id} />
+              <button
+                type="submit"
+                className="mt-5 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white dark:text-white font-black py-3 rounded-xl transition-colors text-sm cursor-pointer"
+              >
+                <RotateCcw className="w-4 h-4" />
+                {t("reorderThisMeal")}
+              </button>
+            </form>
           </div>
 
           <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 flex items-center gap-3 shadow-sm">

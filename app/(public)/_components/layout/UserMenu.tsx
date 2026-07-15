@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { User, LogOut, ChevronDown } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface SessionUser {
     name: string;
@@ -14,6 +15,7 @@ interface SessionUser {
 }
 
 export function UserMenu() {
+    const t = useTranslations("UserMenu");
     const [user, setUser] = useState<SessionUser | null>(null);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = useState(false);
@@ -106,7 +108,7 @@ export function UserMenu() {
                             className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
                         >
                             <User className="h-4 w-4" />
-                            My Profile
+                            {t("myProfile")}
                         </Link>
 
                         <button
@@ -115,7 +117,7 @@ export function UserMenu() {
                             className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer"
                         >
                             <LogOut className="h-4 w-4" />
-                            Sign Out
+                            {t("signOut")}
                         </button>
                     </div>
                 </>

@@ -1,4 +1,4 @@
-import { getUserOrders } from "@/lib/actions/checkoutActions";
+import { getUserOrders, reorderOrder } from "@/lib/actions/checkoutActions";
 import { requireUser } from "@/lib/requireUser";
 import { ShoppingBag, RotateCcw, ChevronRight, Zap, Clock } from "lucide-react";
 import Link from "next/link";
@@ -144,13 +144,16 @@ export default async function OrdersPage() {
                 </Link>
 
                 {isPaid && (
-                  <Link
-                    href={`/checkout/success?session_id=${order.stripeSessionId}`}
-                    className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white dark:text-black text-xs font-black px-4 py-2 rounded-lg transition-colors"
-                  >
-                    <RotateCcw className="w-3 h-3" />
-                    {t("reorder")}
-                  </Link>
+                  <form action={reorderOrder}>
+                    <input type="hidden" name="orderId" value={order.id} />
+                    <button
+                      type="submit"
+                      className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white dark:text-white text-xs font-black px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      {t("reorder")}
+                    </button>
+                  </form>
                 )}
               </div>
             </div>

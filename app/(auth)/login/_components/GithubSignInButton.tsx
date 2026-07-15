@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 function GithubIcon() {
     return (
@@ -19,8 +19,8 @@ function GithubIcon() {
 }
 
 export function GithubSignInButton() {
-    const t = useTranslations("Auth.Common");
     const [loading, setLoading] = useState(false);
+    const t = useTranslations("Auth.Common");
 
     const handleSignIn = async () => {
         setLoading(true);
@@ -41,7 +41,7 @@ export function GithubSignInButton() {
             ) : (
                 <>
                     <GithubIcon />
-                    {t("signInWithGithub")}
+                        {t("signInWithGithub")}
                 </>
             )}
         </button>

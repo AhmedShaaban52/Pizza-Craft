@@ -8,10 +8,12 @@ import { useTranslations } from "next-intl";
 import { createCheckoutSession } from "@/lib/actions/checkoutActions";
 import { AddToCartButton } from "@/app/(public)/products/_components/AddToCartButton";
 import { removeFromCart } from "@/lib/actions/cart-actions";
+import { pickLocale, useLocale } from "@/context/locale-context";
 
 interface CartProduct {
   id: string;
   name: string;
+  nameAr: string | null;
   image: string;
   price: string;
   discountType?: string | null;
@@ -22,7 +24,7 @@ interface CartItem {
   id: string;
   quantity: number;
   product: CartProduct;
-  category: { name: string | null } | null;
+  category: { name: string | null; nameAr: string | null } | null;
 }
 
 function getFinalPrice(product: CartProduct): number {
@@ -36,6 +38,7 @@ function getFinalPrice(product: CartProduct): number {
 
 export default function CartClient({ items }: { items: CartItem[] }) {
   const t = useTranslations("Cart");
+  const { locale } = useLocale();
   const [list, setList] = useState<CartItem[]>(items);
   const [isPending, startTransition] = useTransition();
   const [checkingOut, setCheckingOut] = useState(false);
@@ -115,6 +118,10 @@ export default function CartClient({ items }: { items: CartItem[] }) {
             const finalPrice = getFinalPrice(item.product);
             const hasDiscount =
               item.product.discountType && item.product.discountValue;
+            const localizedName = pickLocale(item.product.name, item.product.nameAr, locale);
+            const localizedCategory = item.category
+              ? pickLocale(item.category.name, item.category.nameAr, locale)
+              : null;
 
             return (
               <div key={item.id} className="p-5 flex items-center gap-4">
@@ -122,7 +129,7 @@ export default function CartClient({ items }: { items: CartItem[] }) {
                   {item.product.image ? (
                     <Image
                       src={item.product.image}
-                      alt={item.product.name}
+                      alt={localizedName}
                       fill
                       unoptimized
                       className="object-cover"
@@ -136,14 +143,14 @@ export default function CartClient({ items }: { items: CartItem[] }) {
 
                 <div className="flex-1 min-w-0">
                   <h3 className="font-bold text-neutral-900 dark:text-white text-base truncate">
-                    {item.product.name}
+                    {localizedName}
                   </h3>
-                  {item.category?.name && (
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
-                      {item.category.name}
+                  {localizedCategory && (
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                      {localizedCategory}
                     </p>
                   )}
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex items-center gap-2 my-1">
                     {hasDiscount && (
                       <span className="text-neutral-400 dark:text-neutral-600 line-through text-xs">
                         ${Number(item.product.price).toFixed(2)}
@@ -221,7 +228,7 @@ export default function CartClient({ items }: { items: CartItem[] }) {
           <button
             onClick={handleCheckout}
             disabled={checkingOut || list.length === 0}
-            className="mt-5 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white dark:text-black font-black py-3 rounded-xl transition-colors text-sm disabled:opacity-60"
+            className="mt-5 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white dark:text-white font-black py-3 rounded-xl transition-colors text-sm disabled:opacity-60"
           >
             {checkingOut ? t("redirecting") : t("proceedToCheckout")}
           </button>

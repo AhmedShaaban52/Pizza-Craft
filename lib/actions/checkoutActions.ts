@@ -4,6 +4,7 @@ import { stripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/requireUser";
 import { desc, eq, sql } from "drizzle-orm";
+import { redirect } from "next/navigation";
 import {
   cartsTable,
   couponsTable,
@@ -11,7 +12,7 @@ import {
   ordersTable,
 } from "../schema";
 import { OrderWithItems } from "../types";
-import { getCartItems } from "./cart-actions";
+import { getCartItems, addToCart } from "./cart-actions";
 
 function getFinalPrice(item: {
   price: string;
@@ -26,79 +27,99 @@ function getFinalPrice(item: {
   return price;
 }
 
+function toStripeImageUrl(image: string | null | undefined): string | null {
+  if (!image) return null;
+  if (image.startsWith("http://") || image.startsWith("https://")) {
+    return image;
+  }
+  return null;
+}
+
 export async function createCheckoutSession(
   couponCode?: string,
   couponDiscount?: number,
 ) {
-  const user = await requireUser();
+  try {
+    const user = await requireUser();
 
-  const cartResult = await getCartItems();
-  if (!cartResult.success || !cartResult.data?.length) {
-    return { error: "Cart is empty" };
-  }
-
-  const items = cartResult.data.map((item) => ({
-    id: item.product.id,
-    name: item.product.name,
-    image: item.product.image,
-    price: item.product.price,
-    quantity: item.quantity,
-    discountType: item.product.discountType,
-    discountValue: item.product.discountValue,
-  }));
-
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-
-  const lineItems = items.map((item) => ({
-    price_data: {
-      currency: "usd",
-      product_data: {
-        name: item.name,
-        images: [item.image],
-      },
-      unit_amount: Math.round(getFinalPrice(item) * 100),
-    },
-    quantity: item.quantity,
-  }));
-
-  const discounts: { coupon: string }[] = [];
-  if (couponDiscount && couponDiscount > 0) {
-    try {
-      const stripeCoupon = await stripe.coupons.create({
-        amount_off: Math.round(couponDiscount * 100),
-        currency: "usd",
-        duration: "once",
-        name: `Coupon: ${couponCode}`,
-      });
-      discounts.push({ coupon: stripeCoupon.id });
-    } catch (err) {
-      console.error("Stripe coupon error:", err);
+    const cartResult = await getCartItems();
+    if (!cartResult.success || !cartResult.data?.length) {
+      return { error: "Cart is empty" };
     }
+
+    const items = cartResult.data.map((item) => ({
+      id: item.product.id,
+      name: item.product.name,
+      image: item.product.image,
+      price: item.product.price,
+      quantity: item.quantity,
+      discountType: item.product.discountType,
+      discountValue: item.product.discountValue,
+    }));
+
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+
+    const lineItems = items.map((item) => {
+      const image = toStripeImageUrl(item.image);
+      return {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.name,
+            ...(image ? { images: [image] } : {}),
+          },
+          unit_amount: Math.round(getFinalPrice(item) * 100),
+        },
+        quantity: item.quantity,
+      };
+    });
+
+    const discounts: { coupon: string }[] = [];
+    if (couponDiscount && couponDiscount > 0) {
+      try {
+        const stripeCoupon = await stripe.coupons.create({
+          amount_off: Math.round(couponDiscount * 100),
+          currency: "usd",
+          duration: "once",
+          name: `Coupon: ${couponCode}`,
+        });
+        discounts.push({ coupon: stripeCoupon.id });
+      } catch (err) {
+        console.error("Stripe coupon error:", err);
+      }
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      discounts,
+      mode: "payment",
+      success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/cart`,
+      metadata: {
+        userId: user.id,
+        couponCode: couponCode || "",
+        items: JSON.stringify(
+          items.map((i) => ({
+            productId: i.id,
+            name: i.name,
+            quantity: i.quantity,
+            image: i.image,
+            price: getFinalPrice(i).toFixed(2),
+          })),
+        ),
+      },
+    });
+
+    if (!session.url) {
+      return { error: "Could not start checkout. Please try again." };
+    }
+
+    return { url: session.url };
+  } catch (err) {
+    console.error("createCheckoutSession error:", err);
+    return { error: "Something went wrong starting checkout. Please try again." };
   }
-
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: lineItems,
-    discounts,
-    mode: "payment",
-    success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}/cart`,
-    metadata: {
-      userId: user.id,
-      couponCode: couponCode || "",
-      items: JSON.stringify(
-        items.map((i) => ({
-          productId: i.id,
-          name: i.name,
-          quantity: i.quantity,
-          image: i.image,
-          price: getFinalPrice(i).toFixed(2),
-        })),
-      ),
-    },
-  });
-
-  return { url: session.url };
 }
 
 export async function confirmOrder(sessionId: string) {
@@ -202,4 +223,42 @@ export async function getUserOrders(): Promise<{
     console.error("Error fetching orders:", error);
     return { success: false, data: [] };
   }
+}
+
+export async function reorderOrder(formData: FormData) {
+  const orderId = formData.get("orderId");
+  if (typeof orderId !== "string" || !orderId) {
+    redirect("/cart");
+  }
+
+  const user = await requireUser();
+
+  const [order] = await db
+    .select({ id: ordersTable.id, userId: ordersTable.userId })
+    .from(ordersTable)
+    .where(eq(ordersTable.id, orderId as string));
+
+  if (!order || order.userId !== user.id) {
+    redirect("/cart");
+  }
+
+  const items = await db
+    .select({
+      productId: orderItemsTable.productId,
+      quantity: orderItemsTable.quantity,
+    })
+    .from(orderItemsTable)
+    .where(eq(orderItemsTable.orderId, orderId as string));
+
+  for (const item of items) {
+    await addToCart(item.productId, item.quantity);
+  }
+
+  const result = await createCheckoutSession();
+
+  if (result?.url) {
+    redirect(result.url);
+  }
+
+  redirect("/cart");
 }

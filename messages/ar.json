@@ -25,6 +25,10 @@
   "ProductDetail": {
     "relatedProducts": "قد يعجبك أيضاً"
   },
+  "UserMenu": {
+    "myProfile": "ملفى الشخصي",
+    "signOut": "تسجيل الخروج"
+  },
   "Admin": {
     "dashboard": "لوحة التحكم",
     "products": "المنتجات",

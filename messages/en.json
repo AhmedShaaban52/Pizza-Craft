@@ -25,6 +25,10 @@
   "ProductDetail": {
     "relatedProducts": "You might also like"
   },
+  "UserMenu": {
+    "myProfile": "My Profile",
+    "signOut": "Sign Out"
+  },
   "Admin": {
     "dashboard": "Dashboard",
     "products": "Products",
